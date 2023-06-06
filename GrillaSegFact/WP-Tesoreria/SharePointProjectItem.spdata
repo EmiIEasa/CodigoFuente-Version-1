@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="WP-TesoreriaUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="WP-Tesoreria\" Type="ElementManifest" />
+    <ProjectItemFile Source="WP-Tesoreria.webpart" Target="WP-Tesoreria\" Type="ElementFile" />
+    <ProjectItemFile Source="WP-TesoreriaUserControl.ascx" Target="CONTROLTEMPLATES\GrillaSegFact\WP-Tesoreria\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="GrillaSegFact.WP_Tesoreria" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

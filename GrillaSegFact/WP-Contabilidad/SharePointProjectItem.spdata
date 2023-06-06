@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="WP-ContabilidadUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="WP-Contabilidad\" Type="ElementManifest" />
+    <ProjectItemFile Source="WP-Contabilidad.webpart" Target="WP-Contabilidad\" Type="ElementFile" />
+    <ProjectItemFile Source="WP-ContabilidadUserControl.ascx" Target="CONTROLTEMPLATES\GrillaSegFact\WP-Contabilidad\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="GrillaSegFact.WP_Contabilidad" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

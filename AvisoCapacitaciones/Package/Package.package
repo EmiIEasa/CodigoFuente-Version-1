@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="10383237-10e2-434c-9239-48df4b63c923" solutionId="10383237-10e2-434c-9239-48df4b63c923" resetWebServer="false" sharePointProductVersion="15.0" name="AvisoCapacitaciones" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="3975f339-9363-4209-938e-ca3862c9a4e1" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="0ea1cbc3-81c3-4563-9a35-f6f25090f86f" />
+  </projectItems>
+</package>

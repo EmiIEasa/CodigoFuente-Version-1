@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E492FEB1-EB31-4982-9508-240DC0F61B03}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GrillaDatosPersonal</RootNamespace>
+    <AssemblyName>GrillaDatosPersonal</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>19.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SandboxedSolution>False</SandboxedSolution>
+    <ProjectMode>SharePointCustomization</ProjectMode>
+    <MinimumOfficeToolsVersion>14.1</MinimumOfficeToolsVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>C:\CodigoFuente\Backup\GrillaDatosPersonal\</UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuscadorDePersonal\BuscadorDePersonal.cs" />
+    <Compile Include="BuscadorDePersonal\BuscadorDePersonalUserControl.ascx.cs">
+      <DependentUpon>BuscadorDePersonalUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BuscadorDePersonal\BuscadorDePersonalUserControl.ascx.designer.cs">
+      <DependentUpon>BuscadorDePersonalUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatosDelPersonal\DatosDelPersonal.cs" />
+    <Compile Include="DatosDelPersonal\DatosDelPersonalUserControl.ascx.cs">
+      <DependentUpon>DatosDelPersonalUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DatosDelPersonal\DatosDelPersonalUserControl.ascx.designer.cs">
+      <DependentUpon>DatosDelPersonalUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MisDatos\MisDatos.cs" />
+    <Compile Include="MisDatos\MisDatosUserControl.ascx.cs">
+      <DependentUpon>MisDatosUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisDatos\MisDatosUserControl.ascx.designer.cs">
+      <DependentUpon>MisDatosUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuscadorDePersonal\BuscadorDePersonal.webpart" />
+    <None Include="BuscadorDePersonal\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{04030dcc-4d17-45cf-b326-89971767a18b}</SharePointProjectItemId>
+    </None>
+    <None Include="DatosDelPersonal\DatosDelPersonal.webpart" />
+    <None Include="DatosDelPersonal\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{367265fa-9754-4d87-a356-f5c98f9e226a}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\Feature1\Feature1.feature">
+      <FeatureId>{ad307ea6-60fc-43fa-910f-919d8d1e11a7}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\GrillaDatosPersonal\fuente\Ubuntu-Regular.ttf" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{e5f70500-8769-4f4a-9314-e19054e766ad}</SharePointProjectItemId>
+    </None>
+    <None Include="MisDatos\MisDatos.webpart" />
+    <None Include="MisDatos\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{2b008553-ea12-4aff-af15-d3b1151842e6}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{f9ae7333-980d-4f00-804e-20f3682b2bf5}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="BuscadorDePersonal\BuscadorDePersonalUserControl.ascx" />
+    <Content Include="BuscadorDePersonal\Elements.xml" />
+    <Content Include="DatosDelPersonal\DatosDelPersonalUserControl.ascx" />
+    <Content Include="DatosDelPersonal\Elements.xml" />
+    <Content Include="Features\Feature1\Feature1.Template.xml">
+      <DependentUpon>Feature1.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\GrillaDatosPersonal\css\1-10-20-dataTables.bootstrap4.min.css" />
+    <Content Include="Layouts\GrillaDatosPersonal\css\4-3-1-bootstrap.min.css" />
+    <Content Include="Layouts\GrillaDatosPersonal\css\estilosGrillaDatosPersonal.css" />
+    <Content Include="Layouts\GrillaDatosPersonal\img\Logo.png" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\1-10-20-dataTables.bootstrap4.min.js" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\1-10-20-jquery.dataTables.min.js" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\1-14-7-popper.min.js" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\3-4-1-jquery.min.js" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\4-3-1-bootstrap.min.js" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\fontAwesome.js" />
+    <Content Include="Layouts\GrillaDatosPersonal\js\funcionesGrillaDatosPersonal.js" />
+    <Content Include="MisDatos\Elements.xml" />
+    <Content Include="MisDatos\MisDatosUserControl.ascx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

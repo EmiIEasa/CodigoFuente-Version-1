@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="f9ae7333-980d-4f00-804e-20f3682b2bf5" solutionId="f9ae7333-980d-4f00-804e-20f3682b2bf5" resetWebServer="false" sharePointProductVersion="15.0" name="GrillaDatosPersonal" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="ad307ea6-60fc-43fa-910f-919d8d1e11a7" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="e5f70500-8769-4f4a-9314-e19054e766ad" />
+  </projectItems>
+</package>

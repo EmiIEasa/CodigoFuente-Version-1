@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
+  <Module Name="WP-Contabilidad" List="113" Url="_catalogs/wp">
+    <File Path="WP-Contabilidad\WP-Contabilidad.webpart" Url="GrillaSegFact_WP-Contabilidad.webpart" Type="GhostableInLibrary" >
+      <Property Name="Group" Value="Seguimiento Facturas" />
+    </File>
+  </Module>
+</Elements>

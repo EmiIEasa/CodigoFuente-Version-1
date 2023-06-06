@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="38d6e3ac-1b7b-42eb-89ec-c71161198b53" solutionId="38d6e3ac-1b7b-42eb-89ec-c71161198b53" resetWebServer="false" sharePointProductVersion="15.0" name="BloquesApp" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="5fdc2e69-459c-4d1f-94c8-df014824d9c2" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="17add6fd-c677-4179-8596-0fff1f9fd8c5" />
+  </projectItems>
+</package>

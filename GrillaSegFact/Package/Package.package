@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="fb61a2b3-7e64-436a-aa46-af8277ae2377" solutionId="fb61a2b3-7e64-436a-aa46-af8277ae2377" resetWebServer="false" sharePointProductVersion="15.0" name="GrillaSegFact" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="2fe18860-b85f-4155-ab2f-e0b41868bf83" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="91f24695-e818-48f0-8d73-53ad747705ac" />
+  </projectItems>
+</package>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="26f2f073-3765-4125-ac9a-e6305fa04923" solutionId="26f2f073-3765-4125-ac9a-e6305fa04923" resetWebServer="false" sharePointProductVersion="15.0" name="DatosPersonal" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <projectItems>
+    <projectItemReference itemId="b346a0aa-da54-40cd-b1bf-6bb91191efe4" />
+    <projectItemReference itemId="ea395faf-096a-4aa1-8d6f-d49615c38c1e" />
+  </projectItems>
+</package>

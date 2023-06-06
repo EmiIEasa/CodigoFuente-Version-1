@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6447D15-2703-4BB4-82F5-4C24B4725A9F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GrillaAltaProvisoria</RootNamespace>
+    <AssemblyName>GrillaAltaProvisoria</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>19.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SandboxedSolution>False</SandboxedSolution>
+    <ProjectMode>SharePointCustomization</ProjectMode>
+    <MinimumOfficeToolsVersion>14.1</MinimumOfficeToolsVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>C:\CodigoFuente\Backup\GrillaAltaProvisoria\</UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuscadorRubros\BuscadorRubros.cs" />
+    <Compile Include="BuscadorRubros\BuscadorRubrosUserControl.ascx.cs">
+      <DependentUpon>BuscadorRubrosUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BuscadorRubros\BuscadorRubrosUserControl.ascx.designer.cs">
+      <DependentUpon>BuscadorRubrosUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Compras.cs" />
+    <Compile Include="Compras\ComprasUserControl.ascx.cs">
+      <DependentUpon>ComprasUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Compras\ComprasUserControl.ascx.designer.cs">
+      <DependentUpon>ComprasUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreadoPorMi\CreadoPorMi.cs" />
+    <Compile Include="CreadoPorMi\CreadoPorMiUserControl.ascx.cs">
+      <DependentUpon>CreadoPorMiUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreadoPorMi\CreadoPorMiUserControl.ascx.designer.cs">
+      <DependentUpon>CreadoPorMiUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuscadorRubros\BuscadorRubros.webpart" />
+    <None Include="BuscadorRubros\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{1de37e19-a240-4af8-aa92-210276518933}</SharePointProjectItemId>
+    </None>
+    <None Include="Compras\Compras.webpart" />
+    <None Include="Compras\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{ccd3f3dc-80cd-4102-8b44-281a2fa66adc}</SharePointProjectItemId>
+    </None>
+    <None Include="CreadoPorMi\CreadoPorMi.webpart" />
+    <None Include="CreadoPorMi\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{5b9555e3-bcf7-4426-a927-180b75d9ae0b}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\Feature1\Feature1.feature">
+      <FeatureId>{6f904ac0-0826-463b-b919-94d964df91fc}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{9893a220-84bb-49a3-892c-1003cce0b620}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{a6776ec2-bb84-4f81-8453-571fa36ed0bc}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="BuscadorRubros\BuscadorRubrosUserControl.ascx" />
+    <Content Include="BuscadorRubros\Elements.xml" />
+    <Content Include="Compras\ComprasUserControl.ascx" />
+    <Content Include="Compras\Elements.xml" />
+    <Content Include="CreadoPorMi\CreadoPorMiUserControl.ascx" />
+    <Content Include="CreadoPorMi\Elements.xml" />
+    <Content Include="Features\Feature1\Feature1.Template.xml">
+      <DependentUpon>Feature1.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\GrillaAltaProvisoria\css\1-10-20-dataTables.bootstrap4.min.css" />
+    <Content Include="Layouts\GrillaAltaProvisoria\css\4-3-1-bootstrap.min.css" />
+    <Content Include="Layouts\GrillaAltaProvisoria\css\chosen-sprite.png" />
+    <Content Include="Layouts\GrillaAltaProvisoria\css\chosen.css" />
+    <Content Include="Layouts\GrillaAltaProvisoria\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\1-10-20-dataTables.bootstrap4.min.js" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\1-10-20-jquery.dataTables.min.js" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\1-14-7-popper.min.js" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\3-4-1-jquery.min.js" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\4-3-1-bootstrap.min.js" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\chosen.jquery.js" />
+    <Content Include="Layouts\GrillaAltaProvisoria\js\fontAwesome.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

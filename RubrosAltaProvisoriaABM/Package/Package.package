@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="e658b1c2-5725-4a0d-a46b-506a571b16d5" solutionId="e658b1c2-5725-4a0d-a46b-506a571b16d5" resetWebServer="false" sharePointProductVersion="15.0" name="RubrosAltaProvisoriaABM" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="70f597e2-6b25-468a-8996-55d1705d4fac" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="3b5e92b1-2005-4b03-b1b7-51535e7c972a" />
+  </projectItems>
+</package>

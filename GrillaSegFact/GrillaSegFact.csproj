@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC966F61-2BDB-48B2-B8BC-8BC014492607}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GrillaSegFact</RootNamespace>
+    <AssemblyName>GrillaSegFact</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>19.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SandboxedSolution>False</SandboxedSolution>
+    <ProjectMode>SharePointCustomization</ProjectMode>
+    <MinimumOfficeToolsVersion>14.1</MinimumOfficeToolsVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>C:\CodigoFuente\Backup\GrillaSegFact\</UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WP-Buscador\WP-Buscador.cs" />
+    <Compile Include="WP-Buscador\WP-BuscadorUserControl.ascx.cs">
+      <DependentUpon>WP-BuscadorUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WP-Buscador\WP-BuscadorUserControl.ascx.designer.cs">
+      <DependentUpon>WP-BuscadorUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WP-Contabilidad\WP-Contabilidad.cs" />
+    <Compile Include="WP-Contabilidad\WP-ContabilidadUserControl.ascx.cs">
+      <DependentUpon>WP-ContabilidadUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WP-Contabilidad\WP-ContabilidadUserControl.ascx.designer.cs">
+      <DependentUpon>WP-ContabilidadUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WP-Creado\WP-Creado.cs" />
+    <Compile Include="WP-Creado\WP-CreadoUserControl.ascx.cs">
+      <DependentUpon>WP-CreadoUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WP-Creado\WP-CreadoUserControl.ascx.designer.cs">
+      <DependentUpon>WP-CreadoUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WP-Tesoreria\WP-Tesoreria.cs" />
+    <Compile Include="WP-Tesoreria\WP-TesoreriaUserControl.ascx.cs">
+      <DependentUpon>WP-TesoreriaUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WP-Tesoreria\WP-TesoreriaUserControl.ascx.designer.cs">
+      <DependentUpon>WP-TesoreriaUserControl.ascx.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Features\Feature1\Feature1.feature">
+      <FeatureId>{2fe18860-b85f-4155-ab2f-e0b41868bf83}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{91f24695-e818-48f0-8d73-53ad747705ac}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{fb61a2b3-7e64-436a-aa46-af8277ae2377}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+    <None Include="WP-Buscador\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{14ad7bb2-b672-40f6-9d26-b817e6dd1269}</SharePointProjectItemId>
+    </None>
+    <None Include="WP-Buscador\WP-Buscador.webpart" />
+    <None Include="WP-Contabilidad\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{0d797e72-de6f-441c-8255-7669ee75ed13}</SharePointProjectItemId>
+    </None>
+    <None Include="WP-Contabilidad\WP-Contabilidad.webpart" />
+    <None Include="WP-Creado\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{b8e956d2-449e-4fc7-8c73-787d9ebb547a}</SharePointProjectItemId>
+    </None>
+    <None Include="WP-Creado\WP-Creado.webpart" />
+    <None Include="WP-Tesoreria\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{cc1a4cc2-087d-4115-ada3-0fc1ab1ac8c4}</SharePointProjectItemId>
+    </None>
+    <None Include="WP-Tesoreria\WP-Tesoreria.webpart" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Layouts\GrillaSegFact\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\Feature1\Feature1.Template.xml">
+      <DependentUpon>Feature1.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\GrillaSegFact\css\1-10-20-dataTables.bootstrap4.min.css" />
+    <Content Include="Layouts\GrillaSegFact\css\4-3-1-bootstrap.min.css" />
+    <Content Include="Layouts\GrillaSegFact\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Layouts\GrillaSegFact\js\1-10-20-dataTables.bootstrap4.min.js" />
+    <Content Include="Layouts\GrillaSegFact\js\1-10-20-jquery.dataTables.min.js" />
+    <Content Include="Layouts\GrillaSegFact\js\1-14-7-popper.min.js" />
+    <Content Include="Layouts\GrillaSegFact\js\3-4-1-jquery.min.js" />
+    <Content Include="Layouts\GrillaSegFact\js\4-3-1-bootstrap.min.js" />
+    <Content Include="Layouts\GrillaSegFact\js\fontAwesome.js" />
+    <Content Include="WP-Buscador\Elements.xml" />
+    <Content Include="WP-Buscador\WP-BuscadorUserControl.ascx" />
+    <Content Include="WP-Contabilidad\Elements.xml" />
+    <Content Include="WP-Contabilidad\WP-ContabilidadUserControl.ascx" />
+    <Content Include="WP-Creado\Elements.xml" />
+    <Content Include="WP-Creado\WP-CreadoUserControl.ascx" />
+    <Content Include="WP-Tesoreria\Elements.xml" />
+    <Content Include="WP-Tesoreria\WP-TesoreriaUserControl.ascx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

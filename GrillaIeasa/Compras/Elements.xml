@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
+  <Module Name="Compras" List="113" Url="_catalogs/wp">
+    <File Path="Compras\Compras.webpart" Url="GrillaIeasa_Compras.webpart" Type="GhostableInLibrary" >
+      <Property Name="Group" Value="IEASA" />
+    </File>
+  </Module>
+</Elements>

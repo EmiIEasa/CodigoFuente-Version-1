@@ -1,0 +1,46 @@
+#titleAreaBox, #sideNavBox{
+    display:none !important;
+}
+#contentBox {
+    margin-right: 20px;
+    margin-left: 20px !important;
+}
+.container-fluid, .container{
+
+font-family: Open Sans, sans serif;
+padding-bottom: 4px;
+padding-top: 15px;
+
+}
+.grillas {
+    width: 1000px !important;
+    background-color: #EEEEEE;
+}
+.banner{
+    background-color: #E72C48;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.tooltip-inner{
+    background: red;
+}
+table {
+    font-size: 11px;
+    font-family: Open Sans, sans-serif;
+}
+     
+.tab-content,.nav-link.active{
+    color: #000 !important;
+    background-color:#EEEEEE !important;
+}
+.nav-link {
+    height: 54px !important;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+	color: #000 !important;
+}
+       
+@font-face {
+   font-family: Ubuntu;
+   src: url(/_layouts/15/GrillaDatosPersonal/fuente/Ubuntu-Regular.ttf);
+}

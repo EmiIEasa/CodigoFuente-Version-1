@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="GrillaSegFact.WP_Creado.WP_Creado, $SharePoint.Project.AssemblyFullName$" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">GrillaSegFact - WP-Creado</property>
+        <property name="Description" type="string">Grilla-Creado</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

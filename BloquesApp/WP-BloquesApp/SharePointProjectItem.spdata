@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="WP-BloquesAppUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="WP-BloquesApp\" Type="ElementManifest" />
+    <ProjectItemFile Source="WP-BloquesApp.webpart" Target="WP-BloquesApp\" Type="ElementFile" />
+    <ProjectItemFile Source="WP-BloquesAppUserControl.ascx" Target="CONTROLTEMPLATES\BloquesApp\WP-BloquesApp\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="BloquesApp.WP_BloquesApp" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

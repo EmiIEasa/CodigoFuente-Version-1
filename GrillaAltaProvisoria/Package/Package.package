@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="a6776ec2-bb84-4f81-8453-571fa36ed0bc" solutionId="a6776ec2-bb84-4f81-8453-571fa36ed0bc" resetWebServer="false" sharePointProductVersion="15.0" name="GrillaAltaProvisoria" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="6f904ac0-0826-463b-b919-94d964df91fc" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="9893a220-84bb-49a3-892c-1003cce0b620" />
+  </projectItems>
+</package>

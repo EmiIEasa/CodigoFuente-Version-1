@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{929085E8-EF16-4252-B8F5-BDBF0F87B7BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GrillaIeasa</RootNamespace>
+    <AssemblyName>GrillaIeasa</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetOfficeVersion>19.0</TargetOfficeVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{C1CDDADD-2546-481F-9697-4EA41081F2FC};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SandboxedSolution>False</SandboxedSolution>
+    <ProjectMode>SharePointCustomization</ProjectMode>
+    <MinimumOfficeToolsVersion>14.1</MinimumOfficeToolsVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>C:\CodigoFuente\Backup\GrillaIeasa\</UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Client.ServerRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuscadorRubro\BuscadorRubro.cs" />
+    <Compile Include="BuscadorRubro\BuscadorRubroUserControl.ascx.cs">
+      <DependentUpon>BuscadorRubroUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BuscadorRubro\BuscadorRubroUserControl.ascx.designer.cs">
+      <DependentUpon>BuscadorRubroUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compras\Compras.cs" />
+    <Compile Include="Compras\ComprasUserControl.ascx.cs">
+      <DependentUpon>ComprasUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Compras\ComprasUserControl.ascx.designer.cs">
+      <DependentUpon>ComprasUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuscadorRubro\BuscadorRubro.webpart" />
+    <None Include="BuscadorRubro\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{7355dcb2-070b-4b20-b464-c2aae0912f5e}</SharePointProjectItemId>
+    </None>
+    <None Include="Compras\Compras.webpart" />
+    <None Include="Compras\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{10e0ae34-6d51-49ce-9a15-e8c149ba557b}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\Feature1\Feature1.feature">
+      <FeatureId>{4ae3e87f-ad58-4a46-b5a2-f262e8fe7e49}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{51f2169a-349f-4f14-8770-938b296d27ed}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{c973ce7f-39fd-4468-adcd-6e7d470c5faf}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Layouts\GrillaIeasa\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuscadorRubro\BuscadorRubroUserControl.ascx" />
+    <Content Include="BuscadorRubro\Elements.xml" />
+    <Content Include="Compras\ComprasUserControl.ascx" />
+    <Content Include="Compras\Elements.xml" />
+    <Content Include="Features\Feature1\Feature1.Template.xml">
+      <DependentUpon>Feature1.feature</DependentUpon>
+    </Content>
+    <Content Include="Layouts\GrillaIeasa\css\1-10-20-dataTables.bootstrap4.min.css" />
+    <Content Include="Layouts\GrillaIeasa\css\4-3-1-bootstrap.min.css" />
+    <Content Include="Layouts\GrillaIeasa\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Layouts\GrillaIeasa\js\1-10-20-dataTables.bootstrap4.min.js" />
+    <Content Include="Layouts\GrillaIeasa\js\1-10-20-jquery.dataTables.min.js" />
+    <Content Include="Layouts\GrillaIeasa\js\1-14-7-popper.min.js" />
+    <Content Include="Layouts\GrillaIeasa\js\3-4-1-jquery.min.js" />
+    <Content Include="Layouts\GrillaIeasa\js\4-3-1-bootstrap.min.js" />
+    <Content Include="Layouts\GrillaIeasa\js\fontAwesome.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

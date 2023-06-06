@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
+  <Module Name="WP-BloquesApp" List="113" Url="_catalogs/wp">
+    <File Path="WP-BloquesApp\WP-BloquesApp.webpart" Url="BloquesApp_WP-BloquesApp.webpart" Type="GhostableInLibrary" >
+      <Property Name="Group" Value="IEASA" />
+    </File>
+  </Module>
+</Elements>

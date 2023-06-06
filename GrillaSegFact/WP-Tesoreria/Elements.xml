@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/" >
+  <Module Name="WP-Tesoreria" List="113" Url="_catalogs/wp">
+    <File Path="WP-Tesoreria\WP-Tesoreria.webpart" Url="GrillaSegFact_WP-Tesoreria.webpart" Type="GhostableInLibrary" >
+      <Property Name="Group" Value="Seguimiento Facturas" />
+    </File>
+  </Module>
+</Elements>
