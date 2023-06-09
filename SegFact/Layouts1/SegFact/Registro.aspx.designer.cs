@@ -31,6 +31,33 @@ namespace SegFact.Layouts1.SegFact {
         protected global::System.Web.UI.WebControls.Literal LtPestañas;
         
         /// <summary>
+        /// divBTNContabilidad control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBTNContabilidad;
+        
+        /// <summary>
+        /// btnRecibido control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnRecibido;
+        
+        /// <summary>
+        /// btnContabilizar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnContabilizar;
+        
+        /// <summary>
         /// txtEstado control.
         /// </summary>
         /// <remarks>
@@ -110,24 +137,6 @@ namespace SegFact.Layouts1.SegFact {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNumOC;
-        
-        /// <summary>
-        /// txtCentroCosto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCentroCosto;
-        
-        /// <summary>
-        /// txtCertServ control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCertServ;
         
         /// <summary>
         /// fuCertServ control.
@@ -218,24 +227,6 @@ namespace SegFact.Layouts1.SegFact {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnIrTesoreria;
-        
-        /// <summary>
-        /// btnRecibido control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnRecibido;
-        
-        /// <summary>
-        /// btnContabilizar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnContabilizar;
         
         /// <summary>
         /// btnRechazar control.

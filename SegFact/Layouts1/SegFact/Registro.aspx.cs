@@ -74,6 +74,10 @@ namespace SegFact.Layouts1.SegFact
         {
             if (Request.QueryString["ID"] != null)
             {
+                if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("CONTABILIDAD")))
+                {
+                    divBTNContabilidad.Visible = true;
+                }
                 SPListItem SegFact = SPContext.Current.Web.Lists["SegFact"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
                 CargarDatos(SegFact);
                 CargarDatosHist(SegFact.ID);
@@ -149,8 +153,8 @@ namespace SegFact.Layouts1.SegFact
                 cboOC.SelectedValue = (Registro["OC"] != null && !string.IsNullOrEmpty(Registro["OC"].ToString()) ? Registro["OC"].ToString() : String.Empty);
             }
             txtNumOC.Text = (Registro["NumOC"] != null && !string.IsNullOrEmpty(Registro["NumOC"].ToString()) ? Registro["NumOC"].ToString() : String.Empty);
-            txtCertServ.Text = (Registro["CertServ"] != null && !string.IsNullOrEmpty(Registro["CertServ"].ToString()) ? Registro["CertServ"].ToString() : String.Empty);
-            txtCentroCosto.Text = (Registro["CentroCosto"] != null && !string.IsNullOrEmpty(Registro["CentroCosto"].ToString()) ? Registro["CentroCosto"].ToString() : String.Empty);
+         //   txtCertServ.Text = (Registro["CertServ"] != null && !string.IsNullOrEmpty(Registro["CertServ"].ToString()) ? Registro["CertServ"].ToString() : String.Empty);
+         //   txtCentroCosto.Text = (Registro["CentroCosto"] != null && !string.IsNullOrEmpty(Registro["CentroCosto"].ToString()) ? Registro["CentroCosto"].ToString() : String.Empty);
             txtMonto.Text = (Registro["Monto"] != null && !string.IsNullOrEmpty(Registro["Monto"].ToString()) ? Registro["Monto"].ToString() : String.Empty);
             if (Registro["Sociedad"] != null && !string.IsNullOrEmpty(Registro["Sociedad"].ToString()))
             {
@@ -177,8 +181,8 @@ namespace SegFact.Layouts1.SegFact
             txtNumOC.ReadOnly = true;
             txtNroFact.ReadOnly = true;
             cboOC.Enabled = false;
-            txtCertServ.ReadOnly = true;
-            txtCentroCosto.ReadOnly = true;
+           // txtCertServ.ReadOnly = true;
+         //   txtCentroCosto.ReadOnly = true;
             txtMonto.ReadOnly = true;
             cboSociedad.Enabled = false;
             txtEmail.ReadOnly = true;
@@ -204,7 +208,7 @@ namespace SegFact.Layouts1.SegFact
             string Estado = Registro["Estado"].ToString();
             switch (Estado)
             {
-                case "CONTABILIDAD":
+                case "PENDIENTE DE RECEPCIÓN":
                     if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("CONTABILIDAD")))
                     {
                         btnIrTesoreria.Visible = false;
@@ -278,8 +282,8 @@ namespace SegFact.Layouts1.SegFact
                         txtNumOC.ReadOnly = false;
                         txtNroFact.ReadOnly = false;
                         cboOC.Enabled = true;
-                        txtCertServ.ReadOnly = false;
-                        txtCentroCosto.ReadOnly = false;
+                     //   txtCertServ.ReadOnly = false;
+                     //   txtCentroCosto.ReadOnly = false;
                         txtMonto.ReadOnly = false;
                         cboSociedad.Enabled = true;
                         txtEmail.ReadOnly = false;
@@ -390,7 +394,7 @@ namespace SegFact.Layouts1.SegFact
             {
                 Item["IdFormRelacionado"] = iIdFormulario;
                 Item["Evento"] = "El usuario " + txtRazonSocial.Text + " ha generado un nuevo formulario";
-                Item["Estado"] = "CONTABILIDAD";
+                Item["Estado"] = "PENDIENTE DE RECEPCIÓN";
                 Item.Update();
             }
         }
@@ -399,7 +403,7 @@ namespace SegFact.Layouts1.SegFact
         {
             
             //Datos Generales
-            Registro["Estado"] = "CONTABILIDAD";
+            Registro["Estado"] = "PENDIENTE DE RECEPCIÓN";
             Registro["RazonSocial"] = (txtRazonSocial.Text != null && !string.IsNullOrEmpty(txtRazonSocial.Text) ? txtRazonSocial.Text : String.Empty);
             Registro["CUIT"] = (txtCuit.Text != null && !string.IsNullOrEmpty(txtCuit.Text) ? txtCuit.Text : String.Empty);
             Registro["NumFact"] = (txtNroFact.Text != null && !string.IsNullOrEmpty(txtNroFact.Text) ? txtNroFact.Text : String.Empty);
@@ -409,8 +413,8 @@ namespace SegFact.Layouts1.SegFact
             }
             Registro["OC"] = (cboOC.SelectedItem.Text != null && !string.IsNullOrEmpty(cboOC.SelectedItem.Text) ? cboOC.SelectedItem.Text : String.Empty);
             Registro["NumOC"] = (txtNumOC.Text != null && !string.IsNullOrEmpty(txtNumOC.Text) ? txtNumOC.Text : String.Empty);
-            Registro["CertServ"] = (txtCertServ.Text != null && !string.IsNullOrEmpty(txtCertServ.Text) ? txtCertServ.Text : String.Empty);
-            Registro["CentroCosto"] = (txtCentroCosto.Text != null && !string.IsNullOrEmpty(txtCentroCosto.Text) ? txtCentroCosto.Text : String.Empty);
+         //   Registro["CertServ"] = (txtCertServ.Text != null && !string.IsNullOrEmpty(txtCertServ.Text) ? txtCertServ.Text : String.Empty);
+     //       Registro["CentroCosto"] = (txtCentroCosto.Text != null && !string.IsNullOrEmpty(txtCentroCosto.Text) ? txtCentroCosto.Text : String.Empty);
             Registro["Monto"] = (txtMonto.Text != null && !string.IsNullOrEmpty(txtMonto.Text) ? txtMonto.Text : String.Empty);
             Registro["Sociedad"] = (cboSociedad.SelectedItem.Text != null && !string.IsNullOrEmpty(cboSociedad.SelectedItem.Text) ? cboSociedad.SelectedItem.Text : String.Empty);
             Registro["Email"] = (txtEmail.Text != null && !string.IsNullOrEmpty(txtEmail.Text) ? txtEmail.Text : String.Empty);
@@ -488,7 +492,7 @@ namespace SegFact.Layouts1.SegFact
             SPListItem Item = SPContext.Current.Web.Lists["SegFactHistorial"].Items.Add();
             Item["IdFormRelacionado"] = iIdFormulario;
             Item["Evento"] = "El usuario " + txtRazonSocial.Text + " ha modificado el formulario";
-            Item["Estado"] = "CONTABILIDAD";
+            Item["Estado"] = "PENDIENTE DE RECEPCIÓN";
             Item.Update();
         }
 
@@ -763,7 +767,7 @@ namespace SegFact.Layouts1.SegFact
             else
             {
                 Item["Evento"] = "Tesorería ha pasado el formulario a Contabilidad";
-                Item["Estado"] = "CONTABILIDAD";
+                Item["Estado"] = "PENDIENTE DE RECEPCIÓN";
                 CorreoTesoreriaContabilidad(pasarContabilidad);
             }
             Item.Update();
@@ -778,7 +782,7 @@ namespace SegFact.Layouts1.SegFact
             }
             else
             {
-                Registro["Estado"] = "CONTABILIDAD";
+                Registro["Estado"] = "PENDIENTE DE RECEPCIÓN";
             }
             Registro["NumOrdenPago"] = (txtOrdenPago.Text != null && !string.IsNullOrEmpty(txtOrdenPago.Text) ? txtOrdenPago.Text : String.Empty);
             Registro["NumContabilizado"] = (txtNumContabilidad.Text != null && !string.IsNullOrEmpty(txtNumContabilidad.Text) ? txtNumContabilidad.Text : String.Empty);

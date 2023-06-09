@@ -25,7 +25,7 @@
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
     <div class="container contenedor rounded-lg" style="padding-bottom: 15px" id="formPrincipal">
         <div class="row text-center px-0 banner">
-            prueba server
+            
             <div class="col-3"><img width="150" class="img-fluid" src="../../../_layouts/15/SegFact/img/Logo.png" alt="Logo - IEASA"></div>
             <div class="col-7 text-center align-middle" style="color: white; font-family: Ubuntu; font-size: 42px; font-weight: 700;">Seguimiento de Facturas</div>
         </div>
@@ -47,6 +47,15 @@
           <!-- Tab panes -->
           <div class="tab-content  border border-light border-top-0">
             <div id="DatosGenerales" class="tab-pane active mx-1"><br>
+                <div class="row" id="divBTNContabilidad" runat="server" visible="false">
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="btnRecibido"  disabled="disabled" type="button" class="btn btn-success btn-block" runat="server" onserverclick="btnRecibido_ServerClick"><i class="fa fa-check"></i> Recibido</button>
+                    </div>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="btnContabilizar" disabled="disabled" type="button" class="btn btn-info btn-block" runat="server" onserverclick="btnContabilizar_ServerClick"><i class="fas fa-calculator"></i> Contabilizar</button>
+                    </div>
+                </div>
+                
                 <div class="row justify-content-end">
                     <div class="col-4 my-1">
                         <div class="form-inline">
@@ -123,7 +132,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-sm-6 my-1 pnlCOC" style="display: none">
+                    <div class="col-12 col-sm-5 my-1 pnlCOC" style="display: none">
                         <div class="form-inline">
                             <div class="input-group w-100">
                                 <div class="input-group-prepend">
@@ -133,7 +142,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 my-1 pnlCOC" style="display: none">
+                    <%--<div class="col-12 col-sm-6 my-1 pnlCOC" style="display: none">
                         <div class="form-inline">
                             <div class="input-group w-100">
                                 <div class="input-group-prepend">
@@ -142,14 +151,14 @@
                                 <asp:TextBox runat="server" ID="txtCentroCosto" CssClass="form-control txtCentroCosto" onkeypress="return soloNumeros(event)"></asp:TextBox>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-6 my-1 pnlCOC" style="display: none">
+                    </div>--%>
+                    <div class="col-12 col-sm-7 my-1 pnlCOC" style="display: none">
                         <div class="form-inline">
                             <div class="input-group w-100">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Certif. de Serv.</span>
                                 </div>
-                                <asp:TextBox runat="server" ID="txtCertServ" CssClass="form-control txtCertServ" onkeypress="return soloNumeros(event)"></asp:TextBox>
+                              <%--  <asp:TextBox runat="server" ID="txtCertServ" CssClass="form-control txtCertServ" onkeypress="return soloNumeros(event)"></asp:TextBox>--%>
                                 <asp:FileUpload runat="server" id="fuCertServ"  ClientIDMode="Static"  AllowMultiple="true"></asp:FileUpload><br />
                                 <%--<asp:Literal ID="ltCertServ" runat="server"></asp:Literal>--%>
                                 <%--<asp:CheckBoxList runat="server" ID="chkBoxList"></asp:CheckBoxList>
@@ -232,12 +241,12 @@
                     <div class="col-12 col-sm-3 my-1">
                         <button id="btnIrTesoreria"  disabled="disabled" type="button" class="btn btn-primary btn-block" runat="server" onserverclick="btnIrTesoreria_ServerClick"><i class="fas fa-arrow-right"></i> Pasar a Tesoreria</button>
                     </div>
-                    <div class="col-12 col-sm-3 my-1">
+                    <%--<div class="col-12 col-sm-3 my-1">
                         <button id="btnRecibido"  disabled="disabled" type="button" class="btn btn-success btn-block" runat="server" onserverclick="btnRecibido_ServerClick"><i class="fa fa-check"></i> Recibido</button>
                     </div>
                     <div class="col-12 col-sm-3 my-1">
                         <button id="btnContabilizar" disabled="disabled" type="button" class="btn btn-info btn-block" runat="server" onserverclick="btnContabilizar_ServerClick"><i class="fas fa-calculator"></i> Contabilizar</button>
-                    </div>
+                    </div>--%>
                     <div class="col-12 col-sm-3 my-1">
                         <button id="btnRechazar" disabled="disabled" type="button" class="btn btn-danger btn-block" runat="server"  onclick="if (!validaCampos()) return;" onserverclick="btnRechazar_ServerClick"><i class="fas fa-times-circle"></i> Rechazar</button>
                     </div>

@@ -8,10 +8,14 @@ namespace GrillaSegFact.WP_Tesoreria
 {
     public partial class WP_TesoreriaUserControl : UserControl
     {
+        public WP_Tesoreria WebPart { get; set; }
+        public string sLimiteVista = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
+                this.WebPart = this.Parent as WP_Tesoreria;
+                sLimiteVista = this.WebPart.PropiedadLimiteVista;
                 CargarTabla();
             }
         }
@@ -19,7 +23,7 @@ namespace GrillaSegFact.WP_Tesoreria
         private void CargarTabla()
         {
             SPQuery query = new SPQuery();
-            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>500</RowLimit></View>";
+            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista + "</RowLimit></View>";
             query.ViewXml = QuerySTR;
             SPListItemCollection ListaFact = SPContext.Current.Web.Lists["SegFact"].GetItems(query);
             foreach (SPListItem Facturas in ListaFact)

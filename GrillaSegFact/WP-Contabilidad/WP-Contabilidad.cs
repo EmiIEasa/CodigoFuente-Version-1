@@ -12,6 +12,26 @@ namespace GrillaSegFact.WP_Contabilidad
     [ToolboxItemAttribute(false)]
     public class WP_Contabilidad : WebPart
     {
+        const string const_PropiedadLimiteVista = "500";
+        private string _PropiedadLimiteVista = const_PropiedadLimiteVista;
+
+        [Category("Propiedades vista"),
+        Personalizable(PersonalizationScope.Shared),
+        WebBrowsable(true),
+        WebDisplayName("Limite de la vista"),
+        WebDescription("Ingrese un valor numérico entero"),
+        DefaultValue(const_PropiedadLimiteVista)]
+        public string PropiedadLimiteVista
+        {
+            get { return _PropiedadLimiteVista; }
+            set
+            {
+
+
+                _PropiedadLimiteVista = value;
+
+            }
+        }
         // Visual Studio might automatically update this path when you change the Visual Web Part project item.
         private const string _ascxPath = @"~/_CONTROLTEMPLATES/15/GrillaSegFact/WP-Contabilidad/WP-ContabilidadUserControl.ascx";
 
@@ -20,5 +40,7 @@ namespace GrillaSegFact.WP_Contabilidad
             Control control = Page.LoadControl(_ascxPath);
             Controls.Add(control);
         }
+       
+        
     }
 }

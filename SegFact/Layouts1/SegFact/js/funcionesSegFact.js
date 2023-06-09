@@ -51,8 +51,8 @@ function validaCampos() {
     var adjuntoFactura = $("#fuFactura").val();
     var cboOC = $(".cboOC").val();
     var numOC = $(".txtNumOC").val();
-    var centroCosto = $(".txtCentroCosto").val();
-    var certServ = $(".txtCertServ").val();
+  //  var centroCosto = $(".txtCentroCosto").val();
+  //  var certServ = $(".txtCertServ").val();
     var adjuntoCertServ = $("#fuCertServ").val();
     var monto = $(".txtMonto").val();
     var email = $(".txtEmail").val();
@@ -79,18 +79,18 @@ function validaCampos() {
             textoError += "<p'>Seleccione Orden de Compra</p>";
             retorna = false;
         } else if (cboOC == 'Con OC') {
-            if ($.isEmptyObject(numOC) == true || numOC == "") {
-                textoError += "<p>Ingrese Número Orden de Compra</p>";
-                retorna = false;
-            }
-            if ($.isEmptyObject(centroCosto) == true || centroCosto == "") {
-                textoError += "<p>Ingrese Centro de Costo</p>";
-                retorna = false;
-            }
-            if ($.isEmptyObject(certServ) == true || certServ == "") {
-                textoError += "<p>Ingrese Certificado de Servicio</p>";
-                retorna = false;
-            }
+          //  if ($.isEmptyObject(numOC) == true || numOC == "") {
+         //       textoError += "<p>Ingrese Número Orden de Compra</p>";
+         //       retorna = false;
+         //   }
+           // if ($.isEmptyObject(centroCosto) == true || centroCosto == "") {
+          //      textoError += "<p>Ingrese Centro de Costo</p>";
+         //       retorna = false;
+         //   }
+            //if ($.isEmptyObject(certServ) == true || certServ == "") {
+            //    textoError += "<p>Ingrese Certificado de Servicio</p>";
+            //    retorna = false;
+            //}
             if ($.isEmptyObject(adjuntoCertServ) == true || adjuntoCertServ == "") {
                 textoError += "<p>Debe adjuntar Certificado de Servicio</p>";
                 retorna = false;

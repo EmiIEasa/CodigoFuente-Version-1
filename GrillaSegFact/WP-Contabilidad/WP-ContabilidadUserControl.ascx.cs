@@ -5,15 +5,20 @@ using System.Web.UI.WebControls.WebParts;
 using Microsoft.SharePoint;
 
 namespace GrillaSegFact.WP_Contabilidad
-{
+{ 
     public partial class WP_ContabilidadUserControl : UserControl
     {
+        public WP_Contabilidad WebPart { get; set; }
+        public string sLimiteVista = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
+                this.WebPart = this.Parent as WP_Contabilidad;
+                sLimiteVista = this.WebPart.PropiedadLimiteVista;
                 CargarTabla();
                 txtHoraActualizacion.Text = DateTime.Now.ToString("hh:mm:ss tt");
+                
             }
         }
         protected void GetTime(object sender, EventArgs e)
@@ -23,7 +28,7 @@ namespace GrillaSegFact.WP_Contabilidad
             txtHoraActualizacion.Text = DateTime.Now.ToString("hh:mm:ss tt");
             SPQuery query = new SPQuery();
             //string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where></Query><RowLimit>500</RowLimit></View>";
-            string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>500</RowLimit></View>";
+            string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista + "</RowLimit></View>";
             query.ViewXml = QuerySTR;
             SPListItemCollection ListaFact = SPContext.Current.Web.Lists["SegFact"].GetItems(query);
             foreach (SPListItem Facturas in ListaFact)
@@ -47,7 +52,7 @@ namespace GrillaSegFact.WP_Contabilidad
                                              "</tr>";
             }
             SPQuery querySOC = new SPQuery();
-            string QuerySTRSOC = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>500</RowLimit></View>";
+            string QuerySTRSOC = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista +"</RowLimit></View>";
             //string QuerySTRSOC = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where></Query><RowLimit>500</RowLimit></View>";
             querySOC.ViewXml = QuerySTRSOC;
             SPListItemCollection ListaFactSOC = SPContext.Current.Web.Lists["SegFact"].GetItems(querySOC);
@@ -77,7 +82,7 @@ namespace GrillaSegFact.WP_Contabilidad
         private void CargarTabla()
         {
             SPQuery query = new SPQuery();
-            string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>500</RowLimit></View>";
+            string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista +"</RowLimit></View>";
             //string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where></Query><RowLimit>500</RowLimit></View>";
             query.ViewXml = QuerySTR;
             SPListItemCollection ListaFact = SPContext.Current.Web.Lists["SegFact"].GetItems(query);
@@ -102,7 +107,7 @@ namespace GrillaSegFact.WP_Contabilidad
                                              "</tr>";
             }
             SPQuery querySOC = new SPQuery();
-            string QuerySTRSOC = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>500</RowLimit></View>";
+            string QuerySTRSOC = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista+"</RowLimit></View>";
             //string QuerySTRSOC = "<View><Query><Where><And><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIZADO</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>CONTABILIDAD</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECIBIDO</Value></Eq></Or></Or></Or></And></Where></Query><RowLimit>500</RowLimit></View>";
             querySOC.ViewXml = QuerySTRSOC;
             SPListItemCollection ListaFactSOC = SPContext.Current.Web.Lists["SegFact"].GetItems(querySOC);

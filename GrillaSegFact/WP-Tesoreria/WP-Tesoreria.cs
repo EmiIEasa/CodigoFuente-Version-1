@@ -14,7 +14,26 @@ namespace GrillaSegFact.WP_Tesoreria
     {
         // Visual Studio might automatically update this path when you change the Visual Web Part project item.
         private const string _ascxPath = @"~/_CONTROLTEMPLATES/15/GrillaSegFact/WP-Tesoreria/WP-TesoreriaUserControl.ascx";
+        const string const_PropiedadLimiteVista = "500";
+        private string _PropiedadLimiteVista = const_PropiedadLimiteVista;
 
+        [Category("Propiedades vista"),
+        Personalizable(PersonalizationScope.Shared),
+        WebBrowsable(true),
+        WebDisplayName("Limite de la vista"),
+        WebDescription("Ingrese un valor numérico entero"),
+        DefaultValue(const_PropiedadLimiteVista)]
+        public string PropiedadLimiteVista
+        {
+            get { return _PropiedadLimiteVista; }
+            set
+            {
+
+
+                _PropiedadLimiteVista = value;
+
+            }
+        }
         protected override void CreateChildControls()
         {
             Control control = Page.LoadControl(_ascxPath);
