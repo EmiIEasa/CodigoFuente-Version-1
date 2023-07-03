@@ -16,78 +16,108 @@
 <script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaSegFact/js/1-10-20-dataTables.bootstrap4.min.js"></script>
 
 <script type="text/javascript" class="init">
-    
-		
-		var idioma_espanol = {
-		    "sProcessing": "Procesando...",
-		    "sLengthMenu": "Mostrar _MENU_ registros",
-		    "sZeroRecords": "No se encontraron resultados",
-		    "sEmptyTable": "Ningún dato disponible en esta tabla",
-		    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-		    "sInfoEmpty": "",
-		    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-		    "sInfoPostFix": "",
-		    "sSearch": "Buscar:",
-		    "sUrl": "",
-		    "sInfoThousands": ",",
-		    "sLoadingRecords": "Cargando...",
-		    "oPaginate": {
-		        "sFirst": "Primero",
-		        "sLast": "Último",
-		        "sNext": "Siguiente",
-		        "sPrevious": "Anterior"
-		    },
-		    "oAria": {
-		        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		    },
-		    "buttons": {
-		        "copy": "Copiar",
-		        "colvis": "Visibilidad"
-		    }
+	var idioma_espanol = {
+		"sProcessing": "Procesando...",
+		"sLengthMenu": "Mostrar _MENU_ registros",
+		"sZeroRecords": "No se encontraron resultados",
+		"sEmptyTable": "Ningún dato disponible en esta tabla",
+		"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+		"sInfoEmpty": "",
+		"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix": "",
+		"sSearch": "Buscar:",
+		"sUrl": "",
+		"sInfoThousands": ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+		    "sFirst": "Primero",
+		    "sLast": "Último",
+		    "sNext": "Siguiente",
+		    "sPrevious": "Anterior"
+		},
+		"oAria": {
+		    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+		    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		},
+		"buttons": {
+		    "copy": "Copiar",
+		    "colvis": "Visibilidad"
 		}
-		function abreFormReq() {
-		    //location.replace('../../_layouts/15/ReclamosPPT/registro.aspx');
-		    window.open("../../_layouts/15/SegFact/registro.aspx", "_self")
-		}
-		$(function () {
-		    bindDataTable();
-		    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(bindDataTable);
-		});
-		function bindDataTable() {
-		    $('.table').DataTable(
-			{
-			    "language": idioma_espanol,
-			    "lengthMenu": [[5, 10, 15, 20, 25, 50, -1], [5, 10, 15, 20, 25, 50, "Todos"]],
-			    "iDisplayLength": 15,
-			    "order": [[0, "desc"]],
-			    "orderCellsTop": true,
-			    "initComplete": function () {
-			        this.api()
-                      .columns([1])
-                      .every(function () {
-                          var column = this;
-                          var select = $(
-                            '<select class="form-control" style="font-size: 11px !important; padding: .375rem .175rem !important;"><option value=""></option></select>'
-                          )
-                            // .appendTo( $(column.footer()).empty() )
-                            .appendTo($(column.header()))
-                            .on("change", function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val ? "^" + val + "$" : "", true, false).draw();
-                            });
+	}
+	function abreFormReq() {
+		//location.replace('../../_layouts/15/ReclamosPPT/registro.aspx');
+		window.open("../../_layouts/15/SegFact/registro.aspx", "_self")
+	}
+	$(function () {
+		bindDataTable();
+		Sys.WebForms.PageRequestManager.getInstance().add_endRequest(bindDataTable);
+	});
+	function bindDataTable() {
+		$('.table').DataTable(
+		{
+			"language": idioma_espanol,
+			"lengthMenu": [[5, 10, 15, 20, 25, 50, -1], [5, 10, 15, 20, 25, 50, "Todos"]],
+			"iDisplayLength": 15,
+			"order": [[0, "desc"]],
+			"orderCellsTop": true,
+			"initComplete": function () {
+			    this.api()
+                    .columns([1])
+                    .every(function () {
+                        var column = this;
+                        var select = $(
+                        '<select class="form-control" style="font-size: 11px !important; padding: .375rem .175rem !important;"><option value=""></option></select>'
+                        )
+                        // .appendTo( $(column.footer()).empty() )
+                        .appendTo($(column.header()))
+                        .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                            column.search(val ? "^" + val + "$" : "", true, false).draw();
+                        });
 
-                          column
-                            .data()
-                            .unique()
-                            .sort()
-                            .each(function (d, j) {
-                                select.append('<option value="' + d + '">' + d + "</option>");
-                            });
-                      });
-			    }
-			});
-		}
+                        column
+                        .data()
+                        .unique()
+                        .sort()
+                        .each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + "</option>");
+                        });
+                    });
+			}
+		});
+    }
+    function validaCampos() {
+        $("#alertaBigData").css('display', 'none');
+        var textoError = '';
+        var retorna = true;
+        var cboEstado = $(".cboEstado").val();
+        if (cboEstado == '-') {
+            $("#alertaBigData").css('display', 'block');
+            $("#alertaBigData").html("<p>Seleccione Estado nuevo</p>");
+        } 
+        else {
+            $("#alertaBigData").css('display', 'none');
+            $("#lblComentarioRechazo").css('display', 'none');
+            $(".txtRechazo").html("");
+            $(".modalG").css('display', 'block');
+        }
+    }
+    function validaComentarioRechazo() {
+        var txtRechazo = $(".txtRechazo").val();
+        var cboEstado = $(".cboEstado").val();
+        if (cboEstado == 'RECHAZADO' && txtRechazo == '') {
+            $("#lblComentarioRechazo").css('display', 'block');
+            $("#lblComentarioRechazo").html("Complete motivo de rechazo");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function cerrarModal() {
+        $(".modalG").css('display', 'none');
+    }
+    
 </script>
 <style>
        #pageContentTitle{
@@ -120,9 +150,65 @@
 
 
 <div class="container-fluid" style="margin-top: 25px;">
-    <asp:UpdatePanel ID="UpdatePanel1" updatemode="Conditional" runat="server">
-        <ContentTemplate>
-            <asp:Timer ID="Timer1" runat="server" OnTick="GetTime" Interval="60000"></asp:Timer>
+    <asp:UpdatePanel ID="UpdatePanel1" updatemode="Always" runat="server">
+    <ContentTemplate>
+        <asp:HiddenField ID="HiddenField1" runat="server"  />
+     <%--   <asp:TextBox ID="TextBox1"  runat="server"></asp:TextBox>
+        <asp:Label ID="Label1" runat="server"   Text="Label"></asp:Label>
+        <asp:Label ID="Label2" runat="server"   Text="Label"></asp:Label>--%>
+        <div class="row">
+            <div class="col-4 my-1">
+                <div class="form-inline">
+                    <div class="input-group w-100">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Reemplazar por</span>
+                        </div>
+                        <asp:DropDownList CssClass="form-control cboEstado" runat="server" ID="cboEstado">
+                            <asp:ListItem Text="-" Value="-"></asp:ListItem>
+                            <asp:ListItem Text="CONTABILIZADO" Value="CONTABILIZADO"></asp:ListItem>
+                            <asp:ListItem Text="PENDIENTE DE RECEPCIÓN" Value="PENDIENTE DE RECEPCIÓN"></asp:ListItem>
+                            <asp:ListItem Text="RECIBIDO" Value="RECIBIDO"></asp:ListItem>
+                            <asp:ListItem Text="RECHAZADO" Value="RECHAZADO"></asp:ListItem>
+                            <%--<asp:ListItem Text="TESORERIA" Value="TESORERIA"></asp:ListItem>--%>
+                            <%--<asp:ListItem Text="FINALIZADO" Value="FINALIZADO"></asp:ListItem>--%>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-sm-2">
+                <%--<asp:Button  ID="btnCambiarEstado" CssClass="btn btn-primary verDiasSeleccionados" OnClick="btnCambiarEstado_ServerClick" runat="server" Text="Cambiar estado" />--%>
+                <button id="btnCambiarEstado" onclick="validaCampos()" type="button" class="btn btn-primary verDiasSeleccionados"><i class="fas fa-download" aria-hidden="true"></i>  Cambiar estado</button>
+            </div>
+            <div class="alert alert-warning" id="alertaBigData" style="display:none;margin-top: 5px;"></div>
+            <div class="modal modalG" id="myModal">
+                 <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:url('../../../_layouts/15/GrillaSegFact/img/Logo.png'); background-position-y: center; background-size:25%; background-color:#0a4e9a; background-position-x: 20px; background-repeat: no-repeat;">
+                            <h4 class="modal-title" style="color: white; margin-top: 0px !important; margin-bottom: 0px !important; margin-left: 190px; font-size: 19px; font-weight: bold;">Seguimiento de Facturas</h4>
+                        </div>
+                         <div class="modal-body" id="guardarG" style="padding: 13px !important;">
+                             <h6><label id="lblConfirma">¿Confirma que desea modificar los registros seleccionados?</label></h6>
+                             
+                             <asp:TextBox runat="server" ID="txtRechazo" CssClass="form-control txtRechazo" TextMode="MultiLine"></asp:TextBox>
+                             
+                            <h6><div class="alert alert-warning" id="lblComentarioRechazo" style="display:none;margin-top: 5px;"></div>
+                                <h6></h6>
+                                <%--<asp:Label runat="server" Text="¿Confirma que desea modificar los registros seleccionados?"></asp:Label>--%>
+                                <h6></h6>
+                                <h6></h6>
+                                <h6></h6>
+                             </h6>
+
+                        </div>
+                        <div class="modal-footer modalBtnT btn-group btn-block" style="padding: 0.5rem !important">
+                            <button type="button" class="btn btn-secondary " id="modalCerrar" onclick="cerrarModal()">Cancelar</button>
+                            <button type="button" class="btn btn-primary " id="modalGuardar" onclick="if (!validaComentarioRechazo()) return;" onserverclick="BtnCambiarEstado_ServerClick" runat="server">Confirmar</button>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <asp:Timer ID="Timer1" runat="server" OnTick="GetTime" Interval="60000"></asp:Timer>
             <div class="row">
                 <div class="col-4">
                     <div class="input-group">
@@ -196,6 +282,31 @@
                     </table>
                 </div>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>   
+       </ContentTemplate>
+      
+    </asp:UpdatePanel>  
+    <script>
+    $(document).ready(function() {
+        $('input[type=checkbox]').on('change', function (e) {
+            var diasSeleccionados = new Array();
+                $('input[type=checkbox]:checked').each(function () {
+                             diasSeleccionados.push($(this).val());
+                         });
+            <%--document.getElementById("<%=TextBox1.ClientID%>").value = diasSeleccionados;--%>
+            document.getElementById("<%=HiddenField1.ClientID%>").value = diasSeleccionados;
+        });
+    });
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    prm.add_endRequest(function() {
+        $('input[type=checkbox]').on('change', function (e) {
+            var diasSeleccionados = new Array();
+            $('input[type=checkbox]:checked').each(function () {
+                diasSeleccionados.push($(this).val());
+            });
+            <%--document.getElementById("<%=TextBox1.ClientID%>").value = diasSeleccionados;--%>
+            document.getElementById("<%=HiddenField1.ClientID%>").value = diasSeleccionados;
+        });
+    });
+    </script>
+    
 </div>

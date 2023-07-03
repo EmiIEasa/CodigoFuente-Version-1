@@ -1307,7 +1307,7 @@ namespace Ieasa.Layouts.Ieasa
                             MembershipUser userMembership =    Utils.BaseMembershipProvider().GetUser((RegistroExistente["Cuit"] != null ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString())), false);
                             userMembership.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Utils.BaseMembershipProvider().UpdateUser(userMembership);
-                            user.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
+                           // user.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Usuario = ((RegistroExistente["Cuit"]!= null) ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString()));
                             Usuario.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Usuario.Update();
@@ -1385,6 +1385,7 @@ namespace Ieasa.Layouts.Ieasa
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeModificado(2);", true);
         }
         private void EnviarCorreoRechazado(SPListItem RegistroExistente)
+            .replace(''
         {
             string sCorreoCC = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
                                     "<tr>" +

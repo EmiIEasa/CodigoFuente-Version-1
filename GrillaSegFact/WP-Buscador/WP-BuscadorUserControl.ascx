@@ -59,7 +59,37 @@
 		    //location.replace('../../_layouts/15/ReclamosPPT/registro.aspx');
 		    window.open("../../_layouts/15/SegFact/registro.aspx", "_self")
 		}
-		
+		function validaCampos() {
+        $("#alertaBigData").css('display', 'none');
+        var textoError = '';
+        var retorna = true;
+        var cboEstado = $(".cboEstado").val();
+        if (cboEstado == '-') {
+            $("#alertaBigData").css('display', 'block');
+            $("#alertaBigData").html("<p>Seleccione Estado nuevo</p>");
+        } 
+        else {
+            $("#alertaBigData").css('display', 'none');
+            $("#lblComentarioRechazo").css('display', 'none');
+            $(".txtRechazo").html("");
+            $(".modalG").css('display', 'block');
+        }
+    }
+    function validaComentarioRechazo() {
+        var txtRechazo = $(".txtRechazo").val();
+        var cboEstado = $(".cboEstado").val();
+        if (cboEstado == 'RECHAZADO' && txtRechazo == '') {
+            $("#lblComentarioRechazo").css('display', 'block');
+            $("#lblComentarioRechazo").html("Complete motivo de rechazo");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function cerrarModal() {
+        $(".modalG").css('display', 'none');
+    }
 </script>
 <style>
     #pageContentTitle{
@@ -145,6 +175,57 @@
     </div>
        <br />
         <asp:Panel ID="pnlTabla" runat="server" Visible="false" CssClass="pnlTabla">
+            <h6><label id="lbl1" runat="server"></label></h6>
+            <asp:HiddenField ID="HiddenField1" runat="server"  />
+            <div class="row">
+            <div class="col-4 my-1">
+                <div class="form-inline">
+                    <div class="input-group w-100">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Reemplazar por</span>
+                        </div>
+                        <asp:DropDownList CssClass="form-control cboEstado" runat="server" ID="cboEstado">
+                            <asp:ListItem Text="-" Value="-"></asp:ListItem>
+                            <asp:ListItem Text="CONTABILIZADO" Value="CONTABILIZADO"></asp:ListItem>
+                            <asp:ListItem Text="PENDIENTE DE RECEPCIÓN" Value="PENDIENTE DE RECEPCIÓN"></asp:ListItem>
+                            <asp:ListItem Text="RECIBIDO" Value="RECIBIDO"></asp:ListItem>
+                            <asp:ListItem Text="RECHAZADO" Value="RECHAZADO"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 col-sm-3">
+                <button id="btnCambiarEstado" onclick="validaCampos()" type="button" class="btn btn-primary verDiasSeleccionados"><i class="fas fa-download" aria-hidden="true"></i>  Cambiar estado</button>
+            </div>
+            <div class="alert alert-warning" id="alertaBigData" style="display:none;margin-top: 5px;"></div>
+            <div class="modal modalG" id="myModal">
+                 <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:url('../../../_layouts/15/GrillaSegFact/img/Logo.png'); background-position-y: center; background-size:25%; background-color:#0a4e9a; background-position-x: 20px; background-repeat: no-repeat;">
+                            <h4 class="modal-title" style="color: white; margin-top: 0px !important; margin-bottom: 0px !important; margin-left: 190px; font-size: 19px; font-weight: bold;">Seguimiento de Facturas</h4>
+                        </div>
+                         <div class="modal-body" id="guardarG" style="padding: 13px !important;">
+                             <h6><label id="lblConfirma">¿Confirma que desea modificar los registros seleccionados?</label></h6>
+                             
+                             <asp:TextBox runat="server" ID="txtRechazo" CssClass="form-control txtRechazo" TextMode="MultiLine"></asp:TextBox>
+                             
+                            <h6><div class="alert alert-warning" id="lblComentarioRechazo" style="display:none;margin-top: 5px;"></div>
+                                <h6></h6>
+                                <%--<asp:Label runat="server" Text="¿Confirma que desea modificar los registros seleccionados?"></asp:Label>--%>
+                                <h6></h6>
+                                <h6></h6>
+                                <h6></h6>
+                             </h6>
+
+                        </div>
+                        <div class="modal-footer modalBtnT btn-group btn-block" style="padding: 0.5rem !important">
+                            <button type="button" class="btn btn-secondary " id="modalCerrar" onclick="cerrarModal()">Cancelar</button>
+                            <button type="button" class="btn btn-primary " id="modalGuardar" onclick="if (!validaComentarioRechazo()) return;" onserverclick="BtnCambiarEstado_ServerClick" runat="server">Confirmar</button>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
             <table id="example" class="table table-striped table-bordered table-hover" style="width:100%; margin-top: 25px;">
 				<thead>
 					<tr>
@@ -161,4 +242,16 @@
 			</table>
         </asp:Panel>
     </ContentTemplate></asp:UpdatePanel>
+    <script>
+    $(document).ready(function() {
+        $('input[type=checkbox]').on('change', function (e) {
+            var diasSeleccionados = new Array();
+                $('input[type=checkbox]:checked').each(function () {
+                             diasSeleccionados.push($(this).val());
+                         });
+            document.getElementById("<%=HiddenField1.ClientID%>").value = diasSeleccionados;
+        });
+    });
+   
+    </script>
 </div>

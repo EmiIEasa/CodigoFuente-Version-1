@@ -23,7 +23,7 @@ namespace GrillaSegFact.WP_Tesoreria
         private void CargarTabla()
         {
             SPQuery query = new SPQuery();
-            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista + "</RowLimit></View>";
+            string QuerySTR = "<View><Query><Where><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>TESORERIA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>RECHAZADO</Value></Eq></Or></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>" + sLimiteVista + "</RowLimit></View>";
             query.ViewXml = QuerySTR;
             SPListItemCollection ListaFact = SPContext.Current.Web.Lists["SegFact"].GetItems(query);
             foreach (SPListItem Facturas in ListaFact)
@@ -58,7 +58,10 @@ namespace GrillaSegFact.WP_Tesoreria
                     sColor = "#AFEEEE";
                     break;
                 case "CONTABILIDAD":
-                    sColor = "#FFDEAD";
+                    sColor = "#FFFF00";
+                    break;
+                case "PENDIENTE DE RECEPCIÓN":
+                    sColor = "#FFFF00";
                     break;
                 case "CONTABILIZADO":
                     sColor = "#F4A460";

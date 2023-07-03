@@ -270,29 +270,29 @@ namespace SegFact.Layouts1.SegFact
                         txtObsContabilidad.ReadOnly = false;
                     }
                     break;
-                case "RECHAZADO":
-                    SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, Registro[SPBuiltInFieldId.Author].ToString());
-                    SPUser Creado = Usuario.User;
-                    if (SPContext.Current.Web.CurrentUser.ID.ToString().ToUpper() == Creado.ID.ToString().ToUpper())
-                    {
-                        btnRecibido.Visible = false;
-                        btnRechazar.Visible = false;
-                        btnIrTesoreria.Visible = false;
-                        btnContabilizar.Visible = false;
-                        txtNumOC.ReadOnly = false;
-                        txtNroFact.ReadOnly = false;
-                        cboOC.Enabled = true;
-                     //   txtCertServ.ReadOnly = false;
-                     //   txtCentroCosto.ReadOnly = false;
-                        txtMonto.ReadOnly = false;
-                        cboSociedad.Enabled = true;
-                        txtEmail.ReadOnly = false;
-                        fuFactura.Visible = true;
-                        fuCertServ.Visible = true;
-                        txtObservaciones.ReadOnly = false;
-                        btnGuardar.Visible = true;
-                    }
-                    break;
+                //case "RECHAZADO":
+                //    SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, Registro[SPBuiltInFieldId.Author].ToString());
+                //    SPUser Creado = Usuario.User;
+                //    if (SPContext.Current.Web.CurrentUser.ID.ToString().ToUpper() == Creado.ID.ToString().ToUpper())
+                //    {
+                //        btnRecibido.Visible = false;
+                //        btnRechazar.Visible = false;
+                //        btnIrTesoreria.Visible = false;
+                //        btnContabilizar.Visible = false;
+                //        txtNumOC.ReadOnly = false;
+                //        txtNroFact.ReadOnly = false;
+                //        cboOC.Enabled = true;
+                //     //   txtCertServ.ReadOnly = false;
+                //     //   txtCentroCosto.ReadOnly = false;
+                //        txtMonto.ReadOnly = false;
+                //        cboSociedad.Enabled = true;
+                //        txtEmail.ReadOnly = false;
+                //        fuFactura.Visible = true;
+                //        fuCertServ.Visible = true;
+                //        txtObservaciones.ReadOnly = false;
+                //        btnGuardar.Visible = true;
+                //    }
+                //    break;
             }
         }
         private void CargarAdjuntos(SPListItem AltaProveedor)
@@ -507,8 +507,8 @@ namespace SegFact.Layouts1.SegFact
                                             "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>";
                                                 if (Registro["OC"].ToString() == "Con OC")
                                                 {
-                                                    sCorreo += "Se actualizó la información: Factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ", asociada a la OC " + Registro["NumOC"].ToString() + " y centro de costo " + Registro["CentroCosto"].ToString() + ".";
-                                                }
+                sCorreo += "Se actualizó la información: Factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ", asociada a la OC " + Registro["NumOC"].ToString() + " ."; //y centro de costo " + Registro["CentroCosto"].ToString() + 
+            }
                                                 else
                                                 {
                                                     sCorreo += "Se actualizó la información: Factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ".";
@@ -563,8 +563,8 @@ namespace SegFact.Layouts1.SegFact
                                         "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>";
                                         if (Registro["OC"].ToString() == "Con OC")
                                         {
-                                            sCorreo += "Se ingresó una nueva factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ", asociada a la OC " + Registro["NumOC"].ToString() + " y centro de costo " + Registro["CentroCosto"].ToString() + ".";
-                                        }
+                                            sCorreo += "Se ingresó una nueva factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ", asociada a la OC " + Registro["NumOC"].ToString() + "."; //+ " y centro de costo " + Registro["CentroCosto"].ToString() + ".";
+            }
                                         else
                                         {
                                             sCorreo += "Se ingresó una nueva factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ".";

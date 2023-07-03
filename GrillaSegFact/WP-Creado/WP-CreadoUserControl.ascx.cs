@@ -8,10 +8,14 @@ namespace GrillaSegFact.WP_Creado
 {
     public partial class WP_CreadoUserControl : UserControl
     {
+        public WP_Creado WebPart { get; set; }
+        public string sLimiteVista = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
             {
+                this.WebPart = this.Parent as WP_Creado;
+                sLimiteVista = this.WebPart.PropiedadLimiteVista;
                 CargarTabla();
             }
         }
@@ -19,7 +23,7 @@ namespace GrillaSegFact.WP_Creado
         private void CargarTabla()
         {
             SPQuery query = new SPQuery();
-            string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='Author' /><Value Type='User'>" + SPContext.Current.Web.CurrentUser.Name.ToString() + "</Value></Eq><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>250</RowLimit></View>";
+            string QuerySTR = "<View><Query><Where><And><Eq><FieldRef Name='Author' /><Value Type='User'>" + SPContext.Current.Web.CurrentUser.Name.ToString() + "</Value></Eq><Eq><FieldRef Name='OC' /><Value Type='Text'>Con OC</Value></Eq></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>"+ sLimiteVista + "</RowLimit></View>";
             query.ViewXml = QuerySTR;
             SPListItemCollection ListaFact = SPContext.Current.Web.Lists["SegFact"].GetItems(query);
             foreach (SPListItem Facturas in ListaFact)
@@ -38,7 +42,7 @@ namespace GrillaSegFact.WP_Creado
                                              "</tr>";
             }
             SPQuery querySO = new SPQuery();
-            string QuerySTRSO = "<View><Query><Where><And><Eq><FieldRef Name='Author' /><Value Type='User'>" + SPContext.Current.Web.CurrentUser.Name.ToString() + "</Value></Eq><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>250</RowLimit></View>";
+            string QuerySTRSO = "<View><Query><Where><And><Eq><FieldRef Name='Author' /><Value Type='User'>" + SPContext.Current.Web.CurrentUser.Name.ToString() + "</Value></Eq><Eq><FieldRef Name='OC' /><Value Type='Text'>Sin OC</Value></Eq></And></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query><RowLimit>" + sLimiteVista + "</RowLimit></View>";
             querySO.ViewXml = QuerySTRSO;
             SPListItemCollection ListaFactSO = SPContext.Current.Web.Lists["SegFact"].GetItems(querySO);
             foreach (SPListItem FactSO in ListaFactSO)
@@ -68,7 +72,10 @@ namespace GrillaSegFact.WP_Creado
                     sColor = "#AFEEEE";
                     break;
                 case "CONTABILIDAD":
-                    sColor = "#FFDEAD";
+                    sColor = "#FFFF00";
+                    break;
+                case "PENDIENTE DE RECEPCIÓN":
+                    sColor = "#FFFF00";
                     break;
                 case "CONTABILIZADO":
                     sColor = "#F4A460";

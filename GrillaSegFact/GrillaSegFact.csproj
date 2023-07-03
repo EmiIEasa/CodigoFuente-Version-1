@@ -58,6 +58,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.SharePoint" />
@@ -129,9 +130,7 @@
     </None>
     <None Include="WP-Tesoreria\WP-Tesoreria.webpart" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Layouts\GrillaSegFact\img\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Features\Feature1\Feature1.Template.xml">
       <DependentUpon>Feature1.feature</DependentUpon>
@@ -139,6 +138,7 @@
     <Content Include="Layouts\GrillaSegFact\css\1-10-20-dataTables.bootstrap4.min.css" />
     <Content Include="Layouts\GrillaSegFact\css\4-3-1-bootstrap.min.css" />
     <Content Include="Layouts\GrillaSegFact\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Layouts\GrillaSegFact\img\Logo.png" />
     <Content Include="Layouts\GrillaSegFact\js\1-10-20-dataTables.bootstrap4.min.js" />
     <Content Include="Layouts\GrillaSegFact\js\1-10-20-jquery.dataTables.min.js" />
     <Content Include="Layouts\GrillaSegFact\js\1-14-7-popper.min.js" />

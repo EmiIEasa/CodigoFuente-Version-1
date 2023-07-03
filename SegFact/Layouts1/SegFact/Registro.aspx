@@ -8,18 +8,18 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="SegFact.Layouts1.SegFact.Registro" DynamicMasterPageFile="~masterurl/default.master" %>
 
 <asp:Content ID="PageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <link href="../../../_layouts/15/SegFact/css/4-3-1-bootstrap.min.css" rel="stylesheet" />
-    <link href="../../../_layouts/15/SegFact/css/estilosSegFact.css" rel="stylesheet" />
-    <link href="../../../_layouts/15/SegFact/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="../../../_layouts/15/SegFact/css/4-3-1-bootstrap.min.css?version=1.0" rel="stylesheet" />
+    <link href="../../../_layouts/15/SegFact/css/estilosSegFact.css?version=1.0" rel="stylesheet" />
+    <link href="../../../_layouts/15/SegFact/css/tempusdominus-bootstrap-4.min.css?version=1.0" rel="stylesheet" />
     
-    <script src="../../../_layouts/15/SegFact/js/fontAwesome.js" crossorigin="anonymous" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/1-14-7-popper.min.js" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/3-4-1-jquery.min.js" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/4-3-1-bootstrap.min.js" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/funcionesSegFact.js" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/moment-with-locales.js" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/tempusdominus-bootstrap-4.js" type="text/javascript"></script>
-    <script src="../../../_layouts/15/SegFact/js/jquery.MultiFile.js" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/fontAwesome.js?version=1.0" crossorigin="anonymous" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/1-14-7-popper.min.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/3-4-1-jquery.min.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/4-3-1-bootstrap.min.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/funcionesSegFact.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/moment-with-locales.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/tempusdominus-bootstrap-4.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../_layouts/15/SegFact/js/jquery.MultiFile.js?version=1.0" type="text/javascript"></script>
 </asp:Content>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
