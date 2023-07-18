@@ -6,14 +6,14 @@
 <%@ Import Namespace="Microsoft.SharePoint" %> 
 <%@ Register Tagprefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ComprasUserControl.ascx.cs" Inherits="GrillaAltaProvisoria.Compras.ComprasUserControl" %>
-<link rel="stylesheet" href="../../../../_layouts/15/GrillaAltaProvisoria/css/4-3-1-bootstrap.min.css">
-<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/fontAwesome.js"></script>
-<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/3-4-1-jquery.min.js"></script>
-<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/1-14-7-popper.min.js"></script>
-<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/4-3-1-bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../../../../_layouts/15/GrillaAltaProvisoria/css/1-10-20-dataTables.bootstrap4.min.css">
-<script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaAltaProvisoria/js/1-10-20-jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaAltaProvisoria/js/1-10-20-dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" href="../../../../_layouts/15/GrillaAltaProvisoria/css/4-3-1-bootstrap.min.css?version=1.0">
+<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/fontAwesome.js?version=1.0"></script>
+<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/3-4-1-jquery.min.js?version=1.0"></script>
+<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/1-14-7-popper.min.js?version=1.0"></script>
+<script src="../../../../_layouts/15/GrillaAltaProvisoria/js/4-3-1-bootstrap.min.js?version=1.0"></script>
+<link rel="stylesheet" type="text/css" href="../../../../_layouts/15/GrillaAltaProvisoria/css/1-10-20-dataTables.bootstrap4.min.css?version=1.0">
+<script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaAltaProvisoria/js/1-10-20-jquery.dataTables.min.js?version=1.0"></script>
+<script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaAltaProvisoria/js/1-10-20-dataTables.bootstrap4.min.js?version=1.0"></script>
 
 
 <script type="text/javascript" class="init">
@@ -100,7 +100,13 @@
             <a class="nav-link" id="pestAprobado" data-toggle="pill" href="#aprobado"><i class="fas fa-check"></i> Aprobados</a>
         </li>
         <li class="nav-item bg-light">
-            <a class="nav-link" id="pestRechazado" data-toggle="pill" href="#rechazado"><i class="far fa-times-circle"></i> Rechazados</a>
+            <a class="nav-link" id="pestRechazado" data-toggle="pill" href="#rechazado"><i class="fas fa-times-circle"></i> Rechazados</a>
+        </li>
+        <li class="nav-item bg-light">
+            <a class="nav-link" id="pestSubsanado" data-toggle="pill" href="#subsanado"><i class="fas fa-wrench"></i> Subsanados</a>
+        </li>
+        <li class="nav-item bg-light">
+            <a class="nav-link" id="pestSuspBloq" data-toggle="pill" href="#suspBloq"><i class="fas fa-lock"></i> Suspendidos/Bloqueados</a>
         </li>
     </ul>
   <!-- Tabs de pestañas -->
@@ -135,19 +141,49 @@
                     <asp:Literal ID="ltTablaAprobado" runat="server"></asp:Literal>
 			    </tbody>
 		    </table>
-	    </div><div id="rechazado" class="container-fluid tab-pane fade"><br>
+	    </div>
+        <div id="rechazado" class="container-fluid tab-pane fade"><br>
 	        <table id="example2" class="table table-striped table-bordered table-hover" style="width:100%">
 			    <thead>
 				    <tr>
 					    <th>ID</th>
                         <th>Nombre Fantasía</th>
                         <th>Razón Social</th>
-                        
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>
 			    <tbody>
                     <asp:Literal ID="ltTablaRechazado" runat="server"></asp:Literal>
+			    </tbody>
+		    </table>
+	    </div>
+        <div id="subsanado" class="container-fluid tab-pane fade"><br>
+	        <table id="example3" class="table table-striped table-bordered table-hover" style="width:100%">
+			    <thead>
+				    <tr>
+					    <th>ID</th>
+                        <th>Nombre Fantasía</th>
+                        <th>Razón Social</th>
+                        <th>Actividad Principal</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+                    <asp:Literal ID="ltTablaSubsanado" runat="server"></asp:Literal>
+			    </tbody>
+		    </table>
+	    </div>
+        <div id="suspBloq" class="container-fluid tab-pane fade"><br>
+	        <table id="example4" class="table table-striped table-bordered table-hover" style="width:100%">
+			    <thead>
+				    <tr>
+					    <th>ID</th>
+                        <th>Nombre Fantasía</th>
+                        <th>Razón Social</th>
+                        <th>Actividad Principal</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+                    <asp:Literal ID="ltTablaSuspBloq" runat="server"></asp:Literal>
 			    </tbody>
 		    </table>
 	    </div>

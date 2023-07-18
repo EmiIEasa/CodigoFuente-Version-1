@@ -26,6 +26,7 @@ namespace GrillaSegFact.WP_Contabilidad
         protected void GetTime(object sender, EventArgs e)
         {
             ltTablaContabilidadConOC.Text = "";
+            ltTablaContabilidadSinOC.Text = "";
             this.WebPart = this.Parent as WP_Contabilidad;
             sLimiteVista = this.WebPart.PropiedadLimiteVista;
             CargarTabla();

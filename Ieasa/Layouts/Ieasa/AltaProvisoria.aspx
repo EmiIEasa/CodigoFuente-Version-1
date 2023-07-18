@@ -8,21 +8,21 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AltaProvisoria.aspx.cs" Inherits="Ieasa.Layouts.Ieasa.AltaProvisoria" DynamicMasterPageFile="~masterurl/default.master" %>
 
 <asp:Content ID="PageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <link href="../../../../_layouts/15/Ieasa/css/4-3-1-bootstrap.min.css" rel="stylesheet" />
-    <link href="../../../../_layouts/15/Ieasa/css/estilosIeasa.css" rel="stylesheet" />
-    <link href="../../../../_layouts/15/Ieasa/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="../../../../_layouts/15/Ieasa/css/4-3-1-bootstrap.min.css?version=1.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/Ieasa/css/estilosIeasa.css?version=1.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/Ieasa/css/tempusdominus-bootstrap-4.min.css?version=1.0" rel="stylesheet" />
 
-    <script src="../../../../_layouts/15/Ieasa/js/3-4-1-jquery.min.js" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/3-4-1-jquery.min.js?version=1.0" type="text/javascript"></script>
     
-    <script src="../../../../_layouts/15/Ieasa/js/fontAwesome.js" crossorigin="anonymous" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/1-14-7-popper.min.js" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/4-3-1-bootstrap.min.js" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/funcionesIeasa.js" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/jquery.MultiFile.js" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/moment-with-locales.js" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/tempusdominus-bootstrap-4.js" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/fontAwesome.js?version=1.0" crossorigin="anonymous" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/1-14-7-popper.min.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/4-3-1-bootstrap.min.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/funcionesIeasa.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/jquery.MultiFile.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/moment-with-locales.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/tempusdominus-bootstrap-4.js?version=1.0" type="text/javascript"></script>
 
-    <script src="../../../../_layouts/15/Ieasa/js/chosen.jquery.js" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/Ieasa/js/chosen.jquery.js?version=1.0" type="text/javascript"></script>
     <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>
     <style>
 		a img{border: none;}
@@ -45,7 +45,7 @@
             padding: 0.5rem .05rem !important;
         }
 	</style>
-	<link rel="stylesheet" href="../../../../_layouts/15/Ieasa/css/chosen.css" />
+	<link rel="stylesheet" href="../../../../_layouts/15/Ieasa/css/chosen.css?version=1.0" />
 </asp:Content>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
@@ -476,7 +476,7 @@
                         <div class="form-inline">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">Certificado Exención Impositiva</span>
+                                    <span class="input-group-text">Constancia impositiva</span>
                                 </div>
                                 <asp:FileUpload runat="server" id="fuExencionImpositiva" AllowMultiple="true"></asp:FileUpload>
                             </div>
@@ -652,11 +652,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 my-1">
-                        <button id="btnAprobarCompras" type="button" class="btn btn-success btn-block" runat="server" onserverclick="btnAprobarCompras_ServerClick" AutoPostBack = "true"><i class="fas fa-check"></i> Aprobar</button>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="btnAprobarCompras" type="button" class="btn btn-success btn-block" style="height: 62px;" runat="server" onserverclick="btnAprobarCompras_ServerClick" AutoPostBack = "true"><i class="fas fa-check"></i> Aprobar</button>
                     </div>
-                    <div class="col-12 col-sm-6 my-1">
-                        <button id="btnRechazarCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-info btn-block" runat="server" onserverclick="btnRechazarCompras_ServerClick"><i class="fas fa-times-circle"></i> Rechazar</button>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="btnRechazarCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-info btn-block" style="height: 62px;" runat="server" onserverclick="btnRechazarCompras_ServerClick"><i class="fas fa-times-circle"></i> Rechazar</button>
+                    </div>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="btnSubsanarCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-warning btn-block" style="height: 62px;" runat="server" onserverclick="btnSubsanandoCompras_ServerClick"><i class="fas fa-wrench"></i> Subsanado</button>
+                    </div>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="btnSuspenderCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-danger btn-block" style="height: 62px;" runat="server" onserverclick="btnSuspenderCompras_ServerClick"><i class="fas fa-lock"></i> Suspendidos-Bloqueado</button>
                     </div>
                     <br><br>
                       <asp:Literal ID="LtUsuario" runat="server"></asp:Literal>

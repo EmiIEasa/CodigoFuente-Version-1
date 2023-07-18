@@ -100,6 +100,12 @@
         <li class="nav-item bg-light">
             <a class="nav-link" id="pestRechazado" data-toggle="pill" href="#rechazado"><i class="far fa-file"></i> Rechazado</a>
         </li>
+        <li class="nav-item bg-light">
+            <a class="nav-link" id="pestSubsanado" data-toggle="pill" href="#subsanado"><i class="far fa-file"></i> Subsanados</a>
+        </li>
+        <li class="nav-item bg-light">
+            <a class="nav-link" id="pestSuspbloq" data-toggle="pill" href="#suspbloq"><i class="far fa-file"></i> Suspendidos/Bloqueados</a>
+        </li>
     </ul>
   <!-- Tabs de pestañas -->
     <div class="tab-content">
@@ -142,7 +148,8 @@
                     <asp:Literal ID="ltTablaAprobado" runat="server"></asp:Literal>
 			    </tbody>
 		    </table>
-	    </div><div id="rechazado" class="container-fluid tab-pane fade"><br>
+	    </div>
+        <div id="rechazado" class="container-fluid tab-pane fade"><br>
 	        <table id="example2" class="table table-striped table-bordered table-hover" style="width:100%">
 			    <thead>
 				    <tr>
@@ -159,6 +166,46 @@
 			    </thead>
 			    <tbody>
                     <asp:Literal ID="ltTablaRechazado" runat="server"></asp:Literal>
+			    </tbody>
+		    </table>
+	    </div>
+        <div id="subsanado" class="container-fluid tab-pane fade"><br>
+	        <table id="example3" class="table table-striped table-bordered table-hover" style="width:100%">
+			    <thead>
+				    <tr>
+					    <th>ID</th>
+                        <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
+                        <th>Personería</th>
+                        <th>Actividad Principal</th>
+                        <th>Rama 1</th>
+                        <th>Rama 2</th>
+                        <th>Rama 3</th>
+                        <th>Rama 4</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+                    <asp:Literal ID="ltTablaSubsanados" runat="server"></asp:Literal>
+			    </tbody>
+		    </table>
+	    </div>
+        <div id="suspbloq" class="container-fluid tab-pane fade"><br>
+	        <table id="example4" class="table table-striped table-bordered table-hover" style="width:100%">
+			    <thead>
+				    <tr>
+					    <th>ID</th>
+                        <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
+                        <th>Personería</th>
+                        <th>Actividad Principal</th>
+                        <th>Rama 1</th>
+                        <th>Rama 2</th>
+                        <th>Rama 3</th>
+                        <th>Rama 4</th>
+				    </tr>
+			    </thead>
+			    <tbody>
+                    <asp:Literal ID="ltTablaSuspBloq" runat="server"></asp:Literal>
 			    </tbody>
 		    </table>
 	    </div>
