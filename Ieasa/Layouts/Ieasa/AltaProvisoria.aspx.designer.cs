@@ -634,15 +634,6 @@ namespace Ieasa.Layouts.Ieasa {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnAprobarCompras;
         
         /// <summary>
-        /// btnRechazarCompras control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnRechazarCompras;
-        
-        /// <summary>
         /// btnSubsanarCompras control.
         /// </summary>
         /// <remarks>
@@ -650,6 +641,15 @@ namespace Ieasa.Layouts.Ieasa {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnSubsanarCompras;
+        
+        /// <summary>
+        /// btnRechazarCompras control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnRechazarCompras;
         
         /// <summary>
         /// btnSuspenderCompras control.

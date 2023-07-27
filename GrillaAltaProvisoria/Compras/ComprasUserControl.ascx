@@ -103,7 +103,7 @@
             <a class="nav-link" id="pestRechazado" data-toggle="pill" href="#rechazado"><i class="fas fa-times-circle"></i> Rechazados</a>
         </li>
         <li class="nav-item bg-light">
-            <a class="nav-link" id="pestSubsanado" data-toggle="pill" href="#subsanado"><i class="fas fa-wrench"></i> Subsanados</a>
+            <a class="nav-link" id="pestSubsanado" data-toggle="pill" href="#subsanado"><i class="fas fa-wrench"></i> Subsanando</a>
         </li>
         <li class="nav-item bg-light">
             <a class="nav-link" id="pestSuspBloq" data-toggle="pill" href="#suspBloq"><i class="fas fa-lock"></i> Suspendidos/Bloqueados</a>

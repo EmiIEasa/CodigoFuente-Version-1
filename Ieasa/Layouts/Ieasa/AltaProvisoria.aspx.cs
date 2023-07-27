@@ -19,7 +19,7 @@ namespace Ieasa.Layouts.Ieasa
 {
     public partial class AltaProvisoria : UnsecuredLayoutsPageBase
     {
-
+        private string sSitioAnonimo = "https://proveedores-an.ieasa.com.ar/";
         private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
         //private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
         string strSeleccione = "Seleccione";
@@ -51,7 +51,7 @@ namespace Ieasa.Layouts.Ieasa
                 query.ViewXml = QuerySTR;
                 SPListItemCollection ListaAux = SPContext.Current.Web.Lists["AltaProvisoriaUsuarioBloqueado"].GetItems(query);
                 if (ListaAux.Count > 0) {
-                    if (ListaAux[0]["UsuarioBloqueado"].ToString() == "SI")
+                    if (ListaAux[0]["UsuarioBloqueado"] != null && ListaAux[0]["UsuarioBloqueado"].ToString() == "SI")
                         BloqueaCampos();
                 }
             }
@@ -59,14 +59,40 @@ namespace Ieasa.Layouts.Ieasa
 
         private void CargaPestania()
         {
-            bool bPerteneceIeasa = false;
-            if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("COMPRAS")))
-            {
-                bPerteneceIeasa = true;
-            }
-            if (bPerteneceIeasa == true)
-            {
-                LtPestañaCompras.Text = "<li class='nav-item bg-light'>" +
+            
+                bool bPerteneceIeasa = false;
+                if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("COMPRAS")))
+                {
+                    bPerteneceIeasa = true;
+                }
+                if (bPerteneceIeasa == true)
+                {
+                    LtPestañaCompras.Text = "<li class='nav-item bg-light'>" +
+                                              "<a class='nav-link active' data-toggle='pill' id='pestaniaDatosGrales' href='#home'>Datos Generales</a>" +
+                                            "</li>" +
+                                            "<li class='nav-item bg-light'>" +
+                                              "<a class='nav-link' data-toggle='pill' id='pestaniaRubros' href='#rubros'>Rubros</a>" +
+                                            "</li>" +
+                                            "<li class='nav-item bg-light' >" +
+                                              "<a class='nav-link' data-toggle='pill' id='pestaniaDatosContacto' href='#menu1'>Datos Contacto</a>" +
+                                            "</li>" +
+                                            "<li class='nav-item bg-light'>" +
+                                              "<a class='nav-link' data-toggle='pill' id='pestaniaDatosImpositivos' href='#menu2'>Datos Impositivos</a>" +
+                                            "</li>" +
+
+                                            "<li class='nav-item bg-light'>" +
+                                              "<a class='nav-link' data-toggle='pill' href='#menu3'>Adjuntos</a>" +
+                                            "</li>" +
+                                            "<li class='nav-item bg-light'>" +
+                                                "<a class='nav-link' data-toggle='pill' href='#sap'>SAP</a>" +
+                                            "</li>" +
+                                            "<li class='nav-item bg-light'>" +
+                                                "<a class='nav-link' data-toggle='pill' href='#compras'>Compras</a>" +
+                                            "</li>";
+                }
+                else
+                {
+                    LtPestañaCompras.Text = "<li class='nav-item bg-light'>" +
                                           "<a class='nav-link active' data-toggle='pill' id='pestaniaDatosGrales' href='#home'>Datos Generales</a>" +
                                         "</li>" +
                                         "<li class='nav-item bg-light'>" +
@@ -81,34 +107,11 @@ namespace Ieasa.Layouts.Ieasa
 
                                         "<li class='nav-item bg-light'>" +
                                           "<a class='nav-link' data-toggle='pill' href='#menu3'>Adjuntos</a>" +
-                                        "</li>" +
-                                        "<li class='nav-item bg-light'>" +
-                                            "<a class='nav-link' data-toggle='pill' href='#sap'>SAP</a>" +
-                                        "</li>" +
-                                        "<li class='nav-item bg-light'>" +
-                                            "<a class='nav-link' data-toggle='pill' href='#compras'>Compras</a>" +
                                         "</li>";
-            }
-            else
-            {
-                LtPestañaCompras.Text = "<li class='nav-item bg-light'>" +
-                                      "<a class='nav-link active' data-toggle='pill' id='pestaniaDatosGrales' href='#home'>Datos Generales</a>" +
-                                    "</li>" +
-                                    "<li class='nav-item bg-light'>" +
-                                      "<a class='nav-link' data-toggle='pill' id='pestaniaRubros' href='#rubros'>Rubros</a>" +
-                                    "</li>" +
-                                    "<li class='nav-item bg-light' >" +
-                                      "<a class='nav-link' data-toggle='pill' id='pestaniaDatosContacto' href='#menu1'>Datos Contacto</a>" +
-                                    "</li>" +
-                                    "<li class='nav-item bg-light'>" +
-                                      "<a class='nav-link' data-toggle='pill' id='pestaniaDatosImpositivos' href='#menu2'>Datos Impositivos</a>" +
-                                    "</li>" +
 
-                                    "<li class='nav-item bg-light'>" +
-                                      "<a class='nav-link' data-toggle='pill' href='#menu3'>Adjuntos</a>" +
-                                    "</li>";
-
-            }
+                }
+            
+            
         }
 
         private void CargarDatos(SPListItem AltaProv)
@@ -136,7 +139,6 @@ namespace Ieasa.Layouts.Ieasa
             {
                 cboRubro.SelectedValue = (AltaProv["Rama01"] != null && !string.IsNullOrEmpty(AltaProv["Rama01"].ToString()) ? AltaProv["Rama01"].ToString() : String.Empty);
             }
-
             if (AltaProv["Pais"] != null && !string.IsNullOrEmpty(AltaProv["Pais"].ToString()))
             {
                 cboPais.SelectedValue = (AltaProv["Pais"] != null && !string.IsNullOrEmpty(AltaProv["Pais"].ToString()) ? AltaProv["Pais"].ToString() : String.Empty);
@@ -164,7 +166,6 @@ namespace Ieasa.Layouts.Ieasa
             txtAdministracionCorreo.Text = (AltaProv["AdministracionCorreo"] != null && !string.IsNullOrEmpty(AltaProv["AdministracionCorreo"].ToString()) ? AltaProv["AdministracionCorreo"].ToString() : String.Empty);
             txtTelefono.Text = (AltaProv["Telefono"] != null && !string.IsNullOrEmpty(AltaProv["Telefono"].ToString()) ? AltaProv["Telefono"].ToString() : String.Empty);
             txtFax.Text = (AltaProv["Fax"] != null && !string.IsNullOrEmpty(AltaProv["Fax"].ToString()) ? AltaProv["Fax"].ToString() : String.Empty);
-
             txtCuit.Text = (AltaProv["Cuit"] != null && !string.IsNullOrEmpty(AltaProv["Cuit"].ToString()) ? AltaProv["Cuit"].ToString() : String.Empty);
             txtCIE.Text = (AltaProv["CodigoExtranjero"] != null && !string.IsNullOrEmpty(AltaProv["CodigoExtranjero"].ToString()) ? AltaProv["CodigoExtranjero"].ToString() : String.Empty);
             if (AltaProv["PersonaFisica"] != null && !string.IsNullOrEmpty(AltaProv["PersonaFisica"].ToString()))
@@ -185,12 +186,13 @@ namespace Ieasa.Layouts.Ieasa
             cboConImpG.SelectedValue = (AltaProv["CondImpIG"] != null && !string.IsNullOrEmpty(AltaProv["CondImpIG"].ToString()) ? AltaProv["CondImpIG"].ToString() : String.Empty);
             ValidaAgregaOpcionCombo(AltaProv["CondImpIVA"] != null && !string.IsNullOrEmpty(AltaProv["CondImpIVA"].ToString()) ? AltaProv["CondImpIVA"].ToString() : String.Empty, "cboCondImIVA");
             cboCondImIVA.SelectedValue = (AltaProv["CondImpIVA"] != null && !string.IsNullOrEmpty(AltaProv["CondImpIVA"].ToString()) ? AltaProv["CondImpIVA"].ToString() : String.Empty);
-
+           
             ValidaAgregaOpcionCombo(AltaProv["IngresosBrutos"] != null && !string.IsNullOrEmpty(AltaProv["IngresosBrutos"].ToString()) ? AltaProv["IngresosBrutos"].ToString() : String.Empty, "cboIngresosBrutos");
             cboIngresosBrutos.SelectedValue = (AltaProv["IngresosBrutos"] != null && !string.IsNullOrEmpty(AltaProv["IngresosBrutos"].ToString()) ? AltaProv["IngresosBrutos"].ToString() : String.Empty);
             txtIngresosBrutos.Text = (AltaProv["NumeroIngresosBrutos"] != null && !string.IsNullOrEmpty(AltaProv["NumeroIngresosBrutos"].ToString()) ? AltaProv["NumeroIngresosBrutos"].ToString() : String.Empty);
             txtObsCompras.Text = (AltaProv["ObservacionesCompras"] != null && !string.IsNullOrEmpty(AltaProv["ObservacionesCompras"].ToString()) ? AltaProv["ObservacionesCompras"].ToString() : String.Empty);
             CargarAdjuntos(AltaProv);
+           
             if (AltaProv["SAP"] != null && !string.IsNullOrEmpty(AltaProv["SAP"].ToString()))
             {
                 if (AltaProv["SAP"].ToString() == "SI")
@@ -202,24 +204,26 @@ namespace Ieasa.Layouts.Ieasa
                     chkSAP.Checked = false;
                 }
             }
-            if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("COMPRAS")))
-            {
-                btnEliminar.Visible = true;
-            }
-            else
-            {
-                btnEliminar.Visible = false;
-            }
-            if (AltaProv["Estado"].ToString() == "Aprobado" || AltaProv["Estado"].ToString() == "Rechazado" || AltaProv["Estado"].ToString() == "Subsanado" || AltaProv["Estado"].ToString() == "Suspendido/Bloqueado")
-            {
+           
+                if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("COMPRAS")))
+                {
+                    btnEliminar.Visible = true;
+                }
+                else
+                {
+                    btnEliminar.Visible = false;
+                }
+            
+           
+            //if (AltaProv["Estado"].ToString() == "Aprobado" || AltaProv["Estado"].ToString() == "Rechazado" || AltaProv["Estado"].ToString() == "Subsanado" || AltaProv["Estado"].ToString() == "Suspendido/Bloqueado")
+            //{
 
-                txtObsCompras.ReadOnly = true;
-                btnAprobarCompras.Disabled = true;
-                btnRechazarCompras.Disabled = true;
-                btnSubsanarCompras.Disabled = true;
-                btnSuspenderCompras.Disabled = true;
-            }
-
+            //    txtObsCompras.ReadOnly = true;
+            //    btnAprobarCompras.Disabled = true;
+            //    btnRechazarCompras.Disabled = true;
+            //    btnSubsanarCompras.Disabled = true;
+            //    btnSuspenderCompras.Disabled = true;
+            //}
             CargarRubros(AltaProv.ID);
             CargarSociedad(AltaProv.ID);
         }
@@ -652,7 +656,7 @@ namespace Ieasa.Layouts.Ieasa
                         {
                             htmlCorreoUAPMAP = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                         }
-                        htmlCorreoUAPMAP = htmlCorreoUAPMAP.Replace("##URLSITIO##", "https://proveedores-an.energia-argentina.com.ar/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text);
+                        htmlCorreoUAPMAP = htmlCorreoUAPMAP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text);
                         SPUtility.SendEmail(SPContext.Current.Web, false, false, txtVentasCorreo.Text, "Alta Portal Proveedores", htmlCorreoUAPMAP);
                         break;
                     case "CNRP":
@@ -668,7 +672,7 @@ namespace Ieasa.Layouts.Ieasa
                             htmlCorreoCNRP = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                             destinatarioCorreoCNRP = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                         }
-                        htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", "https://proveedores-an.energia-argentina.com.ar/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
+                        htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtNomFantasia.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
                         SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCNRP, "Alta Portal Proveedores", htmlCorreoCNRP);
                         break;
                     case "CCM":
@@ -684,7 +688,7 @@ namespace Ieasa.Layouts.Ieasa
                             htmlCorreoCCM = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                             destinatarioCorreoCCM = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                         }
-                        htmlCorreoCNRP = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + ID);
+                        htmlCorreoCNRP = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                         SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCM, "Alta Portal Proveedores", htmlCorreoCCM);
                         break;
                    
@@ -710,7 +714,7 @@ namespace Ieasa.Layouts.Ieasa
                                 {
                                     htmlCorreoUAPMAP = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                                 }
-                                htmlCorreoUAPMAP = htmlCorreoUAPMAP.Replace("##URLSITIO##", "https://proveedores-an.energia-argentina.com.ar/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text);
+                                htmlCorreoUAPMAP = htmlCorreoUAPMAP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text);
                                 SPUtility.SendEmail(site.OpenWeb(), false, false, txtVentasCorreo.Text, "Alta Portal Proveedores", htmlCorreoUAPMAP);
                             }
                         });
@@ -732,7 +736,7 @@ namespace Ieasa.Layouts.Ieasa
                                     htmlCorreoCNRP = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                                     destinatarioCorreoCNRP = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                                 }
-                                htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", "https://proveedores-an.energia-argentina.com.ar/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtNomFantasia.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
+                                htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtNomFantasia.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
                                 SPUtility.SendEmail(site.OpenWeb(), false, false, destinatarioCorreoCNRP, "Alta Portal Proveedores", htmlCorreoCNRP);
 
                             }
@@ -762,7 +766,7 @@ namespace Ieasa.Layouts.Ieasa
                         htmlCorreoCCM = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                         destinatarioCorreoCCM = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                     }
-                    htmlCorreoCCM = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + ID);
+                    htmlCorreoCCM = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCM, "Alta Portal Proveedores", htmlCorreoCCM);
                     break;
                 case "CPSA":
@@ -777,7 +781,7 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         htmlCorreoCPSA = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
-                        htmlCorreoCPSA = htmlCorreoCPSA.Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + RegistroExistente.ID.ToString());
+                        htmlCorreoCPSA = htmlCorreoCPSA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + RegistroExistente.ID.ToString());
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSA);
                     break;
                 case "CPSR":
@@ -791,7 +795,7 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         htmlCorreoCPSR = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
-                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSR);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSR.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
                 case "CPSS":
                     //CORREO A PROVEEDOR REGISTRO SUBSANADO
@@ -804,7 +808,7 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         htmlCorreoCPSS = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
-                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSS);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSS.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
                 case "CPSSB":
                     //CORREO A PROVEEDOR REGISTRO SUSPENDIDO
@@ -817,7 +821,7 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         htmlCorreoCPSSB = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
-                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSSB);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSSB.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
             }
                 
@@ -845,7 +849,7 @@ namespace Ieasa.Layouts.Ieasa
                         htmlCorreoCPUC = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                       
                     }
-                    htmlCorreoCPUC = htmlCorreoCPUC.Replace("##PASWORD##", Password).Replace("##CUIT##", Usuario);
+                    htmlCorreoCPUC = htmlCorreoCPUC.Replace("##URL##", sSitio).Replace("##PASWORD##", Password).Replace("##CUIT##", Usuario).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString().Trim(), "Alta Portal Proveedores", htmlCorreoCPUC);
                     break;
                
@@ -1594,7 +1598,7 @@ namespace Ieasa.Layouts.Ieasa
             if (cboUsuarioBloqueado.SelectedValue == "SI")
             {
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
-                RegistroExistente["Estado"] = "Bloqueado";
+                RegistroExistente["Estado"] = "Suspendido/Bloqueado";
                 RegistroExistente.Update();
                 if (ListaAux.Count > 0)
                 {

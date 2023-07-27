@@ -21,12 +21,13 @@ namespace SegFact.Layouts1.SegFact
 {
     public partial class Registro : LayoutsPageBase
     {
+        private string sSitioAnonimo= "https://proveedores-an.ieasa.com.ar/";
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
-                
                 CargarCombos();
                 CargarInicial();
                 CargaPestañas();
@@ -496,114 +497,176 @@ namespace SegFact.Layouts1.SegFact
             Item.Update();
         }
 
+        protected void EnvioDeEmails(string CodigoEmail, SPListItem RegistroExistente)
+        {
+            switch (CodigoEmail)
+            {
+                case "CCPCOCMOD":
+                    //CORREO A CUENTAS A PAGAR POR MODIFICACION - CON OC
+                    string QuerySTRCFEOCMOD = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CCPCOCMOD</Value></Eq></Where></Query></View>";
+                    SPQuery queryCFEOCMOD = new SPQuery();
+                    queryCFEOCMOD.ViewXml = QuerySTRCFEOCMOD;
+                    SPListItemCollection ListaABMCFEOCMOD = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCFEOCMOD);
+                    string htmlCorreoCFEOCMOD = "";
+                    string destinatarioCorreoCFEOCMOD = "";
+                    foreach (SPListItem item in ListaABMCFEOCMOD)
+                    {
+                        htmlCorreoCFEOCMOD = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                        destinatarioCorreoCFEOCMOD = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCFEOCMOD = htmlCorreoCFEOCMOD.Replace("##CUIT##", RegistroExistente["CUIT"].ToString()).Replace("##NUMOC##", RegistroExistente["NumOC"].ToString()).Replace("##NUMFACT##", RegistroExistente["NumFact"].ToString()).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCFEOCMOD, RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCFEOCMOD);
+                    break;
+                case "CCPSOCMOD":
+                    //CORREO A CUENTAS A PAGAR POR MODIFICACION - SIN OC
+                    string QuerySTRCCPSOCMOD = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CCPSOCMOD</Value></Eq></Where></Query></View>";
+                    SPQuery queryCCPSOCMOD = new SPQuery();
+                    queryCCPSOCMOD.ViewXml = QuerySTRCCPSOCMOD;
+                    SPListItemCollection ListaABMCCPSOCMOD = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCCPSOCMOD);
+                    string htmlCorreoCCPSOCMOD = "";
+                    string destinatarioCorreoCCPSOCMOD = "";
+                    foreach (SPListItem item in ListaABMCCPSOCMOD)
+                    {
+                        htmlCorreoCCPSOCMOD = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                        destinatarioCorreoCCPSOCMOD = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCCPSOCMOD = htmlCorreoCCPSOCMOD.Replace("##CUIT##", RegistroExistente["CUIT"].ToString()).Replace("##NUMFACT##", RegistroExistente["NumFact"].ToString()).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCPSOCMOD, RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCCPSOCMOD);
+                    break;
+                case "CPMFRMOD":
+                    //CORREO A PROVEEDOR RECEPCION DE MODIFICACION FACTURA
+                    string QuerySTRCPMFRMOD = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPMFRMOD</Value></Eq></Where></Query></View>";
+                    SPQuery queryCPMFRMOD = new SPQuery();
+                    queryCPMFRMOD.ViewXml = QuerySTRCPMFRMOD;
+                    SPListItemCollection ListaABMCPMFRMOD = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPMFRMOD);
+                    string htmlCorreoCPMFRMOD = "";
+                    foreach (SPListItem item in ListaABMCPMFRMOD)
+                    {
+                        htmlCorreoCPMFRMOD = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCPMFRMOD = htmlCorreoCPMFRMOD.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["Email"].ToString().Trim(), "Recepción " + RegistroExistente["NumFact"].ToString() + " - " + RegistroExistente["CUIT"].ToString(), htmlCorreoCPMFRMOD);
+                    break;
+                case "CCPCOC":
+                    //CORREO A CUENTAS A PAGAR Nueva Factura- CON OC
+                    string QuerySTRCFEOC = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CCPCOC</Value></Eq></Where></Query></View>";
+                    SPQuery queryCFEOC = new SPQuery();
+                    queryCFEOC.ViewXml = QuerySTRCFEOC;
+                    SPListItemCollection ListaABMCFEOC = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCFEOC);
+                    string htmlCorreoCFEOC = "";
+                    string destinatarioCorreoCFEOC = "";
+                    foreach (SPListItem item in ListaABMCFEOC)
+                    {
+                        htmlCorreoCFEOC = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                        destinatarioCorreoCFEOC = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCFEOC = htmlCorreoCFEOC.Replace("##CUIT##", RegistroExistente["CUIT"].ToString()).Replace("##NUMOC##", RegistroExistente["NumOC"].ToString()).Replace("##NUMFACT##", RegistroExistente["NumFact"].ToString()).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCFEOC, RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCFEOC);
+                    break;
+                case "CCPSOC":
+                    //CORREO A CUENTAS A PAGAR  Nueva Factura - SIN OC
+                    string QuerySTRCCPSOC = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CCPSOC</Value></Eq></Where></Query></View>";
+                    SPQuery queryCCPSOC = new SPQuery();
+                    queryCCPSOC.ViewXml = QuerySTRCCPSOC;
+                    SPListItemCollection ListaABMCCPSOC = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCCPSOC);
+                    string htmlCorreoCCPSOC = "";
+                    string destinatarioCorreoCCPSOC = "";
+                    foreach (SPListItem item in ListaABMCCPSOC)
+                    {
+                        htmlCorreoCCPSOC = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                        destinatarioCorreoCCPSOC = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCCPSOC = htmlCorreoCCPSOC.Replace("##CUIT##", RegistroExistente["CUIT"].ToString()).Replace("##NUMFACT##", RegistroExistente["NumFact"].ToString()).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCPSOC, RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCCPSOC);
+                    break;
+                case "CPFR":
+                    //CORREO A PROVEEDOR RECEPCION  Nueva Factura
+                    string QuerySTRCPMFR = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPFR</Value></Eq></Where></Query></View>";
+                    SPQuery queryCPMFR = new SPQuery();
+                    queryCPMFR.ViewXml = QuerySTRCPMFR;
+                    SPListItemCollection ListaABMCPMFR = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPMFR);
+                    string htmlCorreoCPMFR = "";
+                    foreach (SPListItem item in ListaABMCPMFR)
+                    {
+                        htmlCorreoCPMFR = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCPMFR = htmlCorreoCPMFR.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID);
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["Email"].ToString().Trim(), "Recepción " + RegistroExistente["NumFact"].ToString() + " - " + RegistroExistente["CUIT"].ToString(), htmlCorreoCPMFR);
+                    break;
+                    case "CPFRC":
+                    //CORREO A PROVEEDOR RECHAZO Factura
+                    string QuerySTRCPFRC = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPFRC</Value></Eq></Where></Query></View>";
+                    SPQuery queryCPFRC = new SPQuery();
+                    queryCPFRC.ViewXml = QuerySTRCPFRC;
+                    SPListItemCollection ListaABMCPFRC = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPFRC);
+                    string htmlCorreoCPFRC = "";
+                    foreach (SPListItem item in ListaABMCPFRC)
+                    {
+                        htmlCorreoCPFRC = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCPFRC = htmlCorreoCPFRC.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID).Replace("##OBSERVACIONESCONTABILIDAD##", RegistroExistente["ObservacionesContabilidad"].ToString()).Replace("##IDREGISTRO##", RegistroExistente.ID.ToString());
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["Email"].ToString().Trim(), RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCPFRC);
+                    break;
+                case "CTF":
+                    //CORREO A TESORERIA
+                    SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, RegistroExistente["Author"].ToString());
+                    string QuerySTRCTF = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CTF</Value></Eq></Where></Query></View>";
+                    SPQuery queryCTF = new SPQuery();
+                    queryCTF.ViewXml = QuerySTRCTF;
+                    SPListItemCollection ListaABMCTF = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCTF);
+                    string htmlCorreoCTF = "";
+                    string destinatarioCorreoCTF = "";
+                    foreach (SPListItem item in ListaABMCTF)
+                    {
+                        htmlCorreoCTF = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                        destinatarioCorreoCTF = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCTF = htmlCorreoCTF.Replace("##USUARIO##", Usuario.User.Name).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID).Replace("##IDREGISTRO##", RegistroExistente.ID.ToString());
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCTF, RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCTF);
+                    break;
+                case "CCF":
+                    //CORREO A CONTABILIDAD
+                    SPFieldUserValue UsuarioCCF = new SPFieldUserValue(SPContext.Current.Web, RegistroExistente["Author"].ToString());
+                    string QuerySTRCCF = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CCF</Value></Eq></Where></Query></View>";
+                    SPQuery queryCCF = new SPQuery();
+                    queryCCF.ViewXml = QuerySTRCCF;
+                    SPListItemCollection ListaABMCCF = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCCF);
+                    string htmlCorreoCCF = "";
+                    string destinatarioCorreoCCF = "";
+                    foreach (SPListItem item in ListaABMCCF)
+                    {
+                        htmlCorreoCCF = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                        destinatarioCorreoCCF = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCCF = htmlCorreoCCF.Replace("##USUARIO##", UsuarioCCF.User.Name).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/SE.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RegistroExistente.ID).Replace("##IDREGISTRO##", RegistroExistente.ID.ToString());
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCF, RegistroExistente["CUIT"].ToString() + " - " + RegistroExistente["NumFact"].ToString(), htmlCorreoCCF);
+                    break;
+            }
+        }
         private void EnviarCorreoEditado(SPListItem Registro)
         {
-            string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                                  "<tr>" +
-                                    "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                                  "</tr>" +
-                                  "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>";
-                                                if (Registro["OC"].ToString() == "Con OC")
-                                                {
-                sCorreo += "Se actualizó la información: Factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ", asociada a la OC " + Registro["NumOC"].ToString() + " ."; //y centro de costo " + Registro["CentroCosto"].ToString() + 
+            if (Registro["OC"].ToString() == "Con OC")
+            {
+                EnvioDeEmails("CCPCOCMOD", Registro);
             }
-                                                else
-                                                {
-                                                    sCorreo += "Se actualizó la información: Factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ".";
-                                                }
-                                                sCorreo += "<br><br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + Registro.ID + "'>Ir al registro " + Registro.ID + "</a>" +
-                                                "</p>" +
-                                        "</td>" +
-                                      "</tr>" +
-                                      "<tr>" +
-                                          "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                                  "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                            "</td>" +
-                                      "</tr>" +
-                                "</tbody></table>";
-
-                               SPUtility.SendEmail(SPContext.Current.Web, false, false, "cuentasapagar@ieasa.com.ar", Registro["CUIT"].ToString() + " - " + Registro["NumFact"].ToString(), sCorreo);
-                                //SPUtility.SendEmail(SPContext.Current.Web, false, false, "cgperez@nacionservicios.com.ar", Registro["CUIT"].ToString() + " - " + Registro["NumFact"].ToString(), sCorreo);
-
-            string sCorreoCC = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                                    "<tr>" +
-                                        "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>" +
-                                                "La modificación ha sido recibida, por favor tener en cuenta que la factura no se encuentra aceptada hasta que podamos verificar su conformidad con la Orden de Compra u Oferta que lo vincula con nuestra empresa. Para evitar futuros rechazos, le recordamos que deberá adjuntar factura, certificado y Orden de Compra/Pedido Abierto. También deberá indicar en la factura el número de HES (hoja de entrada de servicio) o Recepción en caso de corresponder y el número de Orden de Compra" +
-                                                "<br><br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + Registro.ID + "'>Ir al registro " + Registro.ID + "</a>" +
-                                                "<br>Cualquier duda contactar a <a href='mailto:cuentasapagar@ieasa.com.ar'>cuentasapagar@ieasa.com.ar</a>" +
-                                            "</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                "</tbody></table>";
-
-
-            SPUtility.SendEmail(SPContext.Current.Web, false, false, Registro["Email"].ToString().Trim(), "Recepción " + Registro["NumFact"].ToString() + " - " + Registro["CUIT"].ToString(), sCorreoCC);
-       
+            else
+            {
+                EnvioDeEmails("CCPSOCMOD", Registro);
+            }
+            EnvioDeEmails("CPMFRMOD", Registro);
         }
-
         private void EnviarCorreo(SPListItem Registro)
         {
-            string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                              "<tr>" +
-                                "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                              "</tr>" +
-                              "<tr>" +
-                                    "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                        "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>";
-                                        if (Registro["OC"].ToString() == "Con OC")
-                                        {
-                                            sCorreo += "Se ingresó una nueva factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ", asociada a la OC " + Registro["NumOC"].ToString() + "."; //+ " y centro de costo " + Registro["CentroCosto"].ToString() + ".";
+            if (Registro["OC"].ToString() == "Con OC")
+            {
+                EnvioDeEmails("CCPCOC", Registro);
             }
-                                        else
-                                        {
-                                            sCorreo += "Se ingresó una nueva factura " + Registro["NumFact"].ToString() + ", del proveedor " + Registro["CUIT"].ToString() + ".";
-                                        }
-                                        sCorreo += "<br><br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + Registro.ID + "'>Ir al registro " + Registro.ID + "</a>" +
-                                        "</p>" +
-                                "</td>" +
-                              "</tr>" +
-                              "<tr>" +
-                                  "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                          "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                        "</td>" +
-                                  "</tr>" +
-                            "</tbody></table>";
-
-            SPUtility.SendEmail(SPContext.Current.Web, false, false,"cuentasapagar@ieasa.com.ar", Registro["CUIT"].ToString() + " - " + Registro["NumFact"].ToString(), sCorreo);
-            //SPUtility.SendEmail(SPContext.Current.Web, false, false, "cgperez@nacionservicios.com.ar", Registro["CUIT"].ToString() + " - " + Registro["NumFact"].ToString(), sCorreo);
-            string sCorreoCC = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                                    "<tr>" +
-                                        "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>" +
-                                                "La carga ha sido recibida, por favor tener en cuenta que la factura no se encuentra aceptada hasta que podamos verificar su conformidad con la Orden de Compra u Oferta que lo vincula con nuestra empresa. Para evitar futuros rechazos, le recordamos que deberá adjuntar factura, certificado y Orden de Compra/Pedido Abierto. También deberá indicar en la factura el número de HES (hoja de entrada de servicio) o Recepción en caso de corresponder y el número de Orden de Compra" +
-                                                "<br><br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + Registro.ID + "'>Ir al registro " + Registro.ID + "</a>" +
-                                                "<br>Cualquier duda contactar a <a href='mailto:cuentasapagar@ieasa.com.ar'>cuentasapagar@ieasa.com.ar</a>" +
-                                            "</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                "</tbody></table>";
-            
-
-            SPUtility.SendEmail(SPContext.Current.Web, false, false, Registro["Email"].ToString().Trim(), "Recepción " + Registro["NumFact"].ToString() + " - " + Registro["CUIT"].ToString(), sCorreoCC);
+            if (Registro["OC"].ToString() == "Sin OC")
+            {
+                EnvioDeEmails("CCPSOC", Registro);
+            }
+            EnvioDeEmails("CPFR", Registro);
+           
         }
 
         protected void btnRechazar_ServerClick(object sender, EventArgs e)
@@ -621,29 +684,8 @@ namespace SegFact.Layouts1.SegFact
 
         private void CorreoRechazado(SPListItem RechazaContabilidad)
         {
-            string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                                  "<tr>" +
-                                    "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                                  "</tr>" +
-                                  "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>"+
-                                            "El Formulario " + RechazaContabilidad.ID + " fue rechazado." +
-                                            "<br>Motivo:" +
-                                                "<br>" + RechazaContabilidad["ObservacionesContabilidad"].ToString() + "." +
-                                            "<br><br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + RechazaContabilidad.ID + "'>Ir al registro " + RechazaContabilidad.ID + "</a>" +
-                                            "</p>" +
-                                    "</td>" +
-                                  "</tr>" +
-                                  "<tr>" +
-                                      "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                          "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                        "</td>" +
-                                  "</tr>" +
-                            "</tbody></table>"; 
-
-
-            SPUtility.SendEmail(SPContext.Current.Web, false, false, RechazaContabilidad["Email"].ToString().Trim(), RechazaContabilidad["CUIT"].ToString() + " - " + RechazaContabilidad["NumFact"].ToString(), sCorreo);
+            EnvioDeEmails("CPFRC", RechazaContabilidad);
+           
         }
 
         private void GuardarDatosHistorialContabilidad(int iIdFormulario)
@@ -677,27 +719,27 @@ namespace SegFact.Layouts1.SegFact
 
         private void CorreoContabilidadTesoreria(SPListItem pasarTesoreria)
         {
-            SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, pasarTesoreria["Author"].ToString());
-            string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                                    "<tr>" +
-                                        "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>" +
-                                                "El formulario " + pasarTesoreria.ID + " del usuario " + Usuario.User.Name + " ha cambiado su estado a TESORERIA" +
-                                                "<br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + pasarTesoreria.ID + "'>Ir al registro " + pasarTesoreria.ID + "</a>" +
-                                            "</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                "</tbody></table>";
-
-            SPUtility.SendEmail(SPContext.Current.Web, false, false, "tesoreria@ieasa.com.ar", pasarTesoreria["CUIT"].ToString() + " - " + pasarTesoreria["NumFact"].ToString(), sCorreo);
+            EnvioDeEmails("CTF", pasarTesoreria);
+            //SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, pasarTesoreria["Author"].ToString());
+            //string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
+            //                        "<tr>" +
+            //                            "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
+            //                        "</tr>" +
+            //                        "<tr>" +
+            //                            "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
+            //                                "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>" +
+            //                                    "El formulario " + pasarTesoreria.ID + " del usuario " + Usuario.User.Name + " ha cambiado su estado a TESORERIA" +
+            //                                    "<br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + pasarTesoreria.ID + "'>Ir al registro " + pasarTesoreria.ID + "</a>" +
+            //                                "</p>" +
+            //                            "</td>" +
+            //                        "</tr>" +
+            //                        "<tr>" +
+            //                            "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
+            //                                "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
+            //                            "</td>" +
+            //                        "</tr>" +
+            //                    "</tbody></table>";
+            //SPUtility.SendEmail(SPContext.Current.Web, false, false, "tesoreria@ieasa.com.ar", pasarTesoreria["CUIT"].ToString() + " - " + pasarTesoreria["NumFact"].ToString(), sCorreo);
         }
 
         private void GuardarDatosHistorialTesoreria(int iIdFormulario)
@@ -729,27 +771,28 @@ namespace SegFact.Layouts1.SegFact
 
         private void CorreoTesoreriaContabilidad(SPListItem pasarContabilidad)
         {
-            SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, pasarContabilidad["Author"].ToString());
-            string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
-                                    "<tr>" +
-                                        "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>" +
-                                                "El formulario " + pasarContabilidad.ID + " del usuario " + Usuario.User.Name + " ha cambiado su estado a CONTABILIDAD" +
-                                                "<br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + pasarContabilidad.ID + "'>Ir al registro " + pasarContabilidad.ID + "</a>" +
-                                            "</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                    "<tr>" +
-                                        "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
-                                            "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
-                                        "</td>" +
-                                    "</tr>" +
-                                "</tbody></table>";
+            EnvioDeEmails("CCF", pasarContabilidad);
+            //SPFieldUserValue Usuario = new SPFieldUserValue(SPContext.Current.Web, pasarContabilidad["Author"].ToString());
+            //string sCorreo = "<table style='height: 160px;' border='0' width='606' cellspacing='0' cellpadding='0' align='center'><tbody>" +
+            //                        "<tr>" +
+            //                            "<td bgcolor='#0a4e9a'><img src='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/img/Captura.PNG' alt='Logo IEASA' width='606'></td>" +
+            //                        "</tr>" +
+            //                        "<tr>" +
+            //                            "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
+            //                                "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>" +
+            //                                    "El formulario " + pasarContabilidad.ID + " del usuario " + Usuario.User.Name + " ha cambiado su estado a CONTABILIDAD" +
+            //                                    "<br><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/Registro.aspx?ID=" + pasarContabilidad.ID + "'>Ir al registro " + pasarContabilidad.ID + "</a>" +
+            //                                "</p>" +
+            //                            "</td>" +
+            //                        "</tr>" +
+            //                        "<tr>" +
+            //                            "<td valign='top' bgcolor='#f7f7f7' style='padding:0px 15px' colspan='2'>" +
+            //                                "<p style='font-family: Open Sans, sans-serif; font-size: 13px; font-weight: bold; line-height: 28px;'>Saludos</p>" +
+            //                            "</td>" +
+            //                        "</tr>" +
+            //                    "</tbody></table>";
 
-            SPUtility.SendEmail(SPContext.Current.Web, false, false, "cuentasapagar@ieasa.com.ar", pasarContabilidad["CUIT"].ToString() + " - " + pasarContabilidad["NumFact"].ToString(), sCorreo);
+            //SPUtility.SendEmail(SPContext.Current.Web, false, false, "cuentasapagar@ieasa.com.ar", pasarContabilidad["CUIT"].ToString() + " - " + pasarContabilidad["NumFact"].ToString(), sCorreo);
             //SPUtility.SendEmail(SPContext.Current.Web, false, false, "cgperez@nacionservicios.com.ar", pasarContabilidad["CUIT"].ToString() + " - " + pasarContabilidad["NumFact"].ToString(), sCorreo);
         }
 

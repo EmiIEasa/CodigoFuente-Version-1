@@ -655,12 +655,13 @@
                     <div class="col-12 col-sm-3 my-1">
                         <button id="btnAprobarCompras" type="button" class="btn btn-success btn-block" style="height: 62px;" runat="server" onserverclick="btnAprobarCompras_ServerClick" AutoPostBack = "true"><i class="fas fa-check"></i> Aprobar</button>
                     </div>
+                     <div class="col-12 col-sm-3 my-1">
+                        <button id="btnSubsanarCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-warning btn-block" style="height: 62px;" runat="server" onserverclick="btnSubsanandoCompras_ServerClick"><i class="fas fa-wrench"></i> Subsanar</button>
+                    </div>
                     <div class="col-12 col-sm-3 my-1">
                         <button id="btnRechazarCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-info btn-block" style="height: 62px;" runat="server" onserverclick="btnRechazarCompras_ServerClick"><i class="fas fa-times-circle"></i> Rechazar</button>
                     </div>
-                    <div class="col-12 col-sm-3 my-1">
-                        <button id="btnSubsanarCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-warning btn-block" style="height: 62px;" runat="server" onserverclick="btnSubsanandoCompras_ServerClick"><i class="fas fa-wrench"></i> Subsanado</button>
-                    </div>
+                   
                     <div class="col-12 col-sm-3 my-1">
                         <button id="btnSuspenderCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-danger btn-block" style="height: 62px;" runat="server" onserverclick="btnSuspenderCompras_ServerClick"><i class="fas fa-lock"></i> Suspendidos-Bloqueado</button>
                     </div>
