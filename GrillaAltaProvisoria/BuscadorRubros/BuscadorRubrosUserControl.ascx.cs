@@ -203,7 +203,7 @@ namespace GrillaAltaProvisoria.BuscadorRubros
                             if (Item != null)
                             {
                                 LtTablaRama.Text += "<tr>" +
-                                                        "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ieasa/altaprovisoria.aspx?ID=" + Rubro["IDRegistro"].ToString() + "' class='alert-link' target='_blank'> " + Rubro["IDRegistro"].ToString() + "</a></td>" +
+                                                        "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/altaprovisoria.aspx?ID=" + Rubro["IDRegistro"].ToString() + "' class='alert-link' target='_blank'> " + Rubro["IDRegistro"].ToString() + "</a></td>" +
                                                         "<td>" + (Item["Title"] != null && !string.IsNullOrEmpty(Item["Title"].ToString()) ? Item["Title"].ToString() : String.Empty) + "</td>" +
                                                         "<td style='Background-Color:" + SetColorEstado((Item["Estado"] != null && !string.IsNullOrEmpty(Item["Estado"].ToString()) ? Item["Estado"].ToString() : String.Empty)) + "'>" + (Item["Estado"] != null && !string.IsNullOrEmpty(Item["Estado"].ToString()) ? Item["Estado"].ToString() : String.Empty) + "</td>" +
                                                         "<td>" + (Item["RazonSocial"] != null && !string.IsNullOrEmpty(Item["RazonSocial"].ToString()) ? Item["RazonSocial"].ToString() : String.Empty) + "</td>" +

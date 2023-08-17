@@ -21,7 +21,7 @@ namespace SegFact.Layouts1.SegFact
 {
     public partial class Registro : LayoutsPageBase
     {
-        private string sSitioAnonimo= "https://proveedores-an.ieasa.com.ar/";
+        private string sSitioAnonimo= "https://proveedores-an.energia-argentina.com.ar/";
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {

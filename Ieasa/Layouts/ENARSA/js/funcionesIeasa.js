@@ -73,16 +73,16 @@ function buscadorRubro() {
 function cerrar() {
     //location.href = 'http://ibiza:2222/sites/formularios/Lists/AltaProvisoria/AllItems.aspx';
     //location.href = 'https://proveedores-desa.ieasa.com.ar/Lists/AltaProvisoria/AllItems.aspx';
-    location.href = 'https://portalproveedores.ieasa.com.ar/Lists/AltaProvisoria/AllItems.aspx';
+    location.href = 'https://portalproveedores.energia-argentina.com.ar/Lists/AltaProvisoria/AllItems.aspx';
 }
 function cerrarHome() {
-    location.href = window.location.protocol + '//' + window.location.hostname + '/SitePages/IEASA_MP.aspx';
+    location.href = window.location.protocol + '//' + window.location.hostname + '/SitePages/ENARSA_MP.aspx';
 }
 function cerrarCompras() {
     location.href = window.location.protocol + '//' + window.location.hostname + '/INFO/Compras.aspx';
 }
 function cerrarAnonimo() {
-    location.href = window.location.protocol + '//' + window.location.hostname + '/SitePages/IEASA_MP.aspx';
+    location.href = window.location.protocol + '//' + window.location.hostname + '/SitePages/ENARSA_MP.aspx';
 }
 
 function cerrarIrDatos() {

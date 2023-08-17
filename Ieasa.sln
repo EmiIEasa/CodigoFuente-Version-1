@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.33529.398
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ieasa", "Ieasa\Ieasa.csproj", "{14EE2383-B26E-457C-BD1A-9B0731D343C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENARSA", "Ieasa\ENARSA.csproj", "{14EE2383-B26E-457C-BD1A-9B0731D343C9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegFact", "SegFact\SegFact.csproj", "{7D389C12-C293-4628-851B-ED3996A86ECE}"
 EndProject

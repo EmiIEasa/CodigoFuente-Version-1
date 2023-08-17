@@ -19,9 +19,9 @@ namespace Ieasa.Layouts.Ieasa
 {
     public partial class AltaProvisoria : UnsecuredLayoutsPageBase
     {
-        private string sSitioAnonimo = "https://proveedores-an.ieasa.com.ar/";
-        private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
-        //private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
+        private string sSitioAnonimo = "https://proveedores-an.energia-argentina.com.ar/";
+        //private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
+        private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -672,7 +672,7 @@ namespace Ieasa.Layouts.Ieasa
                             htmlCorreoCNRP = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                             destinatarioCorreoCNRP = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                         }
-                        htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtNomFantasia.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
+                        htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
                         SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCNRP, "Alta Portal Proveedores", htmlCorreoCNRP);
                         break;
                     case "CCM":
@@ -688,7 +688,7 @@ namespace Ieasa.Layouts.Ieasa
                             htmlCorreoCCM = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                             destinatarioCorreoCCM = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                         }
-                        htmlCorreoCNRP = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
+                        htmlCorreoCNRP = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                         SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCM, "Alta Portal Proveedores", htmlCorreoCCM);
                         break;
                    
@@ -736,7 +736,7 @@ namespace Ieasa.Layouts.Ieasa
                                     htmlCorreoCNRP = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                                     destinatarioCorreoCNRP = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                                 }
-                                htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtNomFantasia.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
+                                htmlCorreoCNRP = htmlCorreoCNRP.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##RAZONSOCIAL##", txtRazonSocial.Text).Replace("##DIAHORAACTUAL##", DateTime.Today.ToShortDateString());
                                 SPUtility.SendEmail(site.OpenWeb(), false, false, destinatarioCorreoCNRP, "Alta Portal Proveedores", htmlCorreoCNRP);
 
                             }
@@ -766,7 +766,7 @@ namespace Ieasa.Layouts.Ieasa
                         htmlCorreoCCM = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                         destinatarioCorreoCCM = (item["UsuariosPara"] != null && !string.IsNullOrEmpty(item["UsuariosPara"].ToString()) ? item["UsuariosPara"].ToString() : String.Empty);
                     }
-                    htmlCorreoCCM = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
+                    htmlCorreoCCM = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCM, "Alta Portal Proveedores", htmlCorreoCCM);
                     break;
                 case "CPSA":
@@ -781,9 +781,25 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         htmlCorreoCPSA = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
-                        htmlCorreoCPSA = htmlCorreoCPSA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + RegistroExistente.ID.ToString());
+                        htmlCorreoCPSA = htmlCorreoCPSA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/info/MISDATOS.ASPX");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSA);
                     break;
+                case "CPSMA":
+                    //CORREO A PROVEEDOR REGISTRO MODIFICADO APROBADO
+                    string QuerySTRCPMSA = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPSMA</Value></Eq></Where></Query></View>";
+                    SPQuery queryCPSMA = new SPQuery();
+                    queryCPSMA.ViewXml = QuerySTRCPMSA;
+                    SPListItemCollection ListaABMCPSMA = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPSMA);
+                    string htmlCorreoCPSMA = "";
+
+                    foreach (SPListItem item in ListaABMCPSMA)
+                    {
+                        htmlCorreoCPSMA = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                    }
+                    htmlCorreoCPSMA = htmlCorreoCPSMA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/info/MISDATOS.ASPX");
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSMA);
+                    break;
+                    
                 case "CPSR":
                     //CORREO A PROVEEDOR REGISTRO RECHAZADO
                     string QuerySTRCPSR = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPSR</Value></Eq></Where></Query></View>";
@@ -808,6 +824,8 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         htmlCorreoCPSS = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
+                    htmlCorreoCPSS = htmlCorreoCPSS.Replace("##OBSERVACIONES##", RegistroExistente["ObservacionesCompras"].ToString()).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
+                    
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSS.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
                 case "CPSSB":
@@ -824,18 +842,11 @@ namespace Ieasa.Layouts.Ieasa
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSSB.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
             }
-                
-                
-           
         }
         protected void EnvioDeEmails(string Autenticacion, string CodigoEmail, string ID, SPListItem RegistroExistente,string Usuario, string Password)
         {
-           
-
-
             switch (CodigoEmail)
             {
-
                 case "CPUC":
                     //CORREO A CONTABILIDAD POR MODIFICACION
                     string QuerySTRCPUC = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPUC</Value></Eq></Where></Query></View>";
@@ -852,11 +863,7 @@ namespace Ieasa.Layouts.Ieasa
                     htmlCorreoCPUC = htmlCorreoCPUC.Replace("##URL##", sSitio).Replace("##PASWORD##", Password).Replace("##CUIT##", Usuario).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString().Trim(), "Alta Portal Proveedores", htmlCorreoCPUC);
                     break;
-               
             }
-
-
-
         }
         protected void btnGuardar(object sender, EventArgs e)
         {
@@ -1038,12 +1045,14 @@ namespace Ieasa.Layouts.Ieasa
                 else
                 {
                     Registro["Estado"] = "Pendiente";
+                    Registro["RegistroModificado"] = "SI";
                     CorreoComprasModificacion(Request.QueryString["ID"]);
                 }
             }
             else
             {
                 Registro["Estado"] = "Pendiente";
+                Registro["RegistroModificado"] = "NO";
             }
             //Datos Generales
             Registro["NombreFantasia"] = (txtRazonSocial.Text != null && !string.IsNullOrEmpty(txtRazonSocial.Text) ? txtRazonSocial.Text : String.Empty);
@@ -1375,7 +1384,6 @@ namespace Ieasa.Layouts.Ieasa
         {
             SPSecurity.RunWithElevatedPrivileges(delegate()
             {
-               
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
                 bool _showRoles = (new MembershipSettings(SPContext.Current.Web)).EnableRoles;
                 MembershipUser user = null;
@@ -1383,12 +1391,10 @@ namespace Ieasa.Layouts.Ieasa
                 {
                     user = Utils.BaseMembershipProvider().GetUser(RegistroExistente["Cuit"].ToString(), false);
                 }
-               
                 if (RegistroExistente["CodigoExtranjero"] != null && !string.IsNullOrEmpty(RegistroExistente["CodigoExtranjero"].ToString()))
                 {
                     user = Utils.BaseMembershipProvider().GetUser(RegistroExistente["CodigoExtranjero"].ToString(), false);
                 }
-               
                 //SI EL CUIT NO ESTA VACIO, EL PROVEEDOR ES NACIOAL
                 SPUser Usuario = null;
                 string sMensaje = string.Empty;
@@ -1400,7 +1406,6 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         try
                         {
-                            
                             // get site reference             
                             string provider = Utils.GetMembershipProvider(this.Site);
                             // create FBA database user
@@ -1478,13 +1483,16 @@ namespace Ieasa.Layouts.Ieasa
                             Usuario.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Usuario.Update();
                         }
-                        catch (Exception EX)
-                        {
-                          
-                        }
+                        catch (Exception EX){}
                     }
-                  
-                    EnvioDeEmails("LOGIN", "CPSA", "0", RegistroExistente);
+                    if (RegistroExistente["RegistroModificado"] != null && RegistroExistente["RegistroModificado"].ToString() == "SI")
+                    {
+                        EnvioDeEmails("LOGIN", "CPSMA", "0", RegistroExistente);
+                    }
+                    else
+                    {
+                        EnvioDeEmails("LOGIN", "CPSA", "0", RegistroExistente);
+                    }
                     RegistroExistente["ObservacionesCompras"] = (txtObsCompras.Text != null && !string.IsNullOrEmpty(txtObsCompras.Text) ? txtObsCompras.Text : String.Empty);
                     RegistroExistente["Estado"] = "Aprobado";
                     if (UsuarioCreado == true)
@@ -1497,10 +1505,7 @@ namespace Ieasa.Layouts.Ieasa
                         SPUser UsuarioCreador = null;
                         if (RegistroExistente["Cuit"] != null && !string.IsNullOrEmpty(RegistroExistente["Cuit"].ToString()))
                         {
-
                             UsuarioCreador =  SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString());
-
-
                         }
                         if (RegistroExistente["CodigoExtranjero"] != null && !string.IsNullOrEmpty(RegistroExistente["CodigoExtranjero"].ToString()))
                         {

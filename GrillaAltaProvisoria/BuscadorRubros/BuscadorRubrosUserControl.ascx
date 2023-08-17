@@ -60,7 +60,7 @@
 		}
 		function abreFormReq() {
 		    //location.replace('../../_layouts/15/ReclamosPPT/registro.aspx');
-		    window.open("../../_layouts/15/Ieasa/AltaProvisoria.aspx", "_self")
+		    window.open("../../_layouts/15/ENARSA/AltaProvisoria.aspx", "_self")
 		}
 		jQuery(document).ready(function () {
 

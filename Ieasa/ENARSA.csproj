@@ -79,11 +79,11 @@
   <ItemGroup>
     <Compile Include="Layouts\Email.cs" />
     <Compile Include="Layouts\FBADiagnosticsService.cs" />
-    <Compile Include="Layouts\Ieasa\AltaProvisoria.aspx.cs">
+    <Compile Include="Layouts\ENARSA\AltaProvisoria.aspx.cs">
       <DependentUpon>AltaProvisoria.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Layouts\Ieasa\AltaProvisoria.aspx.designer.cs">
+    <Compile Include="Layouts\ENARSA\AltaProvisoria.aspx.designer.cs">
       <DependentUpon>AltaProvisoria.aspx.cs</DependentUpon>
     </Compile>
     <Compile Include="Layouts\LocalizedString.cs" />
@@ -94,9 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />
-    <Content Include="Layouts\Ieasa\css\chosen-sprite.png" />
-    <Content Include="Layouts\Ieasa\css\chosen.css" />
-    <Content Include="Layouts\Ieasa\fuente\Ubuntu-Regular.ttf" />
+    <Content Include="Layouts\ENARSA\css\chosen-sprite.png" />
+    <Content Include="Layouts\ENARSA\css\chosen.css" />
+    <Content Include="Layouts\ENARSA\fuente\Ubuntu-Regular.ttf" />
     <None Include="Layouts\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{b788b980-1e6a-47a8-b69c-4462703cb2d4}</SharePointProjectItemId>
     </None>
@@ -111,22 +111,22 @@
     <Folder Include="Features\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Layouts\Ieasa\AltaProvisoria.aspx" />
-    <Content Include="Layouts\Ieasa\css\4-3-1-bootstrap.min.css" />
-    <Content Include="Layouts\Ieasa\css\estilosIeasa.css" />
-    <Content Include="Layouts\Ieasa\css\tempusdominus-bootstrap-4.min.css" />
-    <Content Include="Layouts\Ieasa\img\calendarB4.png" />
-    <Content Include="Layouts\Ieasa\img\Captura.PNG" />
-    <Content Include="Layouts\Ieasa\img\Logo.png" />
-    <Content Include="Layouts\Ieasa\js\1-14-7-popper.min.js" />
-    <Content Include="Layouts\Ieasa\js\3-4-1-jquery.min.js" />
-    <Content Include="Layouts\Ieasa\js\4-3-1-bootstrap.min.js" />
-    <Content Include="Layouts\Ieasa\js\chosen.jquery.js" />
-    <Content Include="Layouts\Ieasa\js\fontAwesome.js" />
-    <Content Include="Layouts\Ieasa\js\funcionesIeasa.js" />
-    <Content Include="Layouts\Ieasa\js\jquery.MultiFile.js" />
-    <Content Include="Layouts\Ieasa\js\moment-with-locales.js" />
-    <Content Include="Layouts\Ieasa\js\tempusdominus-bootstrap-4.js" />
+    <Content Include="Layouts\ENARSA\AltaProvisoria.aspx" />
+    <Content Include="Layouts\ENARSA\css\4-3-1-bootstrap.min.css" />
+    <Content Include="Layouts\ENARSA\css\estilosIeasa.css" />
+    <Content Include="Layouts\ENARSA\css\tempusdominus-bootstrap-4.min.css" />
+    <Content Include="Layouts\ENARSA\img\calendarB4.png" />
+    <Content Include="Layouts\ENARSA\img\Captura.PNG" />
+    <Content Include="Layouts\ENARSA\img\Logo.png" />
+    <Content Include="Layouts\ENARSA\js\1-14-7-popper.min.js" />
+    <Content Include="Layouts\ENARSA\js\3-4-1-jquery.min.js" />
+    <Content Include="Layouts\ENARSA\js\4-3-1-bootstrap.min.js" />
+    <Content Include="Layouts\ENARSA\js\chosen.jquery.js" />
+    <Content Include="Layouts\ENARSA\js\fontAwesome.js" />
+    <Content Include="Layouts\ENARSA\js\funcionesIeasa.js" />
+    <Content Include="Layouts\ENARSA\js\jquery.MultiFile.js" />
+    <Content Include="Layouts\ENARSA\js\moment-with-locales.js" />
+    <Content Include="Layouts\ENARSA\js\tempusdominus-bootstrap-4.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

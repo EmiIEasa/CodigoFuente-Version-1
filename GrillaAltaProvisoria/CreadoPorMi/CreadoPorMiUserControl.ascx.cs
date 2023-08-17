@@ -41,7 +41,7 @@ namespace GrillaAltaProvisoria.CreadoPorMi
             foreach (SPListItem Facturas in ListaAlta)
             {
                 ltTablaPendiente.Text += "<tr>" +
-                                            "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
+                                            "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
                                             "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
@@ -56,7 +56,7 @@ namespace GrillaAltaProvisoria.CreadoPorMi
             foreach (SPListItem Facturas in ListaAprobados)
             {
                 ltTablaAprobado.Text += "<tr>" +
-                                            "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
+                                            "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
                                             "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
@@ -71,7 +71,7 @@ namespace GrillaAltaProvisoria.CreadoPorMi
             foreach (SPListItem Facturas in ListaRechazados)
             {
                 ltTablaRechazado.Text += "<tr>" +
-                                            "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/Ieasa/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
+                                            "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
                                             "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +

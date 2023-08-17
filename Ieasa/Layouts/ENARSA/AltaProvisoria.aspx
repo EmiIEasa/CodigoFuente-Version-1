@@ -8,21 +8,21 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AltaProvisoria.aspx.cs" Inherits="Ieasa.Layouts.Ieasa.AltaProvisoria" DynamicMasterPageFile="~masterurl/default.master" %>
 
 <asp:Content ID="PageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <link href="../../../../_layouts/15/Ieasa/css/4-3-1-bootstrap.min.css?version=1.0" rel="stylesheet" />
-    <link href="../../../../_layouts/15/Ieasa/css/estilosIeasa.css?version=1.0" rel="stylesheet" />
-    <link href="../../../../_layouts/15/Ieasa/css/tempusdominus-bootstrap-4.min.css?version=1.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/ENARSA/css/4-3-1-bootstrap.min.css?version=2.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/ENARSA/css/estilosIeasa.css?version=2.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/ENARSA/css/tempusdominus-bootstrap-4.min.css?version=2.0" rel="stylesheet" />
 
-    <script src="../../../../_layouts/15/Ieasa/js/3-4-1-jquery.min.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/3-4-1-jquery.min.js?version=2.0" type="text/javascript"></script>
     
-    <script src="../../../../_layouts/15/Ieasa/js/fontAwesome.js?version=1.0" crossorigin="anonymous" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/1-14-7-popper.min.js?version=1.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/4-3-1-bootstrap.min.js?version=1.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/funcionesIeasa.js?version=1.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/jquery.MultiFile.js?version=1.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/moment-with-locales.js?version=1.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/Ieasa/js/tempusdominus-bootstrap-4.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/fontAwesome.js?version=2.0" crossorigin="anonymous" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/1-14-7-popper.min.js?version=2.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/4-3-1-bootstrap.min.js?version=2.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/funcionesIeasa.js?version=2.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/jquery.MultiFile.js?version=2.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/moment-with-locales.js?version=2.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/tempusdominus-bootstrap-4.js?version=2.0" type="text/javascript"></script>
 
-    <script src="../../../../_layouts/15/Ieasa/js/chosen.jquery.js?version=1.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/chosen.jquery.js?version=2.0" type="text/javascript"></script>
     <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>
     <style>
 		a img{border: none;}
@@ -45,13 +45,13 @@
             padding: 0.5rem .05rem !important;
         }
 	</style>
-	<link rel="stylesheet" href="../../../../_layouts/15/Ieasa/css/chosen.css?version=1.0" />
+	<link rel="stylesheet" href="../../../../_layouts/15/ENARSA/css/chosen.css?version=1.0" />
 </asp:Content>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
     <div class="container contenedor rounded-lg" style="padding-bottom: 15px" id="formPrincipal">
         <div class="row text-center px-0 banner pb-2">
-            <div class="col-3"><img width="150" class="img-fluid" src="../../../../_layouts/15/Ieasa/img/Logo.png" alt="Logo - IEASA"></div>
+            <div class="col-3"><img width="150" class="img-fluid" src="../../../../_layouts/15/ENARSA/img/Logo.png" alt="Logo - ENARSA"></div>
             <div class="col-8 text-center align-middle" style="color: white; font-family: Ubuntu; font-size: 28px; font-weight: 700;">Formulario de Alta / Actualización de Datos</div>
         </div>
         <div class="row" >
@@ -663,7 +663,7 @@
                     </div>
                    
                     <div class="col-12 col-sm-3 my-1">
-                        <button id="btnSuspenderCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-danger btn-block" style="height: 62px;" runat="server" onserverclick="btnSuspenderCompras_ServerClick"><i class="fas fa-lock"></i> Suspendidos-Bloqueado</button>
+                        <button id="btnSuspenderCompras" onclick="if (!validaCamposCompras()) return;" type="button" class="btn btn-danger btn-block" style="height: 62px;" runat="server" onserverclick="btnSuspenderCompras_ServerClick"><i class="fas fa-lock"></i> Suspendido-Bloqueado</button>
                     </div>
                     <br><br>
                       <asp:Literal ID="LtUsuario" runat="server"></asp:Literal>
@@ -709,7 +709,7 @@
         <div class="modal" id="myModal">
              <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" style="background:url('../Ieasa/img/Logo.png'); background-position-y: center; background-size:30%; background-color:#0a4e9a; background-position-x: 20px; background-repeat: no-repeat;">
+                    <div class="modal-header" style="background:url('../ENARSA/img/Logo.png'); background-position-y: center; background-size:30%; background-color:#0a4e9a; background-position-x: 20px; background-repeat: no-repeat;">
                         <h4 class="modal-title" style="color: white; margin-top: 0px !important; margin-bottom: 0px !important; margin-left: 190px; font-size: 19px; font-weight: bold;">Alta Proveedores</h4>
                     </div>
                      <div class="modal-body" id="guardar" style="padding: 13px !important;">
