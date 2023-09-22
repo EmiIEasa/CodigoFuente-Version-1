@@ -102,10 +102,12 @@
         <li class="nav-item bg-light">
             <a class="nav-link" id="pestAprobado" data-toggle="pill" href="#aprobado"><i class="fas fa-check"></i> Aprobados</a>
         </li>
-        <li class="nav-item bg-light">
+        <%--<li class="nav-item bg-light">
             <a class="nav-link" id="pestRechazado" data-toggle="pill" href="#rechazado"><i class="fas fa-times-circle"></i> Rechazados</a>
+        </li>--%>
+        <li class="nav-item bg-light">
+            <a class="nav-link" id="pestRechazado" data-toggle="pill" href="#preinscripto"><i class="fas fa-times-circle"></i> Pre-Inscriptos</a>
         </li>
-        
         <li class="nav-item bg-light">
             <a class="nav-link" id="pestSuspBloq" data-toggle="pill" href="#suspBloq"><i class="fas fa-lock"></i> Suspendidos/Bloqueados</a>
         </li>
@@ -117,8 +119,9 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-                        <th>Nombre Fantasía</th>
                         <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
+
                         <th>Actividad Principal</th>
 					</tr>
 				</thead>
@@ -132,8 +135,9 @@
 			    <thead>
 				    <tr>
 					    <th>ID</th>
-                        <th>Nombre Fantasía</th>
+                        
                         <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>
@@ -147,9 +151,8 @@
 			    <thead>
 				    <tr>
 					    <th>ID</th>
-                        <th>Nombre Fantasía</th>
                         <th>Razón Social</th>
-                        
+                        <th>Nombre Fantasía</th>
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>
@@ -158,18 +161,22 @@
 			    </tbody>
 		    </table>
 	    </div>
-        <div id="rechazado" class="container-fluid tab-pane fade"><br>
+        <div id="preinscripto" class="container-fluid tab-pane fade"><br>
 	        <table id="example2" class="table table-striped table-bordered table-hover" style="width:100%">
 			    <thead>
 				    <tr>
 					    <th>ID</th>
-                        <th>Nombre Fantasía</th>
                         <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
+
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>
-			    <tbody>
+			    <%--<tbody>
                     <asp:Literal ID="ltTablaRechazado" runat="server"></asp:Literal>
+			    </tbody>--%>
+                <tbody>
+                    <asp:Literal ID="ltTablaPrInscriptos" runat="server"></asp:Literal>
 			    </tbody>
 		    </table>
 	    </div>
@@ -179,8 +186,9 @@
 			    <thead>
 				    <tr>
 					    <th>ID</th>
-                        <th>Nombre Fantasía</th>
                         <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
+
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>

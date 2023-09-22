@@ -49,13 +49,13 @@ namespace GrillaAltaProvisoria.Compras {
         protected global::System.Web.UI.WebControls.Literal ltTablaAprobado;
         
         /// <summary>
-        /// ltTablaRechazado control.
+        /// ltTablaPrInscriptos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ltTablaRechazado;
+        protected global::System.Web.UI.WebControls.Literal ltTablaPrInscriptos;
         
         /// <summary>
         /// ltTablaSuspBloq control.

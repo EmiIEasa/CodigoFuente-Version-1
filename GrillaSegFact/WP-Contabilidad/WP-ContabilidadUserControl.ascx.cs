@@ -24,6 +24,7 @@ namespace GrillaSegFact.WP_Contabilidad
                 //  Refrescar();
             }
         }
+
         protected void GetTime(object sender, EventArgs e)
         {
             ltTablaContabilidadConOC.Text = "";
@@ -43,8 +44,8 @@ namespace GrillaSegFact.WP_Contabilidad
             sLimiteVista = this.WebPart.PropiedadLimiteVista;
             CargarTabla();
             txtHoraActualizacion.Text = DateTime.Now.ToString("hh:mm:ss tt");
-           
-
+            HiddenField1.Value = string.Empty;
+            cboEstado.SelectedIndex = 0;
         }
         private void CargarTabla()
         {
@@ -56,7 +57,7 @@ namespace GrillaSegFact.WP_Contabilidad
             foreach (SPListItem Facturas in ListaFact)
             {
                 ltTablaContabilidadConOC.Text += "<tr>" +
-                                                    "<td>" + "<div class='form-check'><label class='form-check-label' for='check1'><input type='checkbox' class='form-check-input' id='check1' name='option1' value='" + Facturas.ID.ToString() + "'><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/registro.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></label></div></td>" +
+                                                    "<td>" + "<div class='form-check'><label class='form-check-label' for='check12'><input type='checkbox' class='form-check-input checkbox-class1' data-id='" + Facturas.ID.ToString() + "' id='" + Facturas.ID.ToString() + "' name='option1' value='" + Facturas.ID.ToString() + "'><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/registro.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></label></div></td>" +
                                                     "<td style='Background-Color:" + SetColorEstado((Facturas["Estado"] != null && !string.IsNullOrEmpty(Facturas["Estado"].ToString()) ? Facturas["Estado"].ToString() : String.Empty)) + "'>" + (Facturas["Estado"] != null && !string.IsNullOrEmpty(Facturas["Estado"].ToString()) ? Facturas["Estado"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["CUIT"] != null && !string.IsNullOrEmpty(Facturas["CUIT"].ToString()) ? Facturas["CUIT"].ToString() : String.Empty) + "</td>" +
@@ -81,7 +82,7 @@ namespace GrillaSegFact.WP_Contabilidad
             foreach (SPListItem Facturas in ListaFactSOC)
             {
                 ltTablaContabilidadSinOC.Text += "<tr>" +
-                                                    "<td>" + "<div class='form-check'><label class='form-check-label' for='check1'><input type='checkbox' class='form-check-input' id='check1' name='option1' value='" + Facturas.ID.ToString() + "'><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/registro.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></label></div></td>" +
+                                                    "<td>" + "<div class='form-check'><label class='form-check-label' for='check1'><input type='checkbox' class='form-check-input checkbox-class2' data-id='" + Facturas.ID.ToString() + "' id='" + Facturas.ID.ToString() + "' name='option1' value='" + Facturas.ID.ToString() + "'><a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/registro.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></label></div></td>" +
                                                     "<td style='Background-Color:" + SetColorEstado((Facturas["Estado"] != null && !string.IsNullOrEmpty(Facturas["Estado"].ToString()) ? Facturas["Estado"].ToString() : String.Empty)) + "'>" + (Facturas["Estado"] != null && !string.IsNullOrEmpty(Facturas["Estado"].ToString()) ? Facturas["Estado"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["CUIT"] != null && !string.IsNullOrEmpty(Facturas["CUIT"].ToString()) ? Facturas["CUIT"].ToString() : String.Empty) + "</td>" +
@@ -102,17 +103,18 @@ namespace GrillaSegFact.WP_Contabilidad
         }
         protected void BtnCambiarEstado_ServerClick(object sender, EventArgs e)
         {
-            int cantRegSel = HiddenField1.Value.Split(',').Length;
-            for (int i = 0; i < cantRegSel; i++)
+            string[] cantRegSel = HiddenField1.Value.Remove(0,1).Split(',');
+
+            for (int i = 0; i < cantRegSel.Length; i++)
             {
-                var id = HiddenField1.Value.Split(',')[i];
+                string id = cantRegSel[i];
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["SegFact"].GetItemById(int.Parse(id));
                 string sEstado = cboEstado.SelectedItem.Text;
                 string sEventoHistorial = string.Empty;
                 RegistroExistente["Estado"] = cboEstado.SelectedItem.Text;
                 RegistroExistente["ObservacionesContabilidad"] = (txtRechazo.Text != null && !string.IsNullOrEmpty(txtRechazo.Text) ? txtRechazo.Text : String.Empty);
                 RegistroExistente.Update();
-                Refrescar();
+              
                 switch (sEstado)
                 {
                     case "PENDIENTE DE RECEPCIÓN":
@@ -132,6 +134,7 @@ namespace GrillaSegFact.WP_Contabilidad
                 }
                 GuardarDatosHistorial(RegistroExistente.ID, sEventoHistorial, sEstado);
             }
+            Refrescar();
         }
         protected void EnvioDeEmails(string CodigoEmail, SPListItem RegistroExistente)
         {

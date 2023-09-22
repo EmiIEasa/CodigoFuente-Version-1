@@ -10,14 +10,17 @@ namespace GrillaSegFact.WP_Buscador
     public partial class WP_BuscadorUserControl : UserControl
     {
         public WP_Buscador WebPart { get; set; }
-        public string sLimiteVista = string.Empty;
+        public string sLimiteVistaBuscador = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
+         this.WebPart = this.Parent as WP_Buscador;
+            sLimiteVistaBuscador = this.WebPart.PropiedadLimiteVistaBuscador;
             if (!IsPostBack)
             {
-                this.WebPart = this.Parent as WP_Buscador;
-                sLimiteVista = this.WebPart.PropiedadLimiteVista;
+
+              
                 alertaCamposComp.Visible = true;
+               
             }
         }
         private string SetColorEstado(string sEstado)
@@ -60,7 +63,8 @@ namespace GrillaSegFact.WP_Buscador
             {
                 string QuerySTR = string.Empty;
                 SPQuery query = new SPQuery();
-                QuerySTR = "<View><Query><Where><Contains><FieldRef Name='" + cboCampos.SelectedValue + "' /><Value Type='Text'>" + txtValorB.Text + "</Value></Contains></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query></View>";
+                QuerySTR = "<View><Query><Where><Contains><FieldRef Name='" + cboCampos.SelectedValue + "' /><Value Type='Text'>" + txtValorB.Text + "</Value></Contains></Where><OrderBy><FieldRef Name='Created' Ascending='False' /></OrderBy></Query>" +
+                            "<RowLimit>" + sLimiteVistaBuscador + "</RowLimit></View>";
                 query.ViewXml = QuerySTR;
                 SPListItemCollection ListaReclamos = SPContext.Current.Web.Lists["SegFact"].GetItems(query);
                 LtTablaFacturas.Text = "";
@@ -69,19 +73,19 @@ namespace GrillaSegFact.WP_Buscador
                     alertaNoResultado.Visible = true;
                     pnlTabla.Visible = false;
                 }
-                    alertaMasCarac.Visible = false;
-                    pnlTabla.Visible = true;
-                    foreach (SPListItem Reclamos in ListaReclamos)
-                    {
-                        LtTablaFacturas.Text += "<tr>" +
-                                                    "<td>" + "<div class='form-check'><label class='form-check-label' for='check1'><input type='checkbox' class='form-check-input' id='check1' name='option1' value='" + Reclamos.ID.ToString() + "'>"+"<a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/registro.aspx?ID=" + Reclamos.ID.ToString() + "' class='alert-link'>" + Reclamos.ID.ToString() + "</a></td>" +
-                                                    "<td style='Background-Color:" + SetColorEstado((Reclamos["Estado"] != null && !string.IsNullOrEmpty(Reclamos["Estado"].ToString()) ? Reclamos["Estado"].ToString() : String.Empty)) + "'>" + (Reclamos["Estado"] != null && !string.IsNullOrEmpty(Reclamos["Estado"].ToString()) ? Reclamos["Estado"].ToString() : String.Empty) + "</td>" +
-                                                    "<td>" + (Reclamos["RazonSocial"] != null && !string.IsNullOrEmpty(Reclamos["RazonSocial"].ToString()) ? Reclamos["RazonSocial"].ToString() : String.Empty) + "</td>" +
-                                                    "<td>" + (Reclamos["CUIT"] != null && !string.IsNullOrEmpty(Reclamos["CUIT"].ToString()) ? Reclamos["CUIT"].ToString() : String.Empty) + "</td>" +
-                                                    "<td>" + (Reclamos["NumFact"] != null && !string.IsNullOrEmpty(Reclamos["NumFact"].ToString()) ? Reclamos["NumFact"].ToString() : String.Empty) + "</td>" +
-                                                "</tr>";
-                    }
-            
+                alertaMasCarac.Visible = false;
+                pnlTabla.Visible = true;
+                foreach (SPListItem Reclamos in ListaReclamos)
+                {
+                    LtTablaFacturas.Text += "<tr>" +
+                                                "<td>" + "<div class='form-check'><label class='form-check-label' for='check1'><input type='checkbox' class='form-check-input checkbox-class' id='check1' name='option1' value='" + Reclamos.ID.ToString() + "' data-id='" + Reclamos.ID.ToString() + "'>"+"<a href='" + SPContext.Current.Web.Url + "/_layouts/15/SegFact/registro.aspx?ID=" + Reclamos.ID.ToString() + "' class='alert-link'>" + Reclamos.ID.ToString() + "</a></td>" +
+                                                "<td style='Background-Color:" + SetColorEstado((Reclamos["Estado"] != null && !string.IsNullOrEmpty(Reclamos["Estado"].ToString()) ? Reclamos["Estado"].ToString() : String.Empty)) + "'>" + (Reclamos["Estado"] != null && !string.IsNullOrEmpty(Reclamos["Estado"].ToString()) ? Reclamos["Estado"].ToString() : String.Empty) + "</td>" +
+                                                "<td>" + (Reclamos["RazonSocial"] != null && !string.IsNullOrEmpty(Reclamos["RazonSocial"].ToString()) ? Reclamos["RazonSocial"].ToString() : String.Empty) + "</td>" +
+                                                "<td>" + (Reclamos["CUIT"] != null && !string.IsNullOrEmpty(Reclamos["CUIT"].ToString()) ? Reclamos["CUIT"].ToString() : String.Empty) + "</td>" +
+                                                "<td>" + (Reclamos["NumFact"] != null && !string.IsNullOrEmpty(Reclamos["NumFact"].ToString()) ? Reclamos["NumFact"].ToString() : String.Empty) + "</td>" +
+                                            "</tr>";
+                }
+               
             }
             else
             {
@@ -107,7 +111,7 @@ namespace GrillaSegFact.WP_Buscador
                 RegistroExistente["Estado"] = cboEstado.SelectedItem.Text;
                 RegistroExistente["ObservacionesContabilidad"] = (txtRechazo.Text != null && !string.IsNullOrEmpty(txtRechazo.Text) ? txtRechazo.Text : String.Empty);
                 RegistroExistente.Update();
-                Refrescar();
+             
                 switch (sEstado)
                 {
                     case "PENDIENTE DE RECEPCIÓN":
@@ -127,6 +131,7 @@ namespace GrillaSegFact.WP_Buscador
                 }
                 GuardarDatosHistorial(RegistroExistente.ID, sEventoHistorial, sEstado);
             }
+            Refrescar();
         }
         private void GuardarDatosHistorial(int iIdFormulario, string sEventoHistorial, string sEstado)
         {
@@ -193,7 +198,7 @@ namespace GrillaSegFact.WP_Buscador
             LtTablaFacturas.Text = "";
             txtValorB.Focus();
             this.WebPart = this.Parent as WP_Buscador;
-            sLimiteVista = this.WebPart.PropiedadLimiteVista;
+            sLimiteVistaBuscador = this.WebPart.PropiedadLimiteVistaBuscador;
             alertaCamposComp.Visible = true;
 
         }

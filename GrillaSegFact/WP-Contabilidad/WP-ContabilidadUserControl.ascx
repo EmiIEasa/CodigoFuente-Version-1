@@ -15,6 +15,7 @@
 <script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaSegFact/js/1-10-20-jquery.dataTables.min.js?version=1.0"></script>
 <script type="text/javascript" language="javascript" src="../../../../_layouts/15/GrillaSegFact/js/1-10-20-dataTables.bootstrap4.min.js?version=1.0"></script>
 
+
 <script type="text/javascript" class="init">
 	var idioma_espanol = {
 		"sProcessing": "Procesando...",
@@ -49,43 +50,90 @@
 		window.open("../../_layouts/15/SegFact/registro.aspx", "_self")
 	}
 	$(function () {
-		bindDataTable();
-		Sys.WebForms.PageRequestManager.getInstance().add_endRequest(bindDataTable);
-	});
-	function bindDataTable() {
-		$('.table').DataTable(
-		{
-			"language": idioma_espanol,
-			"lengthMenu": [[5, 10, 15, 20, 25, 50, -1], [5, 10, 15, 20, 25, 50, "Todos"]],
-			"iDisplayLength": 15,
-			"order": [[0, "desc"]],
-			"orderCellsTop": true,
-			"initComplete": function () {
-			    this.api()
-                    .columns([1])
-                    .every(function () {
-                        var column = this;
-                        var select = $(
+        bindDatatable();
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(seleccionarCheckboxesDesdeTextBox);
+    });
+    function bindDatatable() {
+        $('.table').DataTable({
+        "language": idioma_espanol,
+        "bDestroy":true,
+        "lengthMenu": [[5, 10, 15, 20, 25, 50, -1], [5, 10, 15, 20, 25, 50, "Todos"]],
+        "iDisplayLength": 15,
+        "order": [[0, "desc"]],
+        "orderCellsTop": true,
+        "initComplete": function () {
+            this.api()
+                .columns([1])
+                .every(function () {
+                    var column = this;
+                    var select = $(
                         '<select class="form-control" style="font-size: 11px !important; padding: .375rem .175rem !important;"><option value=""></option></select>'
-                        )
-                        // .appendTo( $(column.footer()).empty() )
-                        .appendTo($(column.header()))
-                        .on("change", function () {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            column.search(val ? "^" + val + "$" : "", true, false).draw();
-                        });
+                    )
+                    // .appendTo( $(column.footer()).empty() )
+                    .appendTo($(column.header()))
+                    .on("change", function () {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                        column.search(val ? "^" + val + "$" : "", true, false).draw();
+                    });
 
-                        column
+                    column
                         .data()
                         .unique()
                         .sort()
                         .each(function (d, j) {
                             select.append('<option value="' + d + '">' + d + "</option>");
                         });
-                    });
-			}
-		});
+                });
+        }
+    });
+    };
+function seleccionarCheckboxesDesdeTextBox() {
+    var textBox = document.getElementById("<%=HiddenField1.ClientID%>");
+    var checkedIDs = textBox.value.split(',');
+
+    function manejarCheckbox(event) {
+        var target = event.target;
+        if (target.type === 'checkbox') {
+            var checkboxId = target.getAttribute('data-id');
+            var isChecked = target.checked;
+            if (isChecked) {
+                if (checkedIDs.indexOf(checkboxId) === -1) {
+                    // Agregar el ID solo si no está en la lista
+                    checkedIDs.push(checkboxId);
+                }
+            } else {
+                var index = checkedIDs.indexOf(checkboxId);
+                if (index !== -1) {
+                    checkedIDs.splice(index, 1);
+                }
+            }
+            // Actualizar el valor del textbox sin coma al principio
+            textBox.value = checkedIDs.join(",");
+        }
+
     }
+
+    document.querySelector("#tableConOC tbody").removeEventListener("click", manejarCheckbox);
+    document.querySelector("#tableSinOC tbody").removeEventListener("click", manejarCheckbox);
+    document.querySelector("#tableConOC tbody").addEventListener("click", manejarCheckbox);
+    document.querySelector("#tableSinOC tbody").addEventListener("click", manejarCheckbox);
+
+    var checkboxes = document.querySelectorAll("#tableConOC tbody input[type='checkbox'], #tableSinOC tbody input[type='checkbox']");
+    for (var i = 0; i < checkboxes.length; i++) {
+        var checkbox = checkboxes[i];
+        var checkboxId = checkbox.getAttribute('data-id');
+        checkbox.checked = checkedIDs.includes(checkboxId);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", seleccionarCheckboxesDesdeTextBox);
+
+var prm = Sys.WebForms.PageRequestManager.getInstance();
+    prm.add_endRequest(seleccionarCheckboxesDesdeTextBox);
+    prm.add_endRequest(bindDatatable);
+
+
+
     function validaCampos() {
         $("#alertaBigData").css('display', 'none');
         var textoError = '';
@@ -117,8 +165,12 @@
     function cerrarModal() {
         $(".modalG").css('display', 'none');
     }
+
     
+    
+
 </script>
+
 <style>
        #pageContentTitle{
             display:none !important;
@@ -150,9 +202,10 @@
 
 
 <div class="container-fluid" style="margin-top: 25px;">
-    <asp:UpdatePanel ID="UpdatePanel1" updatemode="Always" runat="server">
-    <ContentTemplate>
+    <asp:UpdatePanel ID="UpdatePanel1" updatemode="Conditional" runat="server">
+        <ContentTemplate>
         <asp:HiddenField ID="HiddenField1" runat="server"  />
+        <%--<asp:TextBox runat="server" ID="txtClick" CssClass="form-control" ></asp:TextBox>--%>
      <%--   <asp:TextBox ID="TextBox1"  runat="server"></asp:TextBox>
         <asp:Label ID="Label1" runat="server"   Text="Label"></asp:Label>
         <asp:Label ID="Label2" runat="server"   Text="Label"></asp:Label>--%>
@@ -232,7 +285,7 @@
             </ul>
             <div class="tab-content">
                 <div id="home" class="container-fluid tab-pane active"><br>
-                    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+                    <table id="tableConOC" class="table table-striped table-bordered table-hover" style="width:100%">
 	                    <thead>
 		                    <tr>
 			                    <th>ID</th>
@@ -257,7 +310,7 @@
                     </table>
                 </div>
                 <div id="menu1" class="container-fluid tab-pane fade"><br>
-                    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+                    <table id="tableSinOC" class="table table-striped table-bordered table-hover" style="width:100%">
 	                    <thead>
 		                    <tr>
 			                    <th>ID</th>
@@ -284,29 +337,9 @@
             </div>
        </ContentTemplate>
       
-    </asp:UpdatePanel>  
-    <script>
-    $(document).ready(function() {
-        $('input[type=checkbox]').on('change', function (e) {
-            var diasSeleccionados = new Array();
-                $('input[type=checkbox]:checked').each(function () {
-                             diasSeleccionados.push($(this).val());
-                         });
-            <%--document.getElementById("<%=TextBox1.ClientID%>").value = diasSeleccionados;--%>
-            document.getElementById("<%=HiddenField1.ClientID%>").value = diasSeleccionados;
-        });
-    });
-    var prm = Sys.WebForms.PageRequestManager.getInstance();
-    prm.add_endRequest(function() {
-        $('input[type=checkbox]').on('change', function (e) {
-            var diasSeleccionados = new Array();
-            $('input[type=checkbox]:checked').each(function () {
-                diasSeleccionados.push($(this).val());
-            });
-            <%--document.getElementById("<%=TextBox1.ClientID%>").value = diasSeleccionados;--%>
-            document.getElementById("<%=HiddenField1.ClientID%>").value = diasSeleccionados;
-        });
-    });
-    </script>
+    </asp:UpdatePanel> 
+    </div>
+
+
     
-</div>
+

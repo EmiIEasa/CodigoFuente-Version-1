@@ -40,6 +40,15 @@ namespace DatosPersonal.Layouts.DatosPersonal {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl menuSinID;
         
         /// <summary>
+        /// pestaniaPerfil control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor pestaniaPerfil;
+        
+        /// <summary>
         /// pestaniaDatosPersonales control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace DatosPersonal.Layouts.DatosPersonal {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor pestaniaGrupoFamiliar;
+        
+        /// <summary>
+        /// perfil control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl perfil;
         
         /// <summary>
         /// datosPersonales control.

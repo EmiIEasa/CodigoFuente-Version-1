@@ -54,7 +54,10 @@ namespace DatosPersonal.Layouts.DatosPersonal
         private void CargaPestania()
         {
             LtPestañaConID.Text = "<li class='nav-item bg-light'>" +
-                                      "<a class='nav-link active' data-toggle='pill' id='pestaniaDatosPersonales' href='#datosPersonales' ClientIDMode='Static'>Datos Personales</a>" +
+                                      "<a class='nav-link active' data-toggle='pill' id='pestaniaPerfil' href='#perfil' ClientIDMode='Static'>Perfil</a>" +
+                                    "</li>" + 
+                                    "<li class='nav-item bg-light'>" +
+                                      "<a class='nav-link' data-toggle='pill' id='pestaniaDatosPersonales' href='#datosPersonales' ClientIDMode='Static'>Datos Personales</a>" +
                                     "</li>" +
                                     "<li class='nav-item bg-light'>" +
                                       "<a class='nav-link' data-toggle='pill' id='pestaniaEstructura' href='#estructura'>Estructura</a>" +

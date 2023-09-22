@@ -517,13 +517,13 @@ namespace Ieasa.Layouts.Ieasa {
         protected global::System.Web.UI.WebControls.Label lbMensaje;
         
         /// <summary>
-        /// chkSAP control.
+        /// lbIdSap control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox chkSAP;
+        protected global::System.Web.UI.WebControls.TextBox lbIdSap;
         
         /// <summary>
         /// txtEstadoSAP control.
@@ -533,6 +533,24 @@ namespace Ieasa.Layouts.Ieasa {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEstadoSAP;
+        
+        /// <summary>
+        /// lbSap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox lbSap;
+        
+        /// <summary>
+        /// idSapBto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton idSapBto;
         
         /// <summary>
         /// Div1 control.
@@ -607,6 +625,15 @@ namespace Ieasa.Layouts.Ieasa {
         protected global::System.Web.UI.HtmlControls.HtmlButton Button2;
         
         /// <summary>
+        /// ltAdjuntos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ltAdjuntos;
+        
+        /// <summary>
         /// cboUsuarioBloqueado control.
         /// </summary>
         /// <remarks>
@@ -643,13 +670,13 @@ namespace Ieasa.Layouts.Ieasa {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnSubsanarCompras;
         
         /// <summary>
-        /// btnRechazarCompras control.
+        /// btnPreInscribiCompras control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnRechazarCompras;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnPreInscribiCompras;
         
         /// <summary>
         /// btnSuspenderCompras control.

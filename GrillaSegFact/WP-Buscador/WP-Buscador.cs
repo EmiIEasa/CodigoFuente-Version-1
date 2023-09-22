@@ -14,8 +14,8 @@ namespace GrillaSegFact.WP_Buscador
     {
         // Visual Studio might automatically update this path when you change the Visual Web Part project item.
         private const string _ascxPath = @"~/_CONTROLTEMPLATES/15/GrillaSegFact/WP-Buscador/WP-BuscadorUserControl.ascx";
-        const string const_PropiedadLimiteVista = "500";
-        private string _PropiedadLimiteVista = const_PropiedadLimiteVista;
+        const string const_PropiedadLimiteVista = "100";
+        private string _PropiedadLimiteVistaBuscador = const_PropiedadLimiteVista;
 
         [Category("Propiedades vista"),
         Personalizable(PersonalizationScope.Shared),
@@ -23,10 +23,13 @@ namespace GrillaSegFact.WP_Buscador
         WebDisplayName("Limite de la vista"),
         WebDescription("Ingrese un valor numérico entero"),
         DefaultValue(const_PropiedadLimiteVista)]
-        public string PropiedadLimiteVista
+        public string PropiedadLimiteVistaBuscador
         {
-            get { return _PropiedadLimiteVista; }
-            set { _PropiedadLimiteVista = value;}
+            get { return _PropiedadLimiteVistaBuscador; }
+            set
+            {
+                _PropiedadLimiteVistaBuscador = value;
+            }
         }
         protected override void CreateChildControls()
         {

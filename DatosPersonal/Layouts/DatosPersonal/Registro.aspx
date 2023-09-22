@@ -35,7 +35,10 @@
           </ul>
         <ul class="nav nav-pills nav-justified mt-3"  runat="server" id="menuSinID">
             <li class="nav-item bg-light">
-              <a class="nav-link active" id="pestaniaDatosPersonales" runat="server" ClientIDMode="Static">Datos Personales</a>
+              <a class="nav-link active" id="pestaniaPerfil" runat="server" ClientIDMode="Static">Perfil</a>
+            </li>
+            <li class="nav-item bg-light">
+              <a class="nav-link" id="pestaniaDatosPersonales" runat="server" ClientIDMode="Static">Datos Personales</a>
             </li>
             <li class="nav-item bg-light">
               <a class="nav-link" id="pestaniaEstructura">Estructura</a>
@@ -51,7 +54,9 @@
             </li>--%>
         </ul>
         <div class="tab-content  border border-light border-top-0">
-            
+            <div id="perfil" class="tab-pane active" runat="server" ClientIDMode="Static">
+                Perfil
+            </div>
             <div id="datosPersonales" class="tab-pane active" runat="server" ClientIDMode="Static">
                 
                 <div class="row" >

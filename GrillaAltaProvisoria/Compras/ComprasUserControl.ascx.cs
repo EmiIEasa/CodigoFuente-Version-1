@@ -38,8 +38,9 @@ namespace GrillaAltaProvisoria.Compras
             {
                 ltTablaPendiente.Text += "<tr>" +
                                             "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
-                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
+                                            
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
+                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
                                         "</tr>";
             }
@@ -53,23 +54,29 @@ namespace GrillaAltaProvisoria.Compras
             {
                 ltTablaAprobado.Text += "<tr>" +
                                             "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
-                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
+                                            
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
+                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
                                         "</tr>";
             }
             SPQuery queryRe = new SPQuery();
+            //string QuerySTRRe = "<View>" +
+            //                    "<Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>Rechazado</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query>" +
+            //                "<RowLimit>" + sLimiteVista + "</RowLimit></View>";
             string QuerySTRRe = "<View>" +
-                                "<Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>Rechazado</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query>" +
+                                "<Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>Pre-inscripto</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query>" +
                             "<RowLimit>" + sLimiteVista + "</RowLimit></View>";
             queryRe.ViewXml = QuerySTRRe;
             SPListItemCollection ListaRechazados = SPContext.Current.Web.Lists["AltaProvisoria"].GetItems(queryRe);
             foreach (SPListItem Facturas in ListaRechazados)
             {
-                ltTablaRechazado.Text += "<tr>" +
+                //ltTablaRechazado.Text
+                ltTablaPrInscriptos.Text+= "<tr>" +
                                             "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
-                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
+                                            
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
+                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
                                         "</tr>";
             }
@@ -83,14 +90,15 @@ namespace GrillaAltaProvisoria.Compras
             {
                 ltTablaSubsanado.Text += "<tr>" +
                                             "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
-                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
+                                            
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
+                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
                                         "</tr>";
             }
             SPQuery querySuspBloq = new SPQuery();
             string QuerySTRSuspBloq = "<View>" +
-                                "<Query><Where><Eq><FieldRef Name='Estado' /><Value Type='Text'>Suspendido/Bloqueado</Value></Eq></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query>" +
+                                "<Query><Where><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>Suspendido/Bloqueado</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Inhabilitado</Value></Eq></Or></Where><OrderBy><FieldRef Name='ID' Ascending='False' /></OrderBy></Query>" +
                             "<RowLimit>" + sLimiteVista + "</RowLimit></View>";
             querySuspBloq.ViewXml = QuerySTRSuspBloq;
             SPListItemCollection ListaSuspBloq = SPContext.Current.Web.Lists["AltaProvisoria"].GetItems(querySuspBloq);
@@ -98,8 +106,9 @@ namespace GrillaAltaProvisoria.Compras
             {
                 ltTablaSuspBloq.Text += "<tr>" +
                                             "<td>" + "<a href='" + SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + Facturas.ID.ToString() + "' class='alert-link'>" + Facturas.ID.ToString() + "</a></td>" +
-                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
+                                            
                                             "<td>" + (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty) + "</td>" +
+                                            "<td>" + (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                             "<td>" + (Facturas["ActividadPrincipal"] != null && !string.IsNullOrEmpty(Facturas["ActividadPrincipal"].ToString()) ? Facturas["ActividadPrincipal"].ToString() : String.Empty) + "</td>" +
                                         "</tr>";
             }
@@ -160,16 +169,18 @@ namespace GrillaAltaProvisoria.Compras
             table.Columns.Add("Representante legal", typeof(string));
             table.Columns.Add("CUIT", typeof(string));
             table.Columns.Add("Rubros", typeof(string));
-            
+            table.Columns.Add("Estado", typeof(string));
+
             SPQuery query = new SPQuery();
             string QuerySTR = "<View>" +
                                 "<Query><Where><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>Aprobado</Value></Eq><Or><Eq><FieldRef Name='Estado' /><Value Type='Text'>Pendiente</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Rechazado</Value></Eq></Or></Or></Where></Query>" +
                             "</View>";
             query.ViewXml = QuerySTR;
-            
 
-            SPListItemCollection ListaAlta = SPContext.Current.Web.Lists["AltaProvisoria"].GetItems(query);
-            
+
+            //            SPListItemCollection ListaAlta = SPContext.Current.Web.Lists["AltaProvisoria"].GetItems(query);
+            SPListItemCollection ListaAlta = SPContext.Current.Web.Lists["AltaProvisoria"].GetItems();
+
             foreach (SPListItem Facturas in ListaAlta)
             {
                 string sRubro = string.Empty;
@@ -183,27 +194,26 @@ namespace GrillaAltaProvisoria.Compras
                     foreach (SPListItem item in ListaAux)
                     {
                        // sRubro += item["Title"].ToString()+" ; ";
-
                         table.Rows.Add(
-                   (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty),
-                   (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty),
-                   (Facturas["Pais"] != null && !string.IsNullOrEmpty(Facturas["Pais"].ToString()) ? Facturas["Pais"].ToString() : String.Empty),
-                   (Facturas["Provincia"] != null && !string.IsNullOrEmpty(Facturas["Provincia"].ToString()) ? Facturas["Provincia"].ToString() : String.Empty) + (Facturas["ProvinciaArg"] != null && !string.IsNullOrEmpty(Facturas["ProvinciaArg"].ToString()) ? Facturas["ProvinciaArg"].ToString() : String.Empty),
-                   (Facturas["Ciudad"] != null && !string.IsNullOrEmpty(Facturas["Ciudad"].ToString()) ? Facturas["Ciudad"].ToString() : String.Empty),
-                   (Facturas["CodPostal"] != null && !string.IsNullOrEmpty(Facturas["CodPostal"].ToString()) ? Facturas["CodPostal"].ToString() : String.Empty),
-                   (Facturas["Calle"] != null && !string.IsNullOrEmpty(Facturas["Calle"].ToString()) ? Facturas["Calle"].ToString() : String.Empty),
-                   (Facturas["Altura"] != null && !string.IsNullOrEmpty(Facturas["Altura"].ToString()) ? Facturas["Altura"].ToString() : String.Empty),
-                   (Facturas["Depto"] != null && !string.IsNullOrEmpty(Facturas["Depto"].ToString()) ? Facturas["Depto"].ToString() : String.Empty),
-                   (Facturas["Piso"] != null && !string.IsNullOrEmpty(Facturas["Piso"].ToString()) ? Facturas["Piso"].ToString() : String.Empty),
-                   (Facturas["Telefono"] != null && !string.IsNullOrEmpty(Facturas["Telefono"].ToString()) ? Facturas["Telefono"].ToString() : String.Empty),
-                   (Facturas["VentasCorreo"] != null && !string.IsNullOrEmpty(Facturas["VentasCorreo"].ToString()) ? Facturas["VentasCorreo"].ToString() : String.Empty),
-                   (Facturas["ApoderadoResp"] != null && !string.IsNullOrEmpty(Facturas["ApoderadoResp"].ToString()) ? Facturas["ApoderadoResp"].ToString() : String.Empty),
-                   (Facturas["Cuit"] != null && !string.IsNullOrEmpty(Facturas["Cuit"].ToString()) ? Facturas["Cuit"].ToString() : String.Empty),
-                   item["Title"].ToString());
-                        
+                            (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty),
+                            (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty),
+                            (Facturas["Pais"] != null && !string.IsNullOrEmpty(Facturas["Pais"].ToString()) ? Facturas["Pais"].ToString() : String.Empty),
+                            (Facturas["Provincia"] != null && !string.IsNullOrEmpty(Facturas["Provincia"].ToString()) ? Facturas["Provincia"].ToString() : String.Empty) + (Facturas["ProvinciaArg"] != null && !string.IsNullOrEmpty(Facturas["ProvinciaArg"].ToString()) ? Facturas["ProvinciaArg"].ToString() : String.Empty),
+                            (Facturas["Ciudad"] != null && !string.IsNullOrEmpty(Facturas["Ciudad"].ToString()) ? Facturas["Ciudad"].ToString() : String.Empty),
+                            (Facturas["CodPostal"] != null && !string.IsNullOrEmpty(Facturas["CodPostal"].ToString()) ? Facturas["CodPostal"].ToString() : String.Empty),
+                            (Facturas["Calle"] != null && !string.IsNullOrEmpty(Facturas["Calle"].ToString()) ? Facturas["Calle"].ToString() : String.Empty),
+                            (Facturas["Altura"] != null && !string.IsNullOrEmpty(Facturas["Altura"].ToString()) ? Facturas["Altura"].ToString() : String.Empty),
+                            (Facturas["Depto"] != null && !string.IsNullOrEmpty(Facturas["Depto"].ToString()) ? Facturas["Depto"].ToString() : String.Empty),
+                            (Facturas["Piso"] != null && !string.IsNullOrEmpty(Facturas["Piso"].ToString()) ? Facturas["Piso"].ToString() : String.Empty),
+                            (Facturas["Telefono"] != null && !string.IsNullOrEmpty(Facturas["Telefono"].ToString()) ? Facturas["Telefono"].ToString() : String.Empty),
+                            (Facturas["VentasCorreo"] != null && !string.IsNullOrEmpty(Facturas["VentasCorreo"].ToString()) ? Facturas["VentasCorreo"].ToString() : String.Empty),
+                            (Facturas["ApoderadoResp"] != null && !string.IsNullOrEmpty(Facturas["ApoderadoResp"].ToString()) ? Facturas["ApoderadoResp"].ToString() : String.Empty),
+                            (Facturas["Cuit"] != null && !string.IsNullOrEmpty(Facturas["Cuit"].ToString()) ? Facturas["Cuit"].ToString() : String.Empty),
+                            item["Title"].ToString(),
+                            (Facturas["Estado"] != null && !string.IsNullOrEmpty(Facturas["Estado"].ToString()) ? Facturas["Estado"].ToString() : String.Empty)
+                        );
                     }
                 }
-               
                 //table.Rows.Add(
                 //    (Facturas["RazonSocial"] != null && !string.IsNullOrEmpty(Facturas["RazonSocial"].ToString()) ? Facturas["RazonSocial"].ToString() : String.Empty),
                 //    (Facturas["NombreFantasia"] != null && !string.IsNullOrEmpty(Facturas["NombreFantasia"].ToString()) ? Facturas["NombreFantasia"].ToString() : String.Empty),
@@ -220,7 +230,6 @@ namespace GrillaAltaProvisoria.Compras
                 //    (Facturas["ApoderadoResp"] != null && !string.IsNullOrEmpty(Facturas["ApoderadoResp"].ToString()) ? Facturas["ApoderadoResp"].ToString() : String.Empty),
                 //    (Facturas["Cuit"] != null && !string.IsNullOrEmpty(Facturas["Cuit"].ToString()) ? Facturas["Cuit"].ToString() : String.Empty),
                 //    sRubro.ToString());
-                
             }
             StringBuilder sb = new StringBuilder();
             StringWriter sw = new StringWriter(sb);
