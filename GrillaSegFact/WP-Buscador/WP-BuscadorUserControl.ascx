@@ -235,6 +235,7 @@
                             <th>Razón Social</th>
                             <th>CUIT</th>
                             <th>Numero Factura</th>
+                            <th>Fecha</th>
 					    </tr>
 				    </thead>
 				    <tbody>

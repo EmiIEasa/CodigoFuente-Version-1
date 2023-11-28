@@ -83,6 +83,7 @@ namespace GrillaSegFact.WP_Buscador
                                                 "<td>" + (Reclamos["RazonSocial"] != null && !string.IsNullOrEmpty(Reclamos["RazonSocial"].ToString()) ? Reclamos["RazonSocial"].ToString() : String.Empty) + "</td>" +
                                                 "<td>" + (Reclamos["CUIT"] != null && !string.IsNullOrEmpty(Reclamos["CUIT"].ToString()) ? Reclamos["CUIT"].ToString() : String.Empty) + "</td>" +
                                                 "<td>" + (Reclamos["NumFact"] != null && !string.IsNullOrEmpty(Reclamos["NumFact"].ToString()) ? Reclamos["NumFact"].ToString() : String.Empty) + "</td>" +
+                                                "<td>" + DateTime.Parse(Reclamos["Created"].ToString()).ToShortDateString() + "</td>" +
                                             "</tr>";
                 }
                

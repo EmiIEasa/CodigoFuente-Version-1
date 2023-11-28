@@ -164,8 +164,7 @@ function divBlock() {
 function validaCamposCompras() {
     var retorna = true;
     var textoError = '';
-    var observaciones = $(".txtObsCompras").val();
-
+    var observaciones = $('.txtObsCompras').val();
     if ($.isEmptyObject(observaciones) == true || observaciones == "") {
         textoError += "<p>Ingrese Observaciones</p>";
         retorna = false;

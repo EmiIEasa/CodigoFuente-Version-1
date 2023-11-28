@@ -443,33 +443,46 @@ namespace SegFact.Layouts1.SegFact
                     fs.Read(fileContents, 0, (int)fs.Length);
                     fs.Close();
                  
-                    Registro.Attachments.Add("NFactura" + ext, fileContents);
+                    Registro.Attachments.Add("NFactura"  + ext, fileContents);
                 }
             }
             if (fuCertFI.HasFiles)
             {
-                List<string> fileNames = new List<string>();
-                foreach (string fileName in Registro.Attachments)
-                {
-                    fileNames.Add(fileName);
-                }
-                foreach (string fileName in fileNames)
-                {
-                    if (fileName.Contains("CertifFI"))
-                    {
-                        Registro.Attachments.Delete(fileName);
-                    }
-                }
+                int cont = 0;
                 foreach (HttpPostedFile uploadedFile in fuCertFI.PostedFiles)
                 {
-                    string ext = System.IO.Path.GetExtension(fuCertFI.FileName);
-                    Stream fs = fuCertFI.PostedFile.InputStream;
+                    cont++;
+                    Stream fs = uploadedFile.InputStream;
                     byte[] fileContents = new byte[fs.Length];
                     fs.Read(fileContents, 0, (int)fs.Length);
                     fs.Close();
-                    Registro.Attachments.Add("CertifFI" + ext, fileContents);
+                    SPAttachmentCollection attachments = Registro.Attachments;
 
+                    string fileName = "CertifFI" + " - " + cont + System.IO.Path.GetExtension(uploadedFile.FileName);
+                    attachments.Add(fileName, fileContents);
                 }
+                //List<string> fileNames = new List<string>();
+                //foreach (string fileName in Registro.Attachments)
+                //{
+                //    fileNames.Add(fileName);
+                //}
+                //foreach (string fileName in fileNames)
+                //{
+                //    if (fileName.Contains("CertifFI"))
+                //    {
+                //        Registro.Attachments.Delete(fileName);
+                //    }
+                //}
+                //foreach (HttpPostedFile uploadedFile in fuCertFI.PostedFiles)
+                //{
+                //    string ext = System.IO.Path.GetExtension(fuCertFI.FileName);
+                //    Stream fs = fuCertFI.PostedFile.InputStream;
+                //    byte[] fileContents = new byte[fs.Length];
+                //    fs.Read(fileContents, 0, (int)fs.Length);
+                //    fs.Close();
+                //    Registro.Attachments.Add("CertifFI" + ext, fileContents);
+
+                //}
             }
             if (fuCertServ.HasFiles)
             {
@@ -909,7 +922,17 @@ namespace SegFact.Layouts1.SegFact
         {
             Registro["Estado"] = "RECIBIDO";
         }
-
+        protected void btnCerrar_ServerClick(object sender, EventArgs e)
+        { 
+            if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("CONTABILIDAD")))
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "cerrarContabilidad();", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "cerrarDatosGenerales();", true);
+            }
+        }
         
     }
 }

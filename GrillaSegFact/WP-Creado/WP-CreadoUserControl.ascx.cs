@@ -35,8 +35,8 @@ namespace GrillaSegFact.WP_Creado
                                                     "<td>" + (Facturas["CUIT"] != null && !string.IsNullOrEmpty(Facturas["CUIT"].ToString()) ? Facturas["CUIT"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["NumFact"] != null && !string.IsNullOrEmpty(Facturas["NumFact"].ToString()) ? Facturas["NumFact"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["NumOC"] != null && !string.IsNullOrEmpty(Facturas["NumOC"].ToString()) ? Facturas["NumOC"].ToString() : String.Empty) + "</td>" +
-                                                    "<td>" + (Facturas["CentroCosto"] != null && !string.IsNullOrEmpty(Facturas["CentroCosto"].ToString()) ? Facturas["CentroCosto"].ToString() : String.Empty) + "</td>" +
-                                                    "<td>" + (Facturas["CertServ"] != null && !string.IsNullOrEmpty(Facturas["CertServ"].ToString()) ? Facturas["CertServ"].ToString() : String.Empty) + "</td>" +
+                                                    "<td>" + (Facturas["ObservacionesContabilidad"] != null && !string.IsNullOrEmpty(Facturas["ObservacionesContabilidad"].ToString()) ? Facturas["ObservacionesContabilidad"].ToString() : String.Empty) + "</td>" +
+                                                    //"<td>" + (Facturas["CertServ"] != null && !string.IsNullOrEmpty(Facturas["CertServ"].ToString()) ? Facturas["CertServ"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["Monto"] != null && !string.IsNullOrEmpty(Facturas["Monto"].ToString()) ? Facturas["Monto"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (Facturas["Sociedad"] != null && !string.IsNullOrEmpty(Facturas["Sociedad"].ToString()) ? Facturas["Sociedad"].ToString() : String.Empty) + "</td>" +
                                              "</tr>";
@@ -55,6 +55,7 @@ namespace GrillaSegFact.WP_Creado
                                                     "<td>" + (FactSO["NumFact"] != null && !string.IsNullOrEmpty(FactSO["NumFact"].ToString()) ? FactSO["NumFact"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (FactSO["Monto"] != null && !string.IsNullOrEmpty(FactSO["Monto"].ToString()) ? FactSO["Monto"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (FactSO["Sociedad"] != null && !string.IsNullOrEmpty(FactSO["Sociedad"].ToString()) ? FactSO["Sociedad"].ToString() : String.Empty) + "</td>" +
+                                                      "<td>" + (FactSO["ObservacionesContabilidad"] != null && !string.IsNullOrEmpty(FactSO["ObservacionesContabilidad"].ToString()) ? FactSO["ObservacionesContabilidad"].ToString() : String.Empty) + "</td>" +
                                                     "<td>" + (FactSO["Email"] != null && !string.IsNullOrEmpty(FactSO["Email"].ToString()) ? FactSO["Email"].ToString() : String.Empty) + "</td>" +
                                              "</tr>";
             }

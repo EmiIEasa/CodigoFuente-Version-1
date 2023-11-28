@@ -8,21 +8,21 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AltaProvisoria.aspx.cs" Inherits="Ieasa.Layouts.Ieasa.AltaProvisoria" DynamicMasterPageFile="~masterurl/default.master" %>
 
 <asp:Content ID="PageHead" ContentPlaceHolderID="PlaceHolderAdditionalPageHead" runat="server">
-    <link href="../../../../_layouts/15/ENARSA/css/4-3-1-bootstrap.min.css?version=3.0" rel="stylesheet" />
-    <link href="../../../../_layouts/15/ENARSA/css/estilosIeasa.css?version=3.0" rel="stylesheet" />
-    <link href="../../../../_layouts/15/ENARSA/css/tempusdominus-bootstrap-4.min.css?version=3.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/ENARSA/css/4-3-1-bootstrap.min.css?version=4.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/ENARSA/css/estilosIeasa.css?version=4.0" rel="stylesheet" />
+    <link href="../../../../_layouts/15/ENARSA/css/tempusdominus-bootstrap-4.min.css?version=4.0" rel="stylesheet" />
 
-    <script src="../../../../_layouts/15/ENARSA/js/3-4-1-jquery.min.js?version=3.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/3-4-1-jquery.min.js?version=4.0" type="text/javascript"></script>
     
-    <script src="../../../../_layouts/15/ENARSA/js/fontAwesome.js?version=3.0" crossorigin="anonymous" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/ENARSA/js/1-14-7-popper.min.js?version=3.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/ENARSA/js/4-3-1-bootstrap.min.js?version=3.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/ENARSA/js/funcionesIeasa.js?version=3.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/ENARSA/js/jquery.MultiFile.js?version=3.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/ENARSA/js/moment-with-locales.js?version=3.0" type="text/javascript"></script>
-    <script src="../../../../_layouts/15/ENARSA/js/tempusdominus-bootstrap-4.js?version=3.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/fontAwesome.js?version=4.0" crossorigin="anonymous" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/1-14-7-popper.min.js?version=4.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/4-3-1-bootstrap.min.js?version=4.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/funcionesIeasa.js?version=4.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/jquery.MultiFile.js?version=4.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/moment-with-locales.js?version=4.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/tempusdominus-bootstrap-4.js?version=4.0" type="text/javascript"></script>
 
-    <script src="../../../../_layouts/15/ENARSA/js/chosen.jquery.js?version=2.0" type="text/javascript"></script>
+    <script src="../../../../_layouts/15/ENARSA/js/chosen.jquery.js?version=4.0" type="text/javascript"></script>
     <script type="text/javascript"> $(".chzn-select").chosen(); $(".chzn-select-deselect").chosen({ allow_single_deselect: true }); </script>
     <style>
 		a img{border: none;}
@@ -168,14 +168,18 @@
                     </div>
                 </div>
                 <hr />
+                 <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                        <ContentTemplate>
                 <div class="row">
+
+                   
                     <div class="col-md-5 my-1">
                         <div class="form-inline">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Pais</span>
                                 </div>
-                                <asp:DropDownList CssClass="form-control cboPais" runat="server" ID="cboPais">
+                                <asp:DropDownList CssClass="form-control cboPais" runat="server" ID="cboPais" AutoPostBack="true" OnSelectedIndexChanged="cboPais_SelectedIndexChanged">
                                     
                                 </asp:DropDownList>
                             </div>
@@ -187,14 +191,15 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Provincia</span>
                                 </div>
-                                <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control txtProvincia"></asp:TextBox>
-                                <asp:DropDownList CssClass="form-control cboProvincia" runat="server" ID="cboProvincia" style="display: none;">
+                                <asp:TextBox runat="server" ID="txtProvincia" CssClass="form-control txtProvincia" style="display: none;"></asp:TextBox>
+                                <asp:DropDownList CssClass="form-control cboProvincia" runat="server" ID="cboProvincia" >
                                     
                                 </asp:DropDownList>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 my-1">
+
+                   <div class="col-md-6 my-1">
                         <div class="form-inline">
                             <div class="input-group w-100">
                                 <div class="input-group-prepend">
@@ -215,6 +220,9 @@
                         </div>
                     </div>
                 </div>
+                            
+                              </ContentTemplate>
+                </asp:UpdatePanel>
                 <div class="row">
                     <div class="col-md-5 my-1">
                         <div class="form-inline">
@@ -578,6 +586,7 @@
                 </div>
               <!--SAP -->
                <div id="sap" class="tab-pane fade"><br>
+               
                 <div class="row">
 
                         <div class="col-6 my-1">
@@ -613,7 +622,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Resultado Web Service</span>
                                 </div>
-                                 <asp:TextBox runat="server" ID="lbSap" TextMode="MultiLine"  CssClass="form-control txtObsCompras" ReadOnly="true"></asp:TextBox>
+                                 <asp:TextBox runat="server" ID="lbSap" TextMode="MultiLine"  CssClass="form-control" ReadOnly="true"></asp:TextBox>
                                 
                             </div>
                         </div>
@@ -622,42 +631,15 @@
                     </div>
                    <div class="row">
                          <div class="col-7 my-1" >
-                        <button type="button" id="idSapBto" class="btn btn-outline-success" onserverclick="btoPasarSap_ServerClick"  runat="server" >Pasar a SAP</button>
+                              <div class="form-check form-group mb-3">
+                            <input type="checkbox" class="form-check-input chkPersFis" id="chkSAP" runat="server"  clientidmode="Static"/>
+                            <label class="form-check-label" for="chkPersFis">Pasar a SAP</label>
+                          </div>
+                        <%--<button type="button" id="idSapBto" class="btn btn-outline-success" onserverclick="btoPasarSap_ServerClick"  runat="server" >Pasar a SAP</button>--%>
                     </div>
                        </div>
-                <div class="row">
-                     
-                    <div class="col-12 my-1" runat="server" id="Div1">
-                        <div class="input-group w-100">
-                         
-                              
+              
                           
-                           <%-- <div class="input-group-prepend">
-                                <span class="input-group-text" style="width: 94px !important">Sociedad</span>
-                            </div>
-                         --%>
-                            
-                          
-                          </br>
-					        <asp:DropDownList runat="server" ID="cboSociedad" Visible="false" class="chzn-select form-control">
-
-					        </asp:DropDownList>
-                        </div>
-                    </div>
-                    
-                </div>
-                  <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                        <ContentTemplate>
-                            <div class="row my-1" >
-                                
-                                <div class="col-10" runat="server" id="div2" visible="false">
-                                    <asp:ListBox ID="listSociedad" AutoPostBack="true" Visible="false" runat="server" CssClass="form-control libServicio"></asp:ListBox>
-                                </div>
-                                <div class="col-2"  runat="server" id="Div3">
-                                    <button type="button" class="btn btn-outline-success" Visible="false" id="Button1" onserverclick="btoMasSociedad_Click" runat="server"><i class="fas fa-plus"></i></button>
-                                    <button type="button" class="btn btn-outline-danger" Visible="false" id="Button2"  runat="server" onserverclick="btoMenosSociedad_Click"><i class="fas fa-minus"></i></button>
-                                </div>
-                            </div>
                              <div class="row">
 
                         <div class="col-6 my-1">
@@ -681,8 +663,6 @@
   </tr>
     <asp:Literal ID="ltAdjuntos" runat="server"></asp:Literal>
 </table> 
-                        </ContentTemplate>
-                </asp:UpdatePanel>
             </div>
 
          <!--Compras-->   

@@ -113,6 +113,7 @@
     <Content Include="Layouts\DatosPersonal\css\tempusdominus-bootstrap-4.min.css" />
     <Content Include="Layouts\DatosPersonal\img\calendarB4.png" />
     <Content Include="Layouts\DatosPersonal\img\Captura.PNG" />
+    <Content Include="Layouts\DatosPersonal\img\default-user-image.png" />
     <Content Include="Layouts\DatosPersonal\img\Logo.png" />
     <Content Include="Layouts\DatosPersonal\js\1-14-7-popper.min.js" />
     <Content Include="Layouts\DatosPersonal\js\3-4-1-jquery.min.js" />

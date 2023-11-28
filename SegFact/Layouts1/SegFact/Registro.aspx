@@ -207,7 +207,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Anexos al comprobante</span>
                                 </div>
-                                <asp:FileUpload runat="server" id="fuCertFI"  ClientIDMode="Static"></asp:FileUpload><br />
+                                <asp:FileUpload runat="server" id="fuCertFI"  ClientIDMode="Static" AllowMultiple="true"></asp:FileUpload><br />
                                 
                             </div>
                         </div>
@@ -315,7 +315,7 @@
         
         <div class="btn-group btn-block">
             <button id="btnGuardar" onclick="if (!validaCampos()) return;" onserverclick="btnGuardar_ServerClick" type="button" class="btn btn-primary" runat="server"><i class="fas fa-download" aria-hidden="true"></i>  Guardar</button>
-            <button type="button" id="btnCerrar" onclick="cerrarDatosGenerales()" class="btn btn-secondary"><i class="far fa-window-close" aria-hidden="true"></i>  Cerrar</button>
+            <button type="button" id="btnCerrar" onserverclick="btnCerrar_ServerClick" class="btn btn-secondary" runat="server"><i class="far fa-window-close" aria-hidden="true"></i>  Cerrar</button>
         </div>
         <div class="alert alert-warning" id="alertaBigData" style="display:none;margin-top: 5px;"></div>
         <div class="modal modalG" id="myModal">

@@ -114,8 +114,8 @@
                         <th>CUIT</th>
                         <th>N° Factura</th>
                         <th>N° OC</th>
-                        <th>Centro de Costo</th>
-                        <th>Certificado de Servicio</th>
+                        <th>Observaciones Contabilidad</th>
+                      
                         <th>Monto</th>
                         <th>Sociedad</th>
 					</tr>
@@ -136,6 +136,7 @@
                         <th>Numero Factura</th>
                         <th>Monto</th>
                         <th>Sociedad</th>
+                            <th>Observaciones Contabilidad</th>
                         <th>Email</th>
 				    </tr>
 			    </thead>

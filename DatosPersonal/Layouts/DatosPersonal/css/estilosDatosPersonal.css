@@ -55,3 +55,6 @@ padding: 0px !important;
     color: #fff !important;
   background-color: #ed6f82 !important;
 }
+.accordion {
+    padding: 10px 0 0 0;
+}

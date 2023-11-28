@@ -23,15 +23,17 @@ namespace Ieasa.Layouts.Ieasa
     public partial class AltaProvisoria : UnsecuredLayoutsPageBase
     {
         private string sSitioAnonimo = "https://proveedores-an.energia-argentina.com.ar/";
-        private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
-        //private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
+      //  private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
+        private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
                 CargarCombos();
                 CargarInicial();
+
             }
         }
         protected override bool AllowAnonymousAccess
@@ -68,25 +70,25 @@ namespace Ieasa.Layouts.Ieasa
 
         private void CargasAdjuntosSap(string Id)
         {
-            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='IdRegistro' /><Value Type='Text'>" + Id+ "</Value></Eq></Where></Query></View>";
+            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='IdRegistro' /><Value Type='Text'>" + Id + "</Value></Eq></Where></Query></View>";
             SPQuery query = new SPQuery();
             query.ViewXml = QuerySTR;
             string sHtml = string.Empty;
-            SPListItemCollection ListaAux=  SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].GetItems(query);
+            SPListItemCollection ListaAux = SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].GetItems(query);
             if (ListaAux.Count > 0)
             {
-               
+
                 foreach (SPListItem item in ListaAux)
                 {
                     sHtml += "<tr>";
-                    sHtml += "<td>" + item["Title"] + "</td>" + "<td>" + item["Estado"] + "</td>" + "<td>" + item["Created"] + "</td>" + "<td>" + item["Eliminado"] + "</td>" ;
+                    sHtml += "<td>" + item["Title"] + "</td>" + "<td>" + item["Estado"] + "</td>" + "<td>" + item["Created"] + "</td>" + "<td>" + item["Eliminado"] + "</td>";
                     sHtml += "</tr>";
 
                 }
 
                 ltAdjuntos.Text = sHtml;
             }
-            }
+        }
 
         private void CargaPestania()
         {
@@ -140,8 +142,8 @@ namespace Ieasa.Layouts.Ieasa
                                     "</li>";
 
             }
-            
-            
+
+
         }
         private void CargarDatos(SPListItem AltaProv)
         {
@@ -154,6 +156,15 @@ namespace Ieasa.Layouts.Ieasa
                 if (ListaAux.Count > 0) {
                     cboUsuarioBloqueado.SelectedValue = ListaAux[0]["UsuarioBloqueado"].ToString();
                 }
+            }
+            if (AltaProv["PasarSAP"] != null && !string.IsNullOrEmpty(AltaProv["PasarSAP"].ToString()) && AltaProv["PasarSAP"].ToString() == "SI")
+
+            {
+                chkSAP.Checked = true;
+            }
+            else
+            {
+                chkSAP.Checked = false;
             }
             txtEstado.Text = (AltaProv["Estado"] != null && !string.IsNullOrEmpty(AltaProv["Estado"].ToString()) ? AltaProv["Estado"].ToString() : String.Empty);
             txtNomFantasia.Text = (AltaProv["RazonSocial"] != null && !string.IsNullOrEmpty(AltaProv["RazonSocial"].ToString()) ? AltaProv["RazonSocial"].ToString() : String.Empty);
@@ -172,14 +183,10 @@ namespace Ieasa.Layouts.Ieasa
             {
                 cboPais.SelectedValue = (AltaProv["Pais"] != null && !string.IsNullOrEmpty(AltaProv["Pais"].ToString()) ? AltaProv["Pais"].ToString() : String.Empty);
             }
-            if (AltaProv["Pais"].ToString() == "Argentina")
-            {
-                cboProvincia.SelectedValue = (AltaProv["ProvinciaArg"] != null && !string.IsNullOrEmpty(AltaProv["ProvinciaArg"].ToString()) ? AltaProv["ProvinciaArg"].ToString() : String.Empty);
-            }
-            else
-            {
-                txtProvincia.Text = (AltaProv["Provincia"] != null && !string.IsNullOrEmpty(AltaProv["Provincia"].ToString()) ? AltaProv["Provincia"].ToString() : String.Empty);
-            }
+            CargarProvincias();
+            cboProvincia.SelectedValue = (AltaProv["Provincia"] != null && !string.IsNullOrEmpty(AltaProv["Provincia"].ToString()) ? AltaProv["Provincia"].ToString() : String.Empty);
+
+
             txtCiudad.Text = (AltaProv["Ciudad"] != null && !string.IsNullOrEmpty(AltaProv["Ciudad"].ToString()) ? AltaProv["Ciudad"].ToString() : String.Empty);
             txtCodPostal.Text = (AltaProv["CodPostal"] != null && !string.IsNullOrEmpty(AltaProv["CodPostal"].ToString()) ? AltaProv["CodPostal"].ToString() : String.Empty);
             txtCalle.Text = (AltaProv["Calle"] != null && !string.IsNullOrEmpty(AltaProv["Calle"].ToString()) ? AltaProv["Calle"].ToString() : String.Empty);
@@ -215,13 +222,13 @@ namespace Ieasa.Layouts.Ieasa
             cboConImpG.SelectedValue = (AltaProv["CondImpIG"] != null && !string.IsNullOrEmpty(AltaProv["CondImpIG"].ToString()) ? AltaProv["CondImpIG"].ToString() : String.Empty);
             ValidaAgregaOpcionCombo(AltaProv["CondImpIVA"] != null && !string.IsNullOrEmpty(AltaProv["CondImpIVA"].ToString()) ? AltaProv["CondImpIVA"].ToString() : String.Empty, "cboCondImIVA");
             cboCondImIVA.SelectedValue = (AltaProv["CondImpIVA"] != null && !string.IsNullOrEmpty(AltaProv["CondImpIVA"].ToString()) ? AltaProv["CondImpIVA"].ToString() : String.Empty);
-           
+
             ValidaAgregaOpcionCombo(AltaProv["IngresosBrutos"] != null && !string.IsNullOrEmpty(AltaProv["IngresosBrutos"].ToString()) ? AltaProv["IngresosBrutos"].ToString() : String.Empty, "cboIngresosBrutos");
             cboIngresosBrutos.SelectedValue = (AltaProv["IngresosBrutos"] != null && !string.IsNullOrEmpty(AltaProv["IngresosBrutos"].ToString()) ? AltaProv["IngresosBrutos"].ToString() : String.Empty);
             txtIngresosBrutos.Text = (AltaProv["NumeroIngresosBrutos"] != null && !string.IsNullOrEmpty(AltaProv["NumeroIngresosBrutos"].ToString()) ? AltaProv["NumeroIngresosBrutos"].ToString() : String.Empty);
             txtObsCompras.Text = (AltaProv["ObservacionesCompras"] != null && !string.IsNullOrEmpty(AltaProv["ObservacionesCompras"].ToString()) ? AltaProv["ObservacionesCompras"].ToString() : String.Empty);
             CargarAdjuntos(AltaProv);
-           
+
             //if (AltaProv["SAP"] != null && !string.IsNullOrEmpty(AltaProv["SAP"].ToString()))
             //{
             //    if (AltaProv["SAP"].ToString() == "SI")
@@ -233,21 +240,21 @@ namespace Ieasa.Layouts.Ieasa
             //        chkSAP.Checked = false;
             //    }
             //}
-           txtEstadoSAP.Text= (AltaProv["EstadoSAP"] != null && !string.IsNullOrEmpty(AltaProv["EstadoSAP"].ToString()) ? AltaProv["EstadoSAP"].ToString() : String.Empty);
-            lbIdSap.Text= (AltaProv["IdSap"] != null && !string.IsNullOrEmpty(AltaProv["IdSap"].ToString()) ? AltaProv["IdSap"].ToString() : String.Empty);
-            lbSap.Text= (AltaProv["SAP"] != null && !string.IsNullOrEmpty(AltaProv["SAP"].ToString()) ? AltaProv["SAP"].ToString() : String.Empty);
+            txtEstadoSAP.Text = (AltaProv["EstadoSAP"] != null && !string.IsNullOrEmpty(AltaProv["EstadoSAP"].ToString()) ? AltaProv["EstadoSAP"].ToString() : String.Empty);
+            lbIdSap.Text = (AltaProv["IdSap"] != null && !string.IsNullOrEmpty(AltaProv["IdSap"].ToString()) ? AltaProv["IdSap"].ToString() : String.Empty);
+            lbSap.Text = (AltaProv["SAP"] != null && !string.IsNullOrEmpty(AltaProv["SAP"].ToString()) ? AltaProv["SAP"].ToString() : String.Empty);
 
 
             if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("COMPRAS")))
-                {
-                    btnEliminar.Visible = true;
-                }
-                else
-                {
-                    btnEliminar.Visible = false;
-                }
-            
-           
+            {
+                btnEliminar.Visible = true;
+            }
+            else
+            {
+                btnEliminar.Visible = false;
+            }
+
+
             //if (AltaProv["Estado"].ToString() == "Aprobado" || AltaProv["Estado"].ToString() == "Rechazado" || AltaProv["Estado"].ToString() == "Subsanado" || AltaProv["Estado"].ToString() == "Suspendido/Bloqueado")
             //{
 
@@ -291,12 +298,12 @@ namespace Ieasa.Layouts.Ieasa
 
         }
         private void CargarRubros(int iIdFormulario)
-        {for (int i = 0; i < libServicio.Items.Count; i++)
+        { for (int i = 0; i < libServicio.Items.Count; i++)
             {
                 libServicio.Items.RemoveAt(i);
             }
 
-           
+
             string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='IDRegistro' /><Value Type='Text'>" + iIdFormulario.ToString() + "</Value></Eq></Where></Query></View>";
             SPQuery query = new SPQuery();
             query.ViewXml = QuerySTR;
@@ -311,17 +318,17 @@ namespace Ieasa.Layouts.Ieasa
         }
         private void CargarSociedad(int iIdFormulario)
         {
-            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='IDRegistro' /><Value Type='Text'>" + iIdFormulario.ToString() + "</Value></Eq></Where></Query></View>";
-            SPQuery query = new SPQuery();
-            query.ViewXml = QuerySTR;
-            SPListItemCollection ListaAux = SPContext.Current.Web.Lists["AltaProvisoriaSociedad"].GetItems(query);
-            if (ListaAux.Count > 0)
-            {
-                foreach (SPListItem item in ListaAux)
-                {
-                    listSociedad.Items.Add(item["Title"].ToString());
-                }
-            }
+            ////    string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='IDRegistro' /><Value Type='Text'>" + iIdFormulario.ToString() + "</Value></Eq></Where></Query></View>";
+            ////    SPQuery query = new SPQuery();
+            ////    query.ViewXml = QuerySTR;
+            ////    SPListItemCollection ListaAux = SPContext.Current.Web.Lists["AltaProvisoriaSociedad"].GetItems(query);
+            ////    if (ListaAux.Count > 0)
+            ////    {
+            ////        foreach (SPListItem item in ListaAux)
+            ////        {
+            ////            listSociedad.Items.Add(item["Title"].ToString());
+            ////        }
+            ////    }
         }
         private void BloqueaCampos(bool respuesta)
         {
@@ -333,7 +340,7 @@ namespace Ieasa.Layouts.Ieasa
                 sDisplay = "none";
                 sCol = "col-12";
                 chkPersFis.Attributes.Add("disabled", "disabled");
-             
+
                 btnAprobarCompras.Attributes.Add("disabled", "disabled");
                 btnSubsanarCompras.Attributes.Add("disabled", "disabled");
                 btnPreInscribiCompras.Attributes.Add("disabled", "disabled");
@@ -347,7 +354,7 @@ namespace Ieasa.Layouts.Ieasa
                 {
                     chkPersFis.Attributes.Remove("disabled");
                 }
-              
+
                 if (btnAprobarCompras.Attributes["disabled"] != null)
                 {
                     btnAprobarCompras.Attributes.Remove("disabled");
@@ -385,7 +392,7 @@ namespace Ieasa.Layouts.Ieasa
             btnAQ.Style.Add("display", sDisplay);
             divListBox.Attributes.Add("class", sCol);
             cboPais.Enabled = !valorBool;
-            txtProvincia.ReadOnly = valorBool;
+            // txtProvincia.ReadOnly = valorBool;
             cboProvincia.Enabled = !valorBool;
             txtCiudad.ReadOnly = valorBool;
             txtCodPostal.ReadOnly = valorBool;
@@ -455,43 +462,43 @@ namespace Ieasa.Layouts.Ieasa
                     {
 
 
-                        SPQuery query = new SPQuery();
-                        string QuerySTR = "<View>" +
-                            "<Query><Where><And><Eq><FieldRef Name='Title' /><Value Type='Text'>Pais</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Activo</Value></Eq></And></Where></Query>" +
-                                "</View>";
-                        query.ViewXml = QuerySTR;
-                        SPListItemCollection Pais = site.OpenWeb().Lists["AltaProvisoria_Aux"].GetItems(query);
+
+
+                        SPListItemCollection Pais = site.OpenWeb().Lists["PaisesProvinciasSAP"].GetItems();
                         if (Pais.Count > 0)
                         {
                             DataView view1 = new DataView(Pais.GetDataTable());
-                            DataTable distinctValues1 = view1.ToTable(true, "Valor");
+                            DataTable distinctValues1 = view1.ToTable(true, "DENOMINACION_x0020_PAIS");
+                            distinctValues1.DefaultView.Sort = "DENOMINACION_x0020_PAIS ASC";
+                            distinctValues1 = distinctValues1.DefaultView.ToTable();
+
                             DataRow rFilaSeleccioneSolicitud = distinctValues1.NewRow();
-                            rFilaSeleccioneSolicitud["Valor"] = strSeleccione;
+                            rFilaSeleccioneSolicitud["DENOMINACION_x0020_PAIS"] = strSeleccione;
                             distinctValues1.Rows.InsertAt(rFilaSeleccioneSolicitud, 0);
+
+
+
                             cboPais.DataSource = distinctValues1;
-                            cboPais.DataValueField = "Valor";
-                            cboPais.DataTextField = "Valor";
+                            cboPais.DataValueField = "DENOMINACION_x0020_PAIS";
+                            cboPais.DataTextField = "DENOMINACION_x0020_PAIS";
                             cboPais.DataBind();
                         }
 
-                        SPQuery queryProv = new SPQuery();
-                        string QuerySTRProv = "<View>" +
-                            "<Query><Where><And><Eq><FieldRef Name='Title' /><Value Type='Text'>Provincia</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Activo</Value></Eq></And></Where><OrderBy><FieldRef Name='Valor' Ascending='True' /></OrderBy></Query>" +
-                                "</View>";
-                        queryProv.ViewXml = QuerySTRProv;
-                        SPListItemCollection Provincia = site.OpenWeb().Lists["AltaProvisoria_Aux"].GetItems(queryProv);
-                        if (Provincia.Count > 0)
-                        {
-                            DataView view1 = new DataView(Provincia.GetDataTable());
-                            DataTable distinctValues1 = view1.ToTable(true, "Valor");
-                            DataRow rFilaSeleccioneSolicitud = distinctValues1.NewRow();
-                            rFilaSeleccioneSolicitud["Valor"] = strSeleccione;
-                            distinctValues1.Rows.InsertAt(rFilaSeleccioneSolicitud, 0);
-                            cboProvincia.DataSource = distinctValues1;
-                            cboProvincia.DataValueField = "Valor";
-                            cboProvincia.DataTextField = "Valor";
-                            cboProvincia.DataBind();
-                        }
+
+                        // SPListItemCollection Provincia = site.OpenWeb().Lists["AltaProvisoria_Aux"].GetItems();
+                        //if (Pais.Count > 0)
+                        //{
+                        //    DataView view1 = new DataView(Pais.GetDataTable());
+                        //    DataTable distinctValues1 = view1.ToTable(true, "DENOMINACION_x0020_REGION");
+                        //    distinctValues1.DefaultView.Sort = "DENOMINACION_x0020_REGION ASC";
+                        //    DataRow rFilaSeleccioneSolicitud = distinctValues1.NewRow();
+                        //    rFilaSeleccioneSolicitud["DENOMINACION_x0020_REGION"] = strSeleccione;
+                        //    distinctValues1.Rows.InsertAt(rFilaSeleccioneSolicitud, 0);
+                        //    cboProvincia.DataSource = distinctValues1;
+                        //    cboProvincia.DataValueField = "DENOMINACION_x0020_REGION";
+                        //    cboProvincia.DataTextField = "DENOMINACION_x0020_REGION";
+                        //    cboProvincia.DataBind();
+                        //}
 
                         SPQuery queryPers = new SPQuery();
                         string QuerySTRPers = "<View>" +
@@ -530,20 +537,20 @@ namespace Ieasa.Layouts.Ieasa
                             cboConImpG.DataBind();
 
                         }
-                        SPQuery querySociedad = new SPQuery();
-                        string QuerySTRSociedad = "<View>" +
-                            "<Query><Where><And><Eq><FieldRef Name='Title' /><Value Type='Text'>Sociedad</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Activo</Value></Eq></And></Where></Query>" +
-                                "</View>";
-                        querySociedad.ViewXml = QuerySTRSociedad;
-                        SPListItemCollection Sociedad = site.OpenWeb().Lists["AltaProvisoria_Aux"].GetItems(querySociedad);
-                        if (Sociedad.Count > 0)
-                        {
-                            cboSociedad.Items.Add(new ListItem(strSeleccione));
-                            foreach (SPListItem item in Sociedad)
-                            {
-                                cboSociedad.Items.Add(item["Valor"].ToString());
-                            }
-                        }
+                        //SPQuery querySociedad = new SPQuery();
+                        //string QuerySTRSociedad = "<View>" +
+                        //    "<Query><Where><And><Eq><FieldRef Name='Title' /><Value Type='Text'>Sociedad</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Activo</Value></Eq></And></Where></Query>" +
+                        //        "</View>";
+                        //querySociedad.ViewXml = QuerySTRSociedad;
+                        //SPListItemCollection Sociedad = site.OpenWeb().Lists["AltaProvisoria_Aux"].GetItems(querySociedad);
+                        //if (Sociedad.Count > 0)
+                        //{
+                        //    cboSociedad.Items.Add(new ListItem(strSeleccione));
+                        //    foreach (SPListItem item in Sociedad)
+                        //    {
+                        //        cboSociedad.Items.Add(item["Valor"].ToString());
+                        //    }
+                        //}
                         SPQuery queryCondImpIVA = new SPQuery();
                         string QuerySTRConImpIVA = "<View>" +
                             "<Query><Where><And><Eq><FieldRef Name='Title' /><Value Type='Text'>CondImpIVA</Value></Eq><Eq><FieldRef Name='Estado' /><Value Type='Text'>Activo</Value></Eq></And></Where></Query>" +
@@ -625,10 +632,10 @@ namespace Ieasa.Layouts.Ieasa
                     rubroExite = true;
                 }
             }
-            if(rubroExite==false)
-            { 
-            libServicio.Items.Add(cboRubro.SelectedValue);
-            libServicio.DataBind();
+            if (rubroExite == false)
+            {
+                libServicio.Items.Add(cboRubro.SelectedValue);
+                libServicio.DataBind();
             }
             if (Request.QueryString["ID"] == null)
             {
@@ -644,16 +651,16 @@ namespace Ieasa.Layouts.Ieasa
                 btnGroupRubros.Style.Add("display", "inline-flex");
             }
         }
-        protected void btoMasSociedad_Click(object sender, EventArgs e)
-        {
-            listSociedad.Items.Add(cboSociedad.SelectedValue);
-            listSociedad.DataBind();
-        }
-        protected void btoMenosSociedad_Click(object sender, EventArgs e)
-        {
-            listSociedad.Items.Remove(listSociedad.SelectedItem);
-            listSociedad.DataBind();
-        }
+        //protected void btoMasSociedad_Click(object sender, EventArgs e)
+        //{
+        //    listSociedad.Items.Add(cboSociedad.SelectedValue);
+        //    listSociedad.DataBind();
+        //}
+        //protected void btoMenosSociedad_Click(object sender, EventArgs e)
+        //{
+        //    listSociedad.Items.Remove(listSociedad.SelectedItem);
+        //    listSociedad.DataBind();
+        //}
         protected void btnValidoRubros(object sender, EventArgs e)
         {
             if (libServicio.Items.Count < 1) {
@@ -670,7 +677,7 @@ namespace Ieasa.Layouts.Ieasa
         {
             SPListItemCollection ListaAux = null;
 
-           
+
             string CorreoVentas = txtVentasCorreo.Text;
             string QuerySTR = "<View><Query><Where><Or><Contains><FieldRef Name='VentasCorreo' /><Value Type='Text'>" + CorreoVentas.Split('@')[1] + "</Value></Contains><Or><Eq><FieldRef Name='RazonSocial' /><Value Type='Text'>" + txtNomFantasia.Text + "</Value></Eq><Or><Eq><FieldRef Name='SitioWeb' /><Value Type='Text'>" + txtSitioWeb.Text + "</Value></Eq><And><Eq><FieldRef Name='Calle' /><Value Type='Text'>" + txtCalle.Text + "</Value></Eq><Eq><FieldRef Name='Altura' /><Value Type='Text'>" + txtAltura.Text + "</Value></Eq></And></Or></Or></Or></Where></Query></View>";
             SPQuery query = new SPQuery();
@@ -700,7 +707,7 @@ namespace Ieasa.Layouts.Ieasa
                             {
 
                                 ListaAux = web.Lists["AltaProvisoria"].GetItems(query);
-                             
+
                             }
                         }
                     });
@@ -734,7 +741,7 @@ namespace Ieasa.Layouts.Ieasa
 
             if (ListaAux.Count > 0)
             {
-              
+
                 return ListaAux.Count;
             }
             else
@@ -797,8 +804,8 @@ namespace Ieasa.Layouts.Ieasa
                         htmlCorreoCNRP = htmlCorreoCCM.Replace("##NOMBREFANTASIA##", txtNomFantasia.Text).Replace("##REGISTRO##", SPContext.Current.Web.Url + "/_layouts/15/ENARSA/AltaProvisoria.aspx?ID=" + ID).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                         SPUtility.SendEmail(SPContext.Current.Web, false, false, destinatarioCorreoCCM, "Alta Portal Proveedores", htmlCorreoCCM);
                         break;
-                   
-                   
+
+
                 }
             }
             else
@@ -882,12 +889,12 @@ namespace Ieasa.Layouts.Ieasa
                     queryCPSA.ViewXml = QuerySTRCPSA;
                     SPListItemCollection ListaABMCPSA = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPSA);
                     string htmlCorreoCPSA = "";
-                  
+
                     foreach (SPListItem item in ListaABMCPSA)
                     {
                         htmlCorreoCPSA = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
-                        htmlCorreoCPSA = htmlCorreoCPSA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/info/MISDATOS.ASPX");
+                    htmlCorreoCPSA = htmlCorreoCPSA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/info/MISDATOS.ASPX");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSA);
                     break;
                 case "CPSMA":
@@ -905,7 +912,7 @@ namespace Ieasa.Layouts.Ieasa
                     htmlCorreoCPSMA = htmlCorreoCPSMA.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG").Replace("##REGISTRO##", SPContext.Current.Web.Url + "/info/MISDATOS.ASPX");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSMA);
                     break;
-                    
+
                 case "CPSR":
                     //CORREO A PROVEEDOR REGISTRO RECHAZADO
                     string QuerySTRCPSR = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPSR</Value></Eq></Where></Query></View>";
@@ -931,7 +938,7 @@ namespace Ieasa.Layouts.Ieasa
                         htmlCorreoCPSS = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
                     }
                     htmlCorreoCPSS = htmlCorreoCPSS.Replace("##OBSERVACIONES##", RegistroExistente["ObservacionesCompras"].ToString()).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
-                    
+
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSS.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
                 case "CPSSB":
@@ -947,9 +954,22 @@ namespace Ieasa.Layouts.Ieasa
                     }
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSSB.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
                     break;
+                case "CPSPI":
+                    //CORREO A PROVEEDOR PRE INSCRIPTO
+                    string QuerySTRCPSPI = "<View><Query><Where><Eq><FieldRef Name='Codigo'/><Value Type='Text'>CPSPI</Value></Eq></Where></Query></View>";
+                    SPQuery queryCPSPI = new SPQuery();
+                    queryCPSPI.ViewXml = QuerySTRCPSPI;
+                    SPListItemCollection ListaABMCPSPI = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPSPI);
+                    string htmlCorreoCPSPI = "";
+                    foreach (SPListItem item in ListaABMCPSPI)
+                    {
+                        htmlCorreoCPSPI = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
+                    }
+                    SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString(), "Alta Portal Proveedores", htmlCorreoCPSPI.Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG"));
+                    break;
             }
         }
-        protected void EnvioDeEmails(string Autenticacion, string CodigoEmail, string ID, SPListItem RegistroExistente,string Usuario, string Password)
+        protected void EnvioDeEmails(string Autenticacion, string CodigoEmail, string ID, SPListItem RegistroExistente, string Usuario, string Password)
         {
             switch (CodigoEmail)
             {
@@ -960,11 +980,11 @@ namespace Ieasa.Layouts.Ieasa
                     queryCPUC.ViewXml = QuerySTRCPUC;
                     SPListItemCollection ListaABMCCM = SPContext.Current.Web.Lists["ABMMails"].GetItems(queryCPUC);
                     string htmlCorreoCPUC = "";
-                   
+
                     foreach (SPListItem item in ListaABMCCM)
                     {
                         htmlCorreoCPUC = (item["Html"] != null && !string.IsNullOrEmpty(item["Html"].ToString()) ? item["Html"].ToString() : String.Empty);
-                      
+
                     }
                     htmlCorreoCPUC = htmlCorreoCPUC.Replace("##URL##", sSitio).Replace("##PASWORD##", Password).Replace("##CUIT##", Usuario).Replace("##URLSITIO##", sSitioAnonimo + "/PublishingImages/BannerAltaProvisoria.PNG");
                     SPUtility.SendEmail(SPContext.Current.Web, false, false, RegistroExistente["VentasCorreo"].ToString().Trim(), "Alta Portal Proveedores", htmlCorreoCPUC);
@@ -985,6 +1005,7 @@ namespace Ieasa.Layouts.Ieasa
                     GuardarDatos(RegistroExistente);
                     RegistroExistente.Update();
                     GuardarRubro(RegistroExistente.ID);
+
                     GuardarSociedad(RegistroExistente.ID);
                     if (SPContext.Current.Web.CurrentUser.Groups.Cast<SPGroup>().Any(g => g.Name.Equals("COMPRAS")))
                     {
@@ -1001,33 +1022,33 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         using (SPSite site = new SPSite(sSitio))
                         {
-                           using (SPWeb web = site.OpenWeb())
-                           {
+                            using (SPWeb web = site.OpenWeb())
+                            {
                                 site.AllowUnsafeUpdates = true;
                                 web.AllowUnsafeUpdates = true;
-                                 // SE CREA EL REGISTRO PARA EL PROVEEDOR
-                                 SPListItem RegistroNuevo = web.Lists["AltaProvisoria"].AddItem();
+                                // SE CREA EL REGISTRO PARA EL PROVEEDOR
+                                SPListItem RegistroNuevo = web.Lists["AltaProvisoria"].AddItem();
                                 GuardarDatos(RegistroNuevo);
                                 RegistroNuevo.Update();
                                 //PRIMER MAIL NO ANONIMO A EL PROVEEDOR 
                                 EnvioDeEmails("LOGIN", "UAPMAP");
                                 //SEGUNDO MAIL NO ANONIMO A CONTABILIDAD
                                 EnvioDeEmails("LOGIN", "CNRP");
-                               
+
                                 //SE GUARDA EL RUBRO
                                 GuardarRubro(RegistroNuevo.ID);
                                 site.AllowUnsafeUpdates = false;
                                 web.AllowUnsafeUpdates = false;
-                                       if (Request.QueryString["AN"] != null)
-                                       {
-                                           ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeGuardaAN();", true);
-                                       }
-                                       else
-                                       {
-                                           ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeGuarda();", true);
-                                       }
-                                   }
-                               }
+                                if (Request.QueryString["AN"] != null)
+                                {
+                                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeGuardaAN();", true);
+                                }
+                                else
+                                {
+                                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeGuarda();", true);
+                                }
+                            }
+                        }
                         if (Request.QueryString["AN"] != null)
                         {
                             ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeGuardaAN();", true);
@@ -1040,7 +1061,7 @@ namespace Ieasa.Layouts.Ieasa
                     else
                     {
                         SPSecurity.RunWithElevatedPrivileges(
-                        delegate()
+                        delegate ()
                         {
                             using (SPSite site = new SPSite(sSitio))
                             {
@@ -1048,7 +1069,7 @@ namespace Ieasa.Layouts.Ieasa
                                 {
                                     site.AllowUnsafeUpdates = true;
                                     web.AllowUnsafeUpdates = true;
-                                   
+
                                     // SE CREA EL REGISTRO PARA EL PROVEEDOR
                                     SPListItem RegistroNuevo = web.Lists["AltaProvisoria"].AddItem();
                                     GuardarDatos(RegistroNuevo);
@@ -1071,8 +1092,8 @@ namespace Ieasa.Layouts.Ieasa
         }
         private void GuardarRubro(int p)
         {
-          //  if (Request.QueryString["ID"] != null)
-            //{
+            if (Request.QueryString["ID"] != null)
+            {
                 string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='IDRegistro' /><Value Type='Text'>" + p + "</Value></Eq></Where></Query></View>";
                 SPQuery query = new SPQuery();
                 query.ViewXml = QuerySTR;
@@ -1085,11 +1106,11 @@ namespace Ieasa.Layouts.Ieasa
                         item2.Delete();
                     }
                 }
-           // }
+            }
             if (libServicio.Items.Count > 0)
             {
                 SPSecurity.RunWithElevatedPrivileges(
-                delegate()
+                delegate ()
                 {
                     using (SPSite site = new SPSite(sSitio))
                     {
@@ -1110,7 +1131,7 @@ namespace Ieasa.Layouts.Ieasa
                     }
                 });
             }
-             
+
         }
         private void GuardarSociedad(int p)
         {
@@ -1129,16 +1150,7 @@ namespace Ieasa.Layouts.Ieasa
                     }
                 }
             }
-            if (listSociedad.Items.Count > 0)
-            {
-                for (int i = 0; i < listSociedad.Items.Count; i++)
-                {
-                    SPListItem Rubro = SPContext.Current.Web.Lists["AltaProvisoriaSociedad"].AddItem();
-                    Rubro["Title"] = listSociedad.Items[i].ToString();
-                    Rubro["IDRegistro"] = p;
-                    Rubro.Update();
-                }
-            }
+
 
         }
         private void GuardarDatos(SPListItem Registro)
@@ -1158,8 +1170,9 @@ namespace Ieasa.Layouts.Ieasa
             }
             else
             {
-               
+
                 Registro["Estado"] = "Pendiente";
+                Registro["EstadoSAP"] = "NUEVO";
                 Registro["RegistroModificado"] = "NO";
             }
             //Datos Generales
@@ -1169,21 +1182,21 @@ namespace Ieasa.Layouts.Ieasa
             Registro["ActividadPrincipal"] = (txtActPrinc.Text != null && !string.IsNullOrEmpty(txtActPrinc.Text) ? txtActPrinc.Text : String.Empty);
             Registro["SitioWeb"] = (txtSitioWeb.Text != null && !string.IsNullOrEmpty(txtSitioWeb.Text) ? txtSitioWeb.Text : String.Empty);
             Registro["Pais"] = cboPais.SelectedItem.Text;
-            if (cboPais.SelectedValue == "Argentina")
-            {
-                Registro["ProvinciaArg"] = cboProvincia.SelectedItem.Text;
-            }
-            else
-            {
-                Registro["Provincia"] = (txtProvincia.Text != null && !string.IsNullOrEmpty(txtProvincia.Text) ? txtProvincia.Text : String.Empty);
-            }
+            //   if (cboPais.SelectedValue == "Argentina")
+            //  {
+            Registro["ProvinciaArg"] = cboProvincia.SelectedItem.Text;
+            //}
+            //else
+            //{
+            Registro["Provincia"] = cboProvincia.SelectedItem.Text;// (txtProvincia.Text != null && !string.IsNullOrEmpty(txtProvincia.Text) ? txtProvincia.Text : String.Empty);
+                                                                   // }
             Registro["Ciudad"] = (txtCiudad.Text != null && !string.IsNullOrEmpty(txtCiudad.Text) ? txtCiudad.Text : String.Empty);
             Registro["CodPostal"] = (txtCodPostal.Text != null && !string.IsNullOrEmpty(txtCodPostal.Text) ? txtCodPostal.Text : String.Empty);
             Registro["Calle"] = (txtCalle.Text != null && !string.IsNullOrEmpty(txtCalle.Text) ? txtCalle.Text : String.Empty);
             Registro["Altura"] = (txtAltura.Text != null && !string.IsNullOrEmpty(txtAltura.Text) ? txtAltura.Text : String.Empty);
             Registro["Depto"] = (txtDepto.Text != null && !string.IsNullOrEmpty(txtDepto.Text) ? txtDepto.Text : String.Empty);
             Registro["Piso"] = (txtPiso.Text != null && !string.IsNullOrEmpty(txtPiso.Text) ? txtPiso.Text : String.Empty);
-          
+
             //if (fuPersoneriaJur.HasFiles)
             //{
             //    foreach (HttpPostedFile uploadedFile in fuPersoneriaJur.PostedFiles)
@@ -1287,15 +1300,15 @@ namespace Ieasa.Layouts.Ieasa
                     attachments.Add(fileName, fileContents);
                 }
             }
-            if(chkPersFis.Checked==true){
+            if (chkPersFis.Checked == true) {
                 Registro["PersonaFisica"] = "SI";
             }
             else
             {
                 Registro["PersonaFisica"] = "NO";
             }
-           
-            
+
+
             Registro["Proveedor"] = cboProveedor.SelectedItem.Text;
             Registro["CondImpIG"] = cboConImpG.SelectedItem.Text;
 
@@ -1363,7 +1376,7 @@ namespace Ieasa.Layouts.Ieasa
 
 
             Registro["CondImpIVA"] = cboCondImIVA.SelectedItem.Text;
-            
+
             Registro["IngresosBrutos"] = cboIngresosBrutos.SelectedItem.Text;
             if (fuIngresosBrutos.HasFiles)
             {
@@ -1383,8 +1396,16 @@ namespace Ieasa.Layouts.Ieasa
             Registro["NumeroIngresosBrutos"] = (txtIngresosBrutos.Text != null && !string.IsNullOrEmpty(txtIngresosBrutos.Text) ? txtIngresosBrutos.Text : String.Empty);
             //Fin Datos Impositivos
             //SAP//
-           
-            
+            if (chkSAP.Checked == true)
+            {
+                Registro["PasarSAP"] = "SI";
+
+            }
+            else
+            {
+                Registro["PasarSAP"] = "NO";
+            }
+
         }
         private void CorreoComprasModificacion(string p)
         {
@@ -1417,7 +1438,7 @@ namespace Ieasa.Layouts.Ieasa
         {
             Random random = new Random();
             return random.Next(min, max);
-        }  
+        }
         protected string SetErrorMessage(MembershipCreateStatus status)
         {
             string sError = string.Empty;
@@ -1483,7 +1504,7 @@ namespace Ieasa.Layouts.Ieasa
         }
         protected void btnAprobarCompras_ServerClick(object sender, EventArgs e)
         {
-            SPSecurity.RunWithElevatedPrivileges(delegate()
+            SPSecurity.RunWithElevatedPrivileges(delegate ()
             {
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
                 bool _showRoles = (new MembershipSettings(SPContext.Current.Web)).EnableRoles;
@@ -1496,12 +1517,13 @@ namespace Ieasa.Layouts.Ieasa
                 {
                     user = Utils.BaseMembershipProvider().GetUser(RegistroExistente["CodigoExtranjero"].ToString(), false);
                 }
+
                 //SI EL CUIT NO ESTA VACIO, EL PROVEEDOR ES NACIOAL
                 SPUser Usuario = null;
                 string sMensaje = string.Empty;
                 bool UsuarioCreado = false;
                 string sMensajeModal = string.Empty;
-                SPSecurity.RunWithElevatedPrivileges(delegate()
+                SPSecurity.RunWithElevatedPrivileges(delegate ()
                 {
                     if (user == null)
                     {
@@ -1514,7 +1536,7 @@ namespace Ieasa.Layouts.Ieasa
                             string sPasword = RandomPassword() + "+";
                             string sCodigoExtranjero = string.Empty;
 
-                            if(RegistroExistente["Proveedor"].ToString() == "Extranjero")
+                            if (RegistroExistente["Proveedor"].ToString() == "Extranjero")
                             {
                                 int iNuevoCodigo = 0;
                                 SPListItem ProvExtranjeroNuevo = SPContext.Current.Web.Lists["AltaProvisoriaProveedorExtranjero"].AddItem();
@@ -1529,7 +1551,7 @@ namespace Ieasa.Layouts.Ieasa
                                     iNuevoCodigo = int.Parse(ListaAux[0]["NumCodExtranjero"].ToString()) + 1;
                                     sCodigoExtranjero = "EXT" + iNuevoCodigo.ToString();
                                 }
-                                    else if (ListaAux[0]["NumCodExtranjero"].ToString().Length == 2)
+                                else if (ListaAux[0]["NumCodExtranjero"].ToString().Length == 2)
                                 {
                                     iNuevoCodigo = int.Parse(ListaAux[0]["NumCodExtranjero"].ToString()) + 1;
                                     sCodigoExtranjero = "EXT0" + iNuevoCodigo.ToString();
@@ -1545,11 +1567,11 @@ namespace Ieasa.Layouts.Ieasa
                             }
                             if (RegistroExistente["Cuit"] != null && !string.IsNullOrEmpty(RegistroExistente["Cuit"].ToString()))
                             {
-                               
+
                                 user = Utils.BaseMembershipProvider().CreateUser(RegistroExistente["Cuit"].ToString(), sPasword, RegistroExistente["VentasCorreo"].ToString(), null, null, true, null, out createStatus);
-                                
+
                             }
-                            else 
+                            else
                             {
                                 user = Utils.BaseMembershipProvider().CreateUser(sCodigoExtranjero, sPasword, RegistroExistente["VentasCorreo"].ToString(), null, null, true, null, out createStatus);
                             }
@@ -1561,7 +1583,7 @@ namespace Ieasa.Layouts.Ieasa
                             AddUserToSite(Utils.EncodeUsername(user.UserName), user.Email, RegistroExistente["NombreFantasia"].ToString());
                             // add user to group
                             SPGroup group = this.Web.SiteGroups["EXTERNOS"];
-                            group.AddUser(Utils.EncodeUsername(user.UserName),user.Email,RegistroExistente["NombreFantasia"].ToString(),"");
+                            group.AddUser(Utils.EncodeUsername(user.UserName), user.Email, RegistroExistente["NombreFantasia"].ToString(), "");
                             group.Update();
                             EnvioDeEmails("LOGIN", "CPUC", "0", RegistroExistente, ((RegistroExistente["Cuit"] != null) ? RegistroExistente["Cuit"].ToString() : sCodigoExtranjero), sPasword);
                             //      
@@ -1576,15 +1598,15 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         try
                         {
-                            MembershipUser userMembership =    Utils.BaseMembershipProvider().GetUser((RegistroExistente["Cuit"] != null ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString())), false);
+                            MembershipUser userMembership = Utils.BaseMembershipProvider().GetUser((RegistroExistente["Cuit"] != null ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString())), false);
                             userMembership.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Utils.BaseMembershipProvider().UpdateUser(userMembership);
-                           // user.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
-                            Usuario = ((RegistroExistente["Cuit"]!= null) ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString()));
+                            // user.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
+                            Usuario = ((RegistroExistente["Cuit"] != null) ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString()));
                             Usuario.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Usuario.Update();
                         }
-                        catch (Exception EX){}
+                        catch (Exception EX) { }
                     }
                     if (RegistroExistente["RegistroModificado"] != null && RegistroExistente["RegistroModificado"].ToString() == "SI")
                     {
@@ -1606,7 +1628,7 @@ namespace Ieasa.Layouts.Ieasa
                         SPUser UsuarioCreador = null;
                         if (RegistroExistente["Cuit"] != null && !string.IsNullOrEmpty(RegistroExistente["Cuit"].ToString()))
                         {
-                            UsuarioCreador =  SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString());
+                            UsuarioCreador = SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString());
                         }
                         if (RegistroExistente["CodigoExtranjero"] != null && !string.IsNullOrEmpty(RegistroExistente["CodigoExtranjero"].ToString()))
                         {
@@ -1618,15 +1640,19 @@ namespace Ieasa.Layouts.Ieasa
                 });
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeCompra('" + sMensajeModal + "');", true);
             });
+            if (chkSAP.Checked == true)
+            {
+                PasarSAP();
+            }
         }
-        
+
         protected void btnRechazarCompras_ServerClick(object sender, EventArgs e)
         {
             SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
             RegistroExistente["ObservacionesCompras"] = (txtObsCompras.Text != null && !string.IsNullOrEmpty(txtObsCompras.Text) ? txtObsCompras.Text : String.Empty);
             RegistroExistente["Estado"] = "Rechazado";
             RegistroExistente.Update();
-           
+
             EnvioDeEmails("LOGIN", "CPSR", "0", RegistroExistente);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeModificado(2);", true);
         }
@@ -1640,7 +1666,7 @@ namespace Ieasa.Layouts.Ieasa
             EnvioDeEmails("LOGIN", "CPSPI", "0", RegistroExistente);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeModificado(2);", true);
         }
-            
+
         protected void btnSubsanandoCompras_ServerClick(object sender, EventArgs e)
         {
             SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
@@ -1663,8 +1689,11 @@ namespace Ieasa.Layouts.Ieasa
         }
         public partial class RespuestaWebService
         { }
-            protected void btoPasarSap_ServerClick(object sender, EventArgs e)
+        private void PasarSAP()
+
         {
+
+            string Usuario = SPContext.Current.Web.CurrentUser.ToString().Split('\\')[1].ToString(); //usuario que realizo la operacion;
             string Status = ""; //status => [NUEVO|MODIFICADO|BLOQUEADO]
             string IdSAP = "";// si el campo EstadoSAP es Nuevo, enviar vacío. Si es una modificación, ya existe en SAP, enviar el valor idSAP 
             string idProveedorSP = ""; //idProvedorSap => ( Vacío si es nacionales/ CIE si es extranjeros )
@@ -1683,7 +1712,7 @@ namespace Ieasa.Layouts.Ieasa
             string pais = "";// Pais =>enviar 2 letras de la tabla Pais
             string region = "";//region => enviar 2/3 letras de la tabla Region
             string idioma = ""; //idioma => ES 
-          
+
             string tel1 = ""; //tel1=>telefono
             string tel2 = "";//tel2 => VACIO
             string direccion = "";// direccion => Dirección de e-mail – Ventas, 2 
@@ -1693,7 +1722,7 @@ namespace Ieasa.Layouts.Ieasa
             string claseImpuesto = ""; //claseImpuesto => Condición Impositiva(IVA) enviar primeros 2 números de la lista desplegable o de la tabla Clase de Impuesto
             string personaFisica = "";//personaFisica => Persona Física. Si es true, enviar una X. Si es False, enviar Vacío 
             string claveBanco = "";  //claveBanco => ?? 
-               string nCuentaBancaria = ""; //nCuentaBancaria =??
+            string nCuentaBancaria = ""; //nCuentaBancaria =??
             string pais2 = "";//pais=>??
             string CuentaAsociada = "";// CuentaAsociada=>2110010
             string GrupoTesoreria = "";// GrupoTesoreria => A1 si es nacionales / A2 si es extranjero, - 
@@ -1739,109 +1768,131 @@ namespace Ieasa.Layouts.Ieasa
                     IdSAP = RegistroExistente["IdSap"].ToString();
                     idProveedorSP = RegistroExistente["IdSap"].ToString();
                 }
-
+                //REGISTRO INHABILITADO 
+                if (RegistroExistente["Estado"].ToString() == "Inhabilitado" && RegistroExistente["IdSap"] != null && RegistroExistente["EstadoSAP"].ToString() == "BLOQUEADO")
+                {
+                    Status = "BLOQUEADO";
+                    IdSAP = RegistroExistente["IdSap"].ToString();
+                    idProveedorSP = RegistroExistente["IdSap"].ToString();
+                }
+                //REGISTRO HABILITADO 
+                if (RegistroExistente["Estado"].ToString() == "Aprobado" && RegistroExistente["IdSap"] != null && RegistroExistente["EstadoSAP"].ToString() == "DESBLOQUEADO")
+                {
+                    Status = "MODIFICADO";
+                    IdSAP = RegistroExistente["IdSap"].ToString();
+                    idProveedorSP = RegistroExistente["IdSap"].ToString();
+                }
+             
                 if (RegistroExistente["Cuit"] != null && !string.IsNullOrEmpty(RegistroExistente["Cuit"].ToString()))
-                    {
-                       
-                        GrupoCuenta = "YB01";
-                        nIdentFis1 = RegistroExistente["Cuit"].ToString();
-                        tipoNIF = "80";
-                        GrupoTesoreria = "A1";
-                        monedaPedido = "ARS";
-                    }
-                    else
-                    {
-                       
-                        GrupoCuenta = "YBIV";
-                        nIdentFis1 = "";
-                        tipoNIF = "83";
-                        GrupoTesoreria = "A2";
-                        monedaPedido = "USD";
-                    }
-                    
-                     tratamiento = "";
-                    nombre = (RegistroExistente["RazonSocial"] != null && !string.IsNullOrEmpty(RegistroExistente["RazonSocial"].ToString()) ? RegistroExistente["RazonSocial"].ToString() : ""); 
-                     nombre2 = (RegistroExistente["NombreFantasia"] != null && !string.IsNullOrEmpty(RegistroExistente["NombreFantasia"].ToString()) ? RegistroExistente["NombreFantasia"].ToString() : ""); 
-                    conceptoB12 =  (RegistroExistente["ActividadPrincipal"] != null && !string.IsNullOrEmpty(RegistroExistente["ActividadPrincipal"].ToString()) ? RegistroExistente["ActividadPrincipal"].ToString() : "");
-                    conceptoB2 = ""; 
-                     plantaEdificio = (RegistroExistente["Piso"] != null && !string.IsNullOrEmpty(RegistroExistente["Piso"].ToString()) ? RegistroExistente["Piso"].ToString() :""); 
-                     nPiso = (RegistroExistente["Depto"] != null && !string.IsNullOrEmpty(RegistroExistente["Depto"].ToString()) ? RegistroExistente["Depto"].ToString() : ""); 
-                    calle = (RegistroExistente["Calle"] != null && !string.IsNullOrEmpty(RegistroExistente["Calle"].ToString()) ? RegistroExistente["Calle"].ToString() : "");
-                    numero = (RegistroExistente["Altura"] != null && !string.IsNullOrEmpty(RegistroExistente["Altura"].ToString()) ? RegistroExistente["Altura"].ToString() : "");
-                    codigoPostal = (RegistroExistente["CodPostal"] != null && !string.IsNullOrEmpty(RegistroExistente["CodPostal"].ToString()) ? RegistroExistente["CodPostal"].ToString() : "");
-                    poblacion = (RegistroExistente["Ciudad"] != null && !string.IsNullOrEmpty(RegistroExistente["Ciudad"].ToString()) ? RegistroExistente["Ciudad"].ToString() : "");
-                    string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='Pais' /><Value Type='Text'>" + RegistroExistente["Pais"].ToString() + "</Value></Eq></Where></Query></View>";
-                    SPQuery query = new SPQuery();
-                    query.ViewXml = QuerySTR;
-                    SPListItemCollection ListaPaisesSap= SPContext.Current.Web.Lists["PaisesSap"].GetItems(query);
+                {
+               
+                    GrupoCuenta = "YB01";
+                    nIdentFis1 = RegistroExistente["Cuit"].ToString();
+                    tipoNIF = "80";
+                    GrupoTesoreria = "A1";
+                    monedaPedido = "ARS";
+                    claseImpuesto = RegistroExistente["CondImpIVA"].ToString().Substring(0, 2);
+                    claseDistrib = RegistroExistente["IngresosBrutos"].ToString().Substring(0, 2);
 
-                    if(ListaPaisesSap!= null && ListaPaisesSap.Count >0 )
-                    { 
+
+                }
+                else
+                {
+
+                    GrupoCuenta = "YBIV";
+                    nIdentFis1 = "";
+                    tipoNIF = "83";
+                    GrupoTesoreria = "A2";
+                    monedaPedido = "USD";
+                    claseImpuesto = "08";
+                    claseDistrib = "";
+
+                }
+
+
+                string QuerySTRRegion = "<View><Query><Where><Eq><FieldRef Name='DENOMINACION_x0020_REGION' /><Value Type='Text'>" + RegistroExistente["Provincia"].ToString() + "</Value></Eq></Where></Query></View>";
+                SPQuery queryRegion = new SPQuery();
+                queryRegion.ViewXml = QuerySTRRegion;
+                SPListItemCollection ListaRegionessSap = SPContext.Current.Web.Lists["PaisesProvinciasSAP"].GetItems(queryRegion);
+
+                if (ListaRegionessSap != null && ListaRegionessSap.Count > 0)
+                {
+
+                    region = (ListaRegionessSap[0]["CODIGO_x0020_REGION"] != null && !string.IsNullOrEmpty(ListaRegionessSap[0]["CODIGO_x0020_REGION"].ToString()) ? ListaRegionessSap[0]["CODIGO_x0020_REGION"].ToString() : "");
+                }
+               
+                tratamiento = "";
+                nombre = (RegistroExistente["RazonSocial"] != null && !string.IsNullOrEmpty(RegistroExistente["RazonSocial"].ToString()) ? RegistroExistente["RazonSocial"].ToString() : "");
+                nombre2 = (RegistroExistente["NombreFantasia"] != null && !string.IsNullOrEmpty(RegistroExistente["NombreFantasia"].ToString()) ? RegistroExistente["NombreFantasia"].ToString() : "");
+                conceptoB12 = (RegistroExistente["ActividadPrincipal"] != null && !string.IsNullOrEmpty(RegistroExistente["ActividadPrincipal"].ToString()) ? RegistroExistente["ActividadPrincipal"].ToString() : "");
+                conceptoB2 = "";
+                plantaEdificio = (RegistroExistente["Piso"] != null && !string.IsNullOrEmpty(RegistroExistente["Piso"].ToString()) ? RegistroExistente["Piso"].ToString() : "");
+                nPiso = (RegistroExistente["Depto"] != null && !string.IsNullOrEmpty(RegistroExistente["Depto"].ToString()) ? RegistroExistente["Depto"].ToString() : "");
+                calle = (RegistroExistente["Calle"] != null && !string.IsNullOrEmpty(RegistroExistente["Calle"].ToString()) ? RegistroExistente["Calle"].ToString() : "");
+                numero = (RegistroExistente["Altura"] != null && !string.IsNullOrEmpty(RegistroExistente["Altura"].ToString()) ? RegistroExistente["Altura"].ToString() : "");
+                codigoPostal = (RegistroExistente["CodPostal"] != null && !string.IsNullOrEmpty(RegistroExistente["CodPostal"].ToString()) ? RegistroExistente["CodPostal"].ToString() : "");
+                poblacion = (RegistroExistente["Ciudad"] != null && !string.IsNullOrEmpty(RegistroExistente["Ciudad"].ToString()) ? RegistroExistente["Ciudad"].ToString() : "");
+
+                string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='DENOMINACION_x0020_PAIS' /><Value Type='Text'>" + RegistroExistente["Pais"].ToString() + "</Value></Eq></Where></Query></View>";
+                SPQuery query = new SPQuery();
+                query.ViewXml = QuerySTR;
+                SPListItemCollection ListaPaisesSap = SPContext.Current.Web.Lists["PaisesProvinciasSAP"].GetItems(query);
+              
+                if (ListaPaisesSap != null && ListaPaisesSap.Count > 0)
+                {
                     pais = (ListaPaisesSap[0]["Title"] != null && !string.IsNullOrEmpty(ListaPaisesSap[0]["Title"].ToString()) ? ListaPaisesSap[0]["Title"].ToString() : "");
-                    }
-                    poblacion = (RegistroExistente["Ciudad"] != null && !string.IsNullOrEmpty(RegistroExistente["Ciudad"].ToString()) ? RegistroExistente["Ciudad"].ToString() : "");
-                    string QuerySTRRegion = "<View><Query><Where><Eq><FieldRef Name='Region' /><Value Type='Text'>" + RegistroExistente["ProvinciaArg"].ToString() + "</Value></Eq></Where></Query></View>";
-                    SPQuery queryRegion = new SPQuery();
-                    queryRegion.ViewXml = QuerySTRRegion;
-                    SPListItemCollection ListaRegionessSap = SPContext.Current.Web.Lists["RegionesSap"].GetItems(queryRegion);
+                }
 
-                    if (ListaRegionessSap != null && ListaRegionessSap.Count > 0)
-                    {
+                poblacion = (RegistroExistente["Ciudad"] != null && !string.IsNullOrEmpty(RegistroExistente["Ciudad"].ToString()) ? RegistroExistente["Ciudad"].ToString() : "");
 
-                        region = (ListaRegionessSap[0]["Title"] != null && !string.IsNullOrEmpty(ListaRegionessSap[0]["Title"].ToString()) ? ListaRegionessSap[0]["Title"].ToString() : "");
-                    }
-                    else
-                    {
-                        region = RegistroExistente["Provincia"].ToString();
-                    }
-                    idioma = "ES";
+                idioma = "ES";
+
+              
+                tel1 = (RegistroExistente["Telefono"] != null && !string.IsNullOrEmpty(RegistroExistente["Telefono"].ToString()) ? RegistroExistente["Telefono"].ToString() : "");
+                tel2 = "";
+                direccion = (RegistroExistente["VentasCorreo"] != null && !string.IsNullOrEmpty(RegistroExistente["VentasCorreo"].ToString()) ? RegistroExistente["VentasCorreo"].ToString() : "");
+                direccion2 = (RegistroExistente["AdministracionCorreo"] != null && !string.IsNullOrEmpty(RegistroExistente["AdministracionCorreo"].ToString()) ? RegistroExistente["AdministracionCorreo"].ToString() : "");
 
 
-                     tel1 = (RegistroExistente["Telefono"] != null && !string.IsNullOrEmpty(RegistroExistente["Telefono"].ToString()) ? RegistroExistente["Telefono"].ToString() : "");
-                    tel2 = "";
-                     direccion = (RegistroExistente["VentasCorreo"] != null && !string.IsNullOrEmpty(RegistroExistente["VentasCorreo"].ToString()) ? RegistroExistente["VentasCorreo"].ToString() : "");
-                    direccion2 = (RegistroExistente["AdministracionCorreo"] != null && !string.IsNullOrEmpty(RegistroExistente["AdministracionCorreo"].ToString()) ? RegistroExistente["AdministracionCorreo"].ToString() : "");
-                   
 
 
-                    claseImpuesto = RegistroExistente["CondImpIVA"].ToString().Substring(0,2);
-                    if (RegistroExistente["PersonaFisica"].ToString() == "SI")
-                    {
-                        personaFisica = "X";
-                    }
-                    else
-                    {
-                        personaFisica = "";
-                    }
+                if (RegistroExistente["PersonaFisica"].ToString() == "SI")
+                {
+                    personaFisica = "X";
+                }
+                else
+                {
+                    personaFisica = "";
+                }
                    ;
-                     claveBanco = ""; 
-                     nCuentaBancaria = ""; 
-                     pais2 = "";
-                     CuentaAsociada = "2110010";
-
-                   
-                     codigoActividad = "01";// VER ESTE,
-                     claseDistrib = RegistroExistente["IngresosBrutos"].ToString().Substring(0, 2); 
-                     nExtension = ""; 
-                     motivoExencion = "";
-                     verifFraDupl = "X"; 
-                     viasdePago = ""; 
-                     notaInterior = ""; 
-                     paisRetencion = "";
-                     grupoEsqProveedor = "03";
-
-                     verifFacBaseEM = "X";
-                     telefonoProveedor = (RegistroExistente["Telefono"] != null && !string.IsNullOrEmpty(RegistroExistente["Telefono"].ToString()) ? RegistroExistente["Telefono"].ToString() : "");
-                    vendedorProveedor = (RegistroExistente["VentasContacto"] != null && !string.IsNullOrEmpty(RegistroExistente["VentasContacto"].ToString()) ? RegistroExistente["VentasContacto"].ToString() : "");
-                    pedidoAutoPermitido = "";
-                     facturaRelativaServicio = "X";
+                claveBanco = "";
+                nCuentaBancaria = "";
+                pais2 = "";
+                CuentaAsociada = "2110010";
 
 
+                codigoActividad = "01";// VER ESTE,
+
+                nExtension = "";
+                motivoExencion = "";
+                verifFraDupl = "X";
+                viasdePago = "";
+                notaInterior = "";
+                paisRetencion = "";
+                grupoEsqProveedor = "03";
+
+                verifFacBaseEM = "X";
+                telefonoProveedor = (RegistroExistente["Telefono"] != null && !string.IsNullOrEmpty(RegistroExistente["Telefono"].ToString()) ? RegistroExistente["Telefono"].ToString() : "");
+                vendedorProveedor = (RegistroExistente["VentasContacto"] != null && !string.IsNullOrEmpty(RegistroExistente["VentasContacto"].ToString()) ? RegistroExistente["VentasContacto"].ToString() : "");
+                pedidoAutoPermitido = "";
+                facturaRelativaServicio = "X";
 
 
-                
 
-                
+
+
+
+
 
             }
 
@@ -1850,7 +1901,9 @@ namespace Ieasa.Layouts.Ieasa
 
             try
             {
-                string url = "http://192.168.11.105:50000/RESTAdapter/ActualizacionProveedores";
+                // string url = "http://192.168.11.105:50000/RESTAdapter/ActualizacionProveedores"; DEV
+                //  string url = "http://esap-5q:50000/RESTAdapter/ActualizacionProveedores";//QAS
+                string url = "http://esap-5p:50000/RESTAdapter/ActualizacionProveedores";
                 HttpMessageHandler handler = new HttpClientHandler();
 
                 var httpClient = new HttpClient(handler)
@@ -1862,132 +1915,147 @@ namespace Ieasa.Layouts.Ieasa
                 httpClient.DefaultRequestHeaders.Add("ContentType", "application/json");
 
                 //This is the key section you were missing    
-                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("PORTAL_PROVEEDORES:Ieasa2022");
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("portal_proveedores:Ieasa.2023");
                 string val = System.Convert.ToBase64String(plainTextBytes);
                 httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
                 string json2 = string.Empty;
-               
-                     json2 = "{\"root\":{\"status\":\"" + Status + "\",\"idProveedorSP\":\"" + idProveedorSP + "\",\"idSAP\":\"" + IdSAP + "\"," +
-                    "\"dataGeneral\":{\"GrupoCuenta\":\"" + GrupoCuenta + "\",\"tratamiento\":\"" + tratamiento + "\"," +
-                    "\"nombre\":\"" + nombre + "\",\"nombre2\":\"" + nombre2 + "\",\"conceptoB12\":\"" + conceptoB12 + "\",\"conceptoB2\":\"" + conceptoB2 + "\"," +
-                    "\"plantaEdificio\":\"" + plantaEdificio + "\",\"direccion\":{\"nPiso\":\"" + nPiso + "\",\"calle\":\"" + calle + "\"," +
-                    "\"numero\":\"" + numero + "\",\"codigoPostal\":\"" + codigoPostal + "\",\"poblacion\":\"" + poblacion + "\",\"pais\":\"" + pais + "\"," +
-                    "\"region\":\"" + region + "\"},\"idioma\":\"" + idioma + "\",\"contacto\":{\"tel1\":\"" + tel1 + "\",\"tel2\":\"" + tel2 + "\"," +
-                    "\"emails\":[{\"direccion\":\"" + direccion + "\"},{\"direccion\":\"" + direccion2 + "\"}]}," +
-                    "\"control\":{\"nIdentFis1\":\"" + nIdentFis1 + "\",\"tipoNIF\":\"" + tipoNIF + "\",\"claseImpuesto\":\"" + claseImpuesto + "\"," +
-                    "\"personaFisica\":\"" + personaFisica + "\"},\"Pagos\":{\"pais\":\"" + pais2 + "\",\"claveBanco\":\"" + claveBanco + "\"," +
-                    "\"nCuentaBancaria\":\"" + nCuentaBancaria + "\"}},\"Sociedad\":{\"gestionCuenta\":{\"CuentaAsociada\":\"" + CuentaAsociada + "\"," +
-                    "\"GrupoTesoreria\":\"" + GrupoTesoreria + "\",\"codigoActividad\":\"" + codigoActividad + "\",\"claseDistrib\":\"" + claseDistrib + "\"," +
-                    "\"nExtension\":\"" + nExtension + "\",\"motivoExencion\":\"" + motivoExencion + "\"}," +
-                    "\"pagosContabilidad\":{\"verifFraDupl\":\"" + verifFraDupl + "\",\"viasdePago\":\"" + viasdePago + "\"}," +
-                    "\"notaInterior\":\"" + notaInterior + "\",\"paisRetencion\":\"" + paisRetencion + "\"}," +
-                    "\"organizacionCompras\":{\"monedaPedido\":\"" + monedaPedido + "\",\"grupoEsqProveedor\":\"" + grupoEsqProveedor + "\"," +
-                    "\"verifFacBaseEM\":\"" + verifFacBaseEM + "\",\"telefonoProveedor\":\"" + telefonoProveedor + "\",\"vendedorProveedor\":\"" + vendedorProveedor + "\"," +
-                    "\"pedidoAutoPermitido\":\"" + pedidoAutoPermitido + "\",\"facturaRelativaServicio\":\"" + facturaRelativaServicio + "\"}}}";
 
-              
+                json2 = "{\"root\":{\"status\":\"" + Status + "\",\"username\":\"" + Usuario + "\",\"idProveedorSP\":\"" + idProveedorSP + "\",\"idSAP\":\"" + IdSAP + "\"," +
+               "\"dataGeneral\":{\"GrupoCuenta\":\"" + GrupoCuenta + "\",\"tratamiento\":\"" + tratamiento + "\"," +
+               "\"nombre\":\"" + nombre + "\",\"nombre2\":\"" + nombre2 + "\",\"conceptoB12\":\"" + conceptoB12 + "\",\"conceptoB2\":\"" + conceptoB2 + "\"," +
+               "\"plantaEdificio\":\"" + plantaEdificio + "\",\"direccion\":{\"nPiso\":\"" + nPiso + "\",\"calle\":\"" + calle + "\"," +
+               "\"numero\":\"" + numero + "\",\"codigoPostal\":\"" + codigoPostal + "\",\"poblacion\":\"" + poblacion + "\",\"pais\":\"" + pais + "\"," +
+               "\"region\":\"" + region + "\"},\"idioma\":\"" + idioma + "\",\"contacto\":{\"tel1\":\"" + tel1 + "\",\"tel2\":\"" + tel2 + "\"," +
+               "\"emails\":[{\"direccion\":\"" + direccion + "\"},{\"direccion\":\"" + direccion2 + "\"}]}," +
+               "\"control\":{\"nIdentFis1\":\"" + nIdentFis1 + "\",\"tipoNIF\":\"" + tipoNIF + "\",\"claseImpuesto\":\"" + claseImpuesto + "\"," +
+               "\"personaFisica\":\"" + personaFisica + "\"},\"Pagos\":{\"pais\":\"" + pais2 + "\",\"claveBanco\":\"" + claveBanco + "\"," +
+               "\"nCuentaBancaria\":\"" + nCuentaBancaria + "\"}},\"Sociedad\":{\"gestionCuenta\":{\"CuentaAsociada\":\"" + CuentaAsociada + "\"," +
+               "\"GrupoTesoreria\":\"" + GrupoTesoreria + "\",\"codigoActividad\":\"" + codigoActividad + "\",\"claseDistrib\":\"" + claseDistrib + "\"," +
+               "\"nExtension\":\"" + nExtension + "\",\"motivoExencion\":\"" + motivoExencion + "\"}," +
+               "\"pagosContabilidad\":{\"verifFraDupl\":\"" + verifFraDupl + "\",\"viasdePago\":\"" + viasdePago + "\"}," +
+               "\"notaInterior\":\"" + notaInterior + "\",\"paisRetencion\":\"" + paisRetencion + "\"}," +
+               "\"organizacionCompras\":{\"monedaPedido\":\"" + monedaPedido + "\",\"grupoEsqProveedor\":\"" + grupoEsqProveedor + "\"," +
+               "\"verifFacBaseEM\":\"" + verifFacBaseEM + "\",\"telefonoProveedor\":\"" + telefonoProveedor + "\",\"vendedorProveedor\":\"" + vendedorProveedor + "\"," +
+               "\"pedidoAutoPermitido\":\"" + pedidoAutoPermitido + "\",\"facturaRelativaServicio\":\"" + facturaRelativaServicio + "\"}}}";
 
-                    using (var response = httpClient.PostAsync(url, new StringContent(json2, System.Text.Encoding.UTF8, "application/json")).Result)
+
+
+                using (var response = httpClient.PostAsync(url, new StringContent(json2, System.Text.Encoding.UTF8, "application/json")).Result)
                 {
-                 
-                   
-                    lbSap.Text = json2 + response.Content.ReadAsStringAsync().Result;
+
+
+                    lbSap.Text = response.Content.ReadAsStringAsync().Result;
                     if (response.Content.ReadAsStringAsync().Result.Contains("success"))
-                    { 
-                    txtEstadoSAP.Text = "ACTUALIZADO";
+                    {
+                        txtEstadoSAP.Text = "ACTUALIZADO";
                         if (RegistroExistente["Estado"].ToString() == "Aprobado" && (RegistroExistente["IdSap"] == null || string.IsNullOrEmpty(RegistroExistente["IdSap"].ToString())))
                         {
                             lbIdSap.Text = response.Content.ReadAsStringAsync().Result.ToString().Split(':')[1].Replace('"', ' ').Replace('}', ' ').Trim().Trim();
                         }
-                            RegistroExistente["IdSap"] = lbIdSap.Text;
-                    RegistroExistente["EstadoSAP"] = "ACTUALIZADO";
-                    RegistroExistente["SAP"] = lbSap.Text;
-                    RegistroExistente.Update();
-                    
-                    SPAttachmentCollection collAttachments = RegistroExistente.Attachments;
+                        RegistroExistente["IdSap"] = lbIdSap.Text;
+                        RegistroExistente["EstadoSAP"] = "ACTUALIZADO";
+                        RegistroExistente["SAP"] = lbSap.Text;
 
-                    string sTipoArchivo = string.Empty;
+                        RegistroExistente.Update();
 
-                    if (collAttachments.Count > 0)
-                    {
-                        string url2 = "http://192.168.11.105:50000/RESTAdapter/ActualizacionDocumentacionProveedores";
-                        HttpMessageHandler handler2 = new HttpClientHandler();
+                        SPAttachmentCollection collAttachments = RegistroExistente.Attachments;
 
-                        var httpClient2 = new HttpClient(handler2)
+                        string sTipoArchivo = string.Empty;
+
+                        if (collAttachments.Count > 0)
                         {
-                            BaseAddress = new Uri(url2),
-                            Timeout = new TimeSpan(0, 2, 0)
-                        };
-                        httpClient2.DefaultRequestHeaders.Add("ContentType", "application/json");
+                            // string url2 = "http://192.168.11.105:50000/RESTAdapter/ActualizacionDocumentacionProveedores"; dev
+                            //string url2 = "http://esap-5q:50000/RESTAdapter/ActualizacionDocumentacionProveedores";// QAS
+                            string url2 = "http://esap-5p:50000/RESTAdapter/ActualizacionDocumentacionProveedores";
+                            HttpMessageHandler handler2 = new HttpClientHandler();
 
-                        //This is the key section you were missing    
-                        var plainTextBytes2 = System.Text.Encoding.UTF8.GetBytes("PORTAL_PROVEEDORES:Ieasa2022");
-                        string val2 = System.Convert.ToBase64String(plainTextBytes);
-                        httpClient2.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
-                        foreach (string nombreArchivo in collAttachments)
-                        {
-                           
-                            var attachmentFile = SPContext.Current.Web.GetFileByUrl(collAttachments.UrlPrefix + nombreArchivo);
-                          
-                            byte[] Bytes = attachmentFile.OpenBinary(SPOpenBinaryOptions.None);
-                            var Archivo = Convert.ToBase64String(Bytes);
-                           
-
-                         
-
-                            if (nombreArchivo.ToUpper().Contains("DDJJ del 202"))
+                            var httpClient2 = new HttpClient(handler2)
                             {
-                                sTipoArchivo = "Z_ACREED01";
-                            }
-                            else
+                                BaseAddress = new Uri(url2),
+                                Timeout = new TimeSpan(0, 2, 0)
+                            };
+                            httpClient2.DefaultRequestHeaders.Add("ContentType", "application/json");
+
+                            //This is the key section you were missing    
+                            var plainTextBytes2 = System.Text.Encoding.UTF8.GetBytes("PORTAL_PROVEEDORES:Ieasa2022");
+                            string val2 = System.Convert.ToBase64String(plainTextBytes);
+                            httpClient2.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
+
+
+
+
+                            foreach (string nombreArchivo in collAttachments)
                             {
-                                sTipoArchivo = "Z_ACREED02";
-                            }
 
 
-                       
-
-                       
-
-                        //    string json2 = "\"root\":{\"GrupoCuenta\":\"YB01\",\"idProveedorSP\":\"0000035989\"\"nIdentFis1\":\"23325235349\",\"attachment\":{\"tipo\":\"Z_ACREED01\",\"filename\":\"PRUEBA.pdf\",\"extension\":\"PDF\",\"mimeType\":\"application/pdf\",\"stream\":\"" +
-                        //     ""+Archivo +"\"}}";
-
-                        string json3 = "{\"root\":{\"GrupoCuenta\":\""+ GrupoCuenta + "\",\"idSAP\":\""+ lbIdSap.Text + "\",\"idProveedorSP\":\""+ lbIdSap.Text + "\",\"nIdentFis1\":\""+ nIdentFis1 + "\",\"attachment\":{\"tipo\":\""+ sTipoArchivo+"\",\"filename\":\""+nombreArchivo+"\",\"extension\":\"PDF\",\"mimeType\":\"application/pdf\",\"stream\":\"" + Archivo + "\"}}}";
-
-                            try
-                            {
-                                using (var response2 = httpClient2.PostAsync(url2, new StringContent(json3, System.Text.Encoding.UTF8, "application/json")).Result)
+                                string QuerySTRdOCS = "<View><Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>" + nombreArchivo + "</Value></Eq></Where></Query></View>";
+                                SPQuery querydOCS = new SPQuery();
+                                querydOCS.ViewXml = QuerySTRdOCS;
+                                SPListItemCollection Adjunto = SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].GetItems(querydOCS);
+                                if (Adjunto == null || Adjunto.Count == 0)
                                 {
-                                    lbSap.Text += "Procesamiento de adjuntos: " + "Nombre adjunto -" + nombreArchivo + "-" + response2.Content.ReadAsStringAsync().Result;
-                                    SPListItem RegistroNuevoSap = SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].AddItem();
-                                    RegistroNuevoSap["Title"] = nombreArchivo;
-                                    RegistroNuevoSap["IdRegistro"] = RegistroExistente.ID;
-                                    RegistroNuevoSap["Estado"] = "Enviado a SAP";
-                                    RegistroNuevoSap["Eliminado"] = "NO";
-                                    RegistroNuevoSap["MensajeSAp"] = response2.Content.ReadAsStringAsync().Result;
-                                    RegistroNuevoSap.Update();
+                                    var attachmentFile = SPContext.Current.Web.GetFileByUrl(collAttachments.UrlPrefix + nombreArchivo);
+
+                                    byte[] Bytes = attachmentFile.OpenBinary(SPOpenBinaryOptions.None);
+                                    var Archivo = Convert.ToBase64String(Bytes);
 
 
 
+
+                                    if (nombreArchivo.ToUpper().Contains("DDJJ DEL 202"))
+                                    {
+                                        sTipoArchivo = "Z_ACREED01";
+                                    }
+                                    else
+                                    {
+                                        sTipoArchivo = "Z_ACREED02";
+                                    }
+
+
+
+
+
+
+                                    //    string json2 = "\"root\":{\"GrupoCuenta\":\"YB01\",\"idProveedorSP\":\"0000035989\"\"nIdentFis1\":\"23325235349\",\"attachment\":{\"tipo\":\"Z_ACREED01\",\"filename\":\"PRUEBA.pdf\",\"extension\":\"PDF\",\"mimeType\":\"application/pdf\",\"stream\":\"" +
+                                    //     ""+Archivo +"\"}}";
+
+                                    string json3 = "{\"root\":{\"GrupoCuenta\":\"" + GrupoCuenta + "\",\"username\":\"" + Usuario + "\",\"idSAP\":\"" + lbIdSap.Text + "\",\"idProveedorSP\":\"" + lbIdSap.Text + "\",\"nIdentFis1\":\"" + nIdentFis1 + "\",\"attachment\":{\"tipo\":\"" + sTipoArchivo + "\",\"filename\":\"" + nombreArchivo + "\",\"extension\":\"PDF\",\"mimeType\":\"application/pdf\",\"stream\":\"" + Archivo + "\"}}}";
+
+                                    try
+                                    {
+                                        using (var response2 = httpClient2.PostAsync(url2, new StringContent(json3, System.Text.Encoding.UTF8, "application/json")).Result)
+                                        {
+                                            lbSap.Text += "Procesamiento de adjuntos: " + "Nombre adjunto -" + nombreArchivo + "-" + response2.Content.ReadAsStringAsync().Result;
+                                            SPListItem RegistroNuevoSap = SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].AddItem();
+                                            RegistroNuevoSap["Title"] = nombreArchivo;
+                                            RegistroNuevoSap["IdRegistro"] = RegistroExistente.ID;
+                                            RegistroNuevoSap["Estado"] = "Enviado a SAP";
+                                            RegistroNuevoSap["Eliminado"] = "NO";
+                                            RegistroNuevoSap["MensajeSAp"] = response2.Content.ReadAsStringAsync().Result;
+                                            RegistroNuevoSap.Update();
+
+
+
+                                        }
+                                    }
+                                    catch (Exception er)
+                                    {
+                                        SPListItem RegistroNuevoSap = SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].AddItem();
+                                        RegistroNuevoSap["Title"] = nombreArchivo;
+                                        RegistroNuevoSap["IdRegistro"] = RegistroExistente.ID;
+                                        RegistroNuevoSap["Estado"] = "NO enviado";
+                                        RegistroNuevoSap["Eliminado"] = "NO";
+                                        RegistroNuevoSap["MensajeSAp"] = er.Message;
+                                        RegistroNuevoSap.Update();
+
+                                    }
                                 }
                             }
-                            catch (Exception er)
-                            {
-                                SPListItem RegistroNuevoSap = SPContext.Current.Web.Lists["AltaProvisoriaAdjuntosSAP"].AddItem();
-                                RegistroNuevoSap["Title"] = nombreArchivo;
-                                RegistroNuevoSap["IdRegistro"] = RegistroExistente.ID;
-                                RegistroNuevoSap["Estado"] = "NO enviado";
-                                RegistroNuevoSap["Eliminado"] = "NO";
-                                RegistroNuevoSap["MensajeSAp"] = er.Message;
-                                RegistroNuevoSap.Update();
 
-                            }
                         }
-
-                    }
                     }
                     else
-                        {
+                    {
 
                         // REGISTRO NUEVO APROBADO
                         if (RegistroExistente["Estado"].ToString() == "Aprobado" && (RegistroExistente["IdSap"] == null || string.IsNullOrEmpty(RegistroExistente["IdSap"].ToString())))
@@ -2001,19 +2069,19 @@ namespace Ieasa.Layouts.Ieasa
                         }
                         //REGISTRO MODIFICADO Aprobado
                         if (RegistroExistente["Estado"].ToString() == "Aprobado" && RegistroExistente["IdSap"] != null && RegistroExistente["EstadoSAP"].ToString() == "MODIFICADO")
-                {
+                        {
                             txtEstadoSAP.Text = "MODIFICADO";
-                           
+
                             RegistroExistente["EstadoSAP"] = "MODIFICADO";
                             RegistroExistente["SAP"] = lbSap.Text;
-                          
+
                             RegistroExistente.Update();
                         }
-                       
+
                     }
                 }
 
-               
+
 
 
 
@@ -2030,7 +2098,7 @@ namespace Ieasa.Layouts.Ieasa
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "cerrarCompras();", true);
             }
-            else 
+            else
             {
                 if (Request.QueryString["ID"] != null)
                 {
@@ -2069,7 +2137,7 @@ namespace Ieasa.Layouts.Ieasa
 
 
                     }
-                    }
+                }
             }
             if (bEntro == true)
             {
@@ -2091,6 +2159,7 @@ namespace Ieasa.Layouts.Ieasa
             {
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
                 RegistroExistente["Estado"] = "Inhabilitado";
+                RegistroExistente["EstadoSAP"] = "BLOQUEADO";
                 RegistroExistente.Update();
                 if (ListaAux.Count > 0)
                 {
@@ -2107,12 +2176,19 @@ namespace Ieasa.Layouts.Ieasa
                     UsuarioBloqueado.Update();
                 }
                 sMensajeModal = "Usuario bloqueado correctamente";
+                if (chkSAP.Checked == true)
+                {
+                    PasarSAP();
+                }
             }
             if (cboUsuarioBloqueado.SelectedValue == "NO")
             {
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
-                RegistroExistente["Estado"] = "Pendiente";
+                RegistroExistente["Estado"] = "Aprobado";
+
+                RegistroExistente["EstadoSAP"] = "DESBLOQUEADO";
                 RegistroExistente.Update();
+
                 if (ListaAux.Count > 0)
                 {
                     SPListItem itemUsuario = ListaAux[0];
@@ -2130,7 +2206,33 @@ namespace Ieasa.Layouts.Ieasa
                 sMensajeModal = "Usuario desbloqueado correctamente";
             }
             CargarInicial();
-        //    ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeCompra('" + sMensajeModal + "');", true);
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "Script", "MensajeCompra('" + sMensajeModal + "');", true);
+        }
+        protected void CargarProvincias()
+        {
+
+            SPQuery queryProvincias = new SPQuery();
+            string QuerySTR = "<View><Query><Where><Eq><FieldRef Name='DENOMINACION_x0020_PAIS' /><Value Type='Text'>" + cboPais.SelectedItem.Text + "</Value></Eq></Where><OrderBy><FieldRef Name='DENOMINACION_x0020_REGION' Ascending='True' /></OrderBy></Query></View>";
+
+            queryProvincias.ViewXml = QuerySTR;
+
+            SPListItemCollection PaisesProvinciasSAP = SPContext.Current.Web.Lists["PaisesProvinciasSAP"].GetItems(queryProvincias);
+            if (PaisesProvinciasSAP.Count > 0)
+            {
+                DataView view1 = new DataView(PaisesProvinciasSAP.GetDataTable());
+                DataTable distinctValues1 = view1.ToTable(true, "DENOMINACION_x0020_REGION");
+                DataRow rFilaSeleccioneSolicitud = distinctValues1.NewRow();
+                rFilaSeleccioneSolicitud["DENOMINACION_x0020_REGION"] = strSeleccione;
+                distinctValues1.Rows.InsertAt(rFilaSeleccioneSolicitud, 0);
+                cboProvincia.DataSource = distinctValues1;
+                cboProvincia.DataValueField = "DENOMINACION_x0020_REGION";
+                cboProvincia.DataTextField = "DENOMINACION_x0020_REGION";
+                cboProvincia.DataBind();
+            }
+        }
+        protected void cboPais_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarProvincias();
         }
     }
 }

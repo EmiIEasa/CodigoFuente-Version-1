@@ -7,6 +7,7 @@ function OcultaDivs() {
     $('#divAdjuntoTerciarios').hide();
     $('#divAdjuntoUniversitarios').hide();
 }
+
 function MuestraDivConyuge() {
     $('.divConyuge').show();
     $('.divHijos').hide();
@@ -15,6 +16,7 @@ function OcultaDivConyuge() {
     $('.divConyuge').hide();
     $('.divHijos').hide();
 }
+
 function MuestraDivHijos(e) {
     if (e != "0") {
         if (e == "1") {
@@ -128,7 +130,7 @@ function soloLetras(e) {
 function validateCUIT(e) {
     var aMult = '5432765432';
     var aMult = aMult.split('');
-    var sCUIT = $('.txtCuil'+e).val();
+    var sCUIT = $('.txtCuil' + e).val();
 
     if (sCUIT.length == 11) {
         aCUIT = sCUIT.split('');
@@ -144,45 +146,24 @@ function validateCUIT(e) {
         if (iResult == aCUIT[10]) {
             $('.spanCUITMAL' + e).css('display', 'none');
             $('.spanBIEN' + e).css('display', 'block');
-            $('.txtCuil'+e).css('border-color', 'green');
+            $('.txtCuil' + e).css('border-color', 'green');
             return true;
-        } 
+        }
     }
-    $('.spanCUITMAL'+e).css('display', 'block');
-    $('.txtCuil'+e).css('border-color', 'red');
+    $('.spanCUITMAL' + e).css('display', 'block');
+    $('.txtCuil' + e).css('border-color', 'red');
     $('.spanBIEN' + e).css('display', 'none');
     return false;
 }
-function validaCamposDatosPersonales() {
+function validaCamposPerfil() {
     var retorna = true;
     var textoError = '';
-    var sociedad = $(".cboSociedad").val();
     var nombreApellido = $(".txtNombreApellido").val();
     var legajo = $(".txtLegajo").val();
-    var fecha = $(".dtFecha").val();
-    var genero = $(".cboGenero").val();
-    var cuil = $(".txtCuil").val();
-    var provincia = $(".cboProvincia").val();
-    var ciudad = $(".txtCiudad").val();
-    var calle = $(".txtCalle").val();
-    var altura = $(".txtAltura").val();
-    var piso = $(".txtPiso").val();
-    var depto = $(".txtDepto").val();
-    var cp = $(".txtCodPostal").val();
-    var celularPersonal = $(".txtCelularPersonal").val();
-    var celularEmpresa = $(".txtCelularEmpresa").val();
-    var companiaEmpresa = $(".txtCompaniaCelular").val();
+    var piso = $(".txtPisoPerfil").val();
+    var gerencia = $(".txtGerencia").val();
+    var posicion = $(".txtPosicion").val();
 
-    
-    
-
-    if (sociedad == 'Seleccione') {
-        textoError += "<p>Seleccione Sociedad</p>";
-        $(".cboSociedad").css('border-color', 'red');
-        retorna = false;
-    } else {
-        $(".cboSociedad").css('border-color', '#ababab');
-    }
 
     if ($.isEmptyObject(nombreApellido) == true || nombreApellido == "") {
         textoError += "<p>Ingrese Nombre y Apellido</p>";
@@ -198,6 +179,74 @@ function validaCamposDatosPersonales() {
     } else {
         $(".txtLegajo").css('border-color', '#ababab');
     }
+    if ($.isEmptyObject(piso) == true || piso == "") {
+        textoError += "<p>Ingrese Piso</p>";
+        $(".txtPisoPerfil").css('border-color', 'red');
+        retorna = false;
+    } else {
+        $(".txtPisoPerfil").css('border-color', '#ababab');
+    }
+    if ($.isEmptyObject(gerencia) == true || gerencia == "") {
+        textoError += "<p>Ingrese Gerencia</p>";
+        $(".txtGerencia").css('border-color', 'red');
+        retorna = false;
+    } else {
+        $(".txtGerencia").css('border-color', '#ababab');
+    }
+    if ($.isEmptyObject(posicion) == true || posicion == "") {
+        textoError += "<p>Ingrese Posición</p>";
+        $(".txtPosicion").css('border-color', 'red');
+        retorna = false;
+    } else {
+        $(".txtPosicion").css('border-color', '#ababab');
+    }
+    if (retorna == false) {
+        $("#alertaCamposObligatorios").css('display', 'block');
+        $("#alertaCamposObligatorios").html(textoError);
+        return false;
+    }
+    else {
+        //return true;
+        $("#alertaCamposObligatorios").css('display', 'none');
+
+        $("#pestaniaPerfil").removeClass("active");
+        $("#pestaniaDatosPersonales").addClass("active");
+
+        $("#perfil").removeClass("active");
+        $("#perfil").addClass("fade");
+        $("#datosPersonales").removeClass("fade");
+        $("#datosPersonales").addClass("active");
+
+        $("#btnGroupPerfil").css('display', 'none');
+        $("#btnGroupDatosPersonales").css('display', 'inline-flex');
+    }
+}
+function validaCamposDatosPersonales() {
+    var retorna = true;
+    var textoError = '';
+    var sociedad = $(".cboSociedad").val();
+
+    var fecha = $(".dtFecha").val();
+    var genero = $(".cboGenero").val();
+    var cuil = $(".txtCuil").val();
+    var provincia = $(".cboProvincia").val();
+    var ciudad = $(".txtCiudad").val();
+    var calle = $(".txtCalle").val();
+    var altura = $(".txtAltura").val();
+    var piso = $(".txtPiso").val();
+    var depto = $(".txtDepto").val();
+    var cp = $(".txtCodPostal").val();
+    var celularPersonal = $(".txtCelularPersonal").val();
+    var celularEmpresa = $(".txtCelularEmpresa").val();
+    var companiaEmpresa = $(".txtCompaniaCelular").val();
+    if (sociedad == 'Seleccione') {
+        textoError += "<p>Seleccione Sociedad</p>";
+        $(".cboSociedad").css('border-color', 'red');
+        retorna = false;
+    } else {
+        $(".cboSociedad").css('border-color', '#ababab');
+    }
+
     if ($.isEmptyObject(fecha) == true || fecha == "") {
         textoError += "<p>Ingrese Fecha de Nacimiento</p>";
         $(".dtFecha").css('border-color', 'red');
@@ -289,11 +338,6 @@ function validaCamposDatosPersonales() {
     } else {
         $(".txtCompaniaCelular").css('border-color', '#ababab');
     }
-    
-
-    
-    
-    
     if (retorna == false) {
         $("#alertaCamposObligatorios").css('display', 'block');
         $("#alertaCamposObligatorios").html(textoError);
@@ -305,7 +349,7 @@ function validaCamposDatosPersonales() {
 
         $("#pestaniaDatosPersonales").removeClass("active");
         $("#pestaniaEstructura").addClass("active");
-        
+
         $("#datosPersonales").removeClass("active");
         $("#datosPersonales").addClass("fade");
         $("#estructura").removeClass("fade");
@@ -314,7 +358,6 @@ function validaCamposDatosPersonales() {
         $("#btnGroupDatosPersonales").css('display', 'none');
         $("#btnGroupEstructura").css('display', 'inline-flex');
     }
-
 }
 function validaCamposEstructura() {
     var retorna = true;
@@ -575,10 +618,25 @@ function validaCamposEstudios() {
         $("#alertaCamposObligatorios").css('display', 'none');
     }
 }
-function volverADatosPersonales(){
+function volverAPerfil() {
     $("#alertaCamposObligatorios").css('display', 'none');
 
-    
+
+    $("#pestaniaPerfil").addClass("active");
+    $("#pestaniaDatosPersonales").removeClass("active");
+
+    $("#perfil").removeClass("fade");
+    $("#perfil").addClass("active");
+    $("#datosPersonales").removeClass("active");
+    $("#datosPersonales").addClass("fade");
+
+    $("#btnGroupPerfil").css('display', 'inline-flex');
+    $("#btnGroupDatosPersonales").css('display', 'none');
+}
+function volverADatosPersonales() {
+    $("#alertaCamposObligatorios").css('display', 'none');
+
+
     $("#pestaniaDatosPersonales").addClass("active");
     $("#pestaniaEstructura").removeClass("active");
 
@@ -620,26 +678,29 @@ function volverAGrupoFliar() {
 }
 function MensajeGuarda() {
     $(".modal").css('display', 'block');
+    $(".modal-body").text('La información se guardó correctamente.');
     $(".modalBtnRRHH").css('display', 'none');
+    $(".modalBtnCerrar").css('display', 'none');
 }
 function MensajeModificado(sec) {
     $(".modal").css('display', 'block');
+    $(".modal-body").text('La información se modificó correctamente.');
     if (sec == '1') {
         $(".modalBtnUsuario").css('display', 'none');
+        $(".modalBtnCerrar").css('display', 'none');
     }
     if (sec == '2') {
         $(".modalBtnRRHH").css('display', 'none');
+        $(".modalBtnCerrar").css('display', 'none');
     }
 }
 function cerrar() {
     location.href = window.location.protocol + '//' + window.location.hostname + '/Lists/DatosPersonal.aspx';
 }
 function cerrarHome() {
-    //location.href = 'http://ibiza:2222/sites/formularios/Lists/AltaProvisoria/AllItems.aspx';
     location.href = window.location.protocol + '//' + window.location.hostname + '/SitePages/HOME.aspx';
 }
 function cerrarRRHH() {
-    //location.href = 'http://ibiza:2222/sites/formularios/Lists/AltaProvisoria/AllItems.aspx';
     location.href = window.location.protocol + '//' + window.location.hostname + '/INFO/RRHH.aspx';
 }
 $(function () {
@@ -654,7 +715,24 @@ $(function () {
             $('#txtConyugeConcubinato').html('Conviviente')
         }
     });
-    
+    $(".cboAlergias").on("change", function () {
+        if ($(this).val() == "SI") {
+            $('.divAlergiaNO').show();
+        };
+        if ($(this).val() == "NO") {
+            $('.divAlergiaNO').hide();
+            $('.txtEspecificar').html('');
+        };
+    });
+    $(".cboLicenciaConducir").on("change", function () {
+        if ($(this).val() == "SI") {
+            $('.divLicenciaNO').show();
+        };
+        if ($(this).val() == "NO") {
+            $('.divLicenciaNO').hide();
+            $('.txtCategoria').html('');
+        };
+    });
     $(".cboCantidadHijos").on("change", function () {
         if ($(this).val() != "0") {
             $('.divHijosTitulo').show();
@@ -766,5 +844,46 @@ $(function () {
             $('#rowUniversitario').show();
         }
     });
-
+    $(".cboCursos").on("change", function () {
+        $('#divAdjuntoCursos').hide();
+        if ($(this).val() == "COMPLETO") {
+            $('#divAdjuntoCursos').show();
+            $('#txtSecundarios').html('Adjuntar constancia curso completo')
+        }
+    });
 });
+function fotoPerfilVer() {
+    if ($("#FotoPerfil").is(':visible')) {
+        $("#FotoPerfil").css('display', 'none');
+    }
+    else {
+        $("#FotoPerfil").css('display', 'block');
+    }
+};
+
+function mensajeCerrar() {
+    $(".modal").css('display', 'block');
+    $(".modal-body").text('Si confirma se perderán los datos no guardados.');
+    $(".modalBtnRRHH").css('display', 'none');
+    $(".modalBtnUsuario").css('display', 'none');
+};
+function agregarCurso(divId, botonId) {
+    var div = document.getElementById(divId);
+    var boton = document.getElementById(botonId);
+    if (div.style.display === 'none' || div.style.display === '') {
+        div.style.display = 'block'; // Mostrar el div
+        boton.style.display = 'none'
+    } 
+}
+
+function quitarCurso(divId, botonId) {
+    var div = document.getElementById(divId);
+    var boton = document.getElementById(botonId);
+    if (div.style.display === 'block' || div.style.display === '') {
+        div.style.display = 'none'; // Mostrar el div
+        boton.style.display = 'block'
+    } 
+}
+function cerrarModal() {
+    $(".modal").css('display', 'none');
+}
