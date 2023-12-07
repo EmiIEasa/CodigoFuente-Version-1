@@ -23,8 +23,10 @@ namespace Ieasa.Layouts.Ieasa
     public partial class AltaProvisoria : UnsecuredLayoutsPageBase
     {
         private string sSitioAnonimo = "https://proveedores-an.energia-argentina.com.ar/";
-      //  private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
-        private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
+     private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
+        //private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
+       // private string sSitio = " https://espd-01.energia-argentina.com.ar";
+       
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -298,7 +300,8 @@ namespace Ieasa.Layouts.Ieasa
 
         }
         private void CargarRubros(int iIdFormulario)
-        { for (int i = 0; i < libServicio.Items.Count; i++)
+        {
+            for (int i = 0; i < libServicio.Items.Count; i++)
             {
                 libServicio.Items.RemoveAt(i);
             }
@@ -308,11 +311,26 @@ namespace Ieasa.Layouts.Ieasa
             SPQuery query = new SPQuery();
             query.ViewXml = QuerySTR;
             SPListItemCollection ListaAux = SPContext.Current.Web.Lists["AltaProvisoriaRubros"].GetItems(query);
+            bool bEncontro = false;
             if (ListaAux.Count > 0)
             {
                 foreach (SPListItem item in ListaAux)
                 {
-                    libServicio.Items.Add(item["Title"].ToString());
+                    bEncontro = false;
+                    for (int i = 0; i < libServicio.Items.Count; i++)
+                    {
+
+                        if (libServicio.Items[i].Text.ToString() == item["Title"].ToString())
+                        {
+                            bEncontro = true;
+                            break;
+
+                        }
+                    }
+                    if (bEncontro == false)
+                    {
+                        libServicio.Items.Add(item["Title"].ToString());
+                    }
                 }
             }
         }
@@ -1901,9 +1919,9 @@ namespace Ieasa.Layouts.Ieasa
 
             try
             {
-                // string url = "http://192.168.11.105:50000/RESTAdapter/ActualizacionProveedores"; DEV
-                //  string url = "http://esap-5q:50000/RESTAdapter/ActualizacionProveedores";//QAS
-                string url = "http://esap-5p:50000/RESTAdapter/ActualizacionProveedores";
+                // string url = "http://192.168.11.105:50000/RESTAdapter/ActualizacionProveedores"; //DEV
+                  string url = "http://192.168.11.115:50000/RESTAdapter/ActualizacionProveedores";//QAS
+               // string url = "http://esap-5p:50000/RESTAdapter/ActualizacionProveedores";
                 HttpMessageHandler handler = new HttpClientHandler();
 
                 var httpClient = new HttpClient(handler)
@@ -1915,7 +1933,7 @@ namespace Ieasa.Layouts.Ieasa
                 httpClient.DefaultRequestHeaders.Add("ContentType", "application/json");
 
                 //This is the key section you were missing    
-                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("portal_proveedores:Ieasa.2023");
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("portal_proveedores:Ieasa2022");//Ieasa.2023
                 string val = System.Convert.ToBase64String(plainTextBytes);
                 httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
                 string json2 = string.Empty;
@@ -1964,9 +1982,9 @@ namespace Ieasa.Layouts.Ieasa
 
                         if (collAttachments.Count > 0)
                         {
-                            // string url2 = "http://192.168.11.105:50000/RESTAdapter/ActualizacionDocumentacionProveedores"; dev
-                            //string url2 = "http://esap-5q:50000/RESTAdapter/ActualizacionDocumentacionProveedores";// QAS
-                            string url2 = "http://esap-5p:50000/RESTAdapter/ActualizacionDocumentacionProveedores";
+                           //  string url2 = "http://192.168.11.105:50000/RESTAdapter/ActualizacionDocumentacionProveedores"; //dev
+                            string url2 = "http://192.168.11.115:50000/RESTAdapter/ActualizacionDocumentacionProveedores";// QAS
+                          //  string url2 = "http://esap-5p:50000/RESTAdapter/ActualizacionDocumentacionProveedores";
                             HttpMessageHandler handler2 = new HttpClientHandler();
 
                             var httpClient2 = new HttpClient(handler2)

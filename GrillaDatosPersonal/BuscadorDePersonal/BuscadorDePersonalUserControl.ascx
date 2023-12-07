@@ -29,7 +29,7 @@
                     </div>
                     <asp:DropDownList CssClass="form-control" runat="server" ID="cboCampos">
                         <asp:ListItem Text="-" Value="-"></asp:ListItem>
-                        <asp:ListItem Text="Apellido o Nombre" Value="NombreApellido"></asp:ListItem>
+                        <asp:ListItem Text="Apellido o Nombre" Value="Title"></asp:ListItem>
                         <asp:ListItem Text="Legajo" Value="Legajo"></asp:ListItem>
                         <asp:ListItem Text="CUIL" Value="CUIL"></asp:ListItem>
                         <asp:ListItem Text="Sociedad" Value="Sociedad"></asp:ListItem>
