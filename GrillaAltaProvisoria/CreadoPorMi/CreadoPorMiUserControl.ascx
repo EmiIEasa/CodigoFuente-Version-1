@@ -114,8 +114,9 @@
 				<thead>
 					<tr>
 						<th>ID</th>
+                          <th>Razón Social</th>
                         <th>Nombre Fantasía</th>
-                        <th>Razón Social</th>
+                      
                         
                         <th>Actividad Principal</th>
 					</tr>
@@ -130,8 +131,9 @@
 			    <thead>
 				    <tr>
 					    <th>ID</th>
-                        <th>Nombre Fantasía</th>
                         <th>Razón Social</th>
+                        <th>Nombre Fantasía</th>
+                        
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>
@@ -144,9 +146,10 @@
 			    <thead>
 				    <tr>
 					    <th>ID</th>
+                            <th>Razón Social</th>
                         <th>Nombre Fantasía</th>
 
-                        <th>Razón Social</th>
+                    
                         <th>Actividad Principal</th>
 				    </tr>
 			    </thead>

@@ -23,10 +23,12 @@ namespace Ieasa.Layouts.Ieasa
     public partial class AltaProvisoria : UnsecuredLayoutsPageBase
     {
         private string sSitioAnonimo = "https://proveedores-an.energia-argentina.com.ar/";
-     private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
+        private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
         //private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
-       // private string sSitio = " https://espd-01.energia-argentina.com.ar";
-       
+        // private string sSitio = " https://espd-01.energia-argentina.com.ar";
+       // private string sSitio = "https://portalproveedoresprodtest.energia-argentina.com.ar";
+        //private string sSitioAnonimo = "http://proveedores-anprodtest.energia-argentina.com.ar/";
+
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -1707,6 +1709,7 @@ namespace Ieasa.Layouts.Ieasa
         }
         public partial class RespuestaWebService
         { }
+
         private void PasarSAP()
 
         {
@@ -1760,7 +1763,7 @@ namespace Ieasa.Layouts.Ieasa
             string pedidoAutoPermitido = "";//pedidoAutoPermitido => VACIO
             string facturaRelativaServicio = "X";//-facturaRelativaServicio => X
 
-
+            bool bEntroValidarExistente = false; 
             SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
 
             if (RegistroExistente != null)
@@ -1840,8 +1843,8 @@ namespace Ieasa.Layouts.Ieasa
                 }
                
                 tratamiento = "";
-                nombre = (RegistroExistente["RazonSocial"] != null && !string.IsNullOrEmpty(RegistroExistente["RazonSocial"].ToString()) ? RegistroExistente["RazonSocial"].ToString() : "");
-                nombre2 = (RegistroExistente["NombreFantasia"] != null && !string.IsNullOrEmpty(RegistroExistente["NombreFantasia"].ToString()) ? RegistroExistente["NombreFantasia"].ToString() : "");
+                nombre2 = (RegistroExistente["RazonSocial"] != null && !string.IsNullOrEmpty(RegistroExistente["RazonSocial"].ToString()) ? RegistroExistente["RazonSocial"].ToString() : "");
+                nombre = (RegistroExistente["NombreFantasia"] != null && !string.IsNullOrEmpty(RegistroExistente["NombreFantasia"].ToString()) ? RegistroExistente["NombreFantasia"].ToString() : "");
                 conceptoB12 = (RegistroExistente["ActividadPrincipal"] != null && !string.IsNullOrEmpty(RegistroExistente["ActividadPrincipal"].ToString()) ? RegistroExistente["ActividadPrincipal"].ToString() : "");
                 conceptoB2 = "";
                 plantaEdificio = (RegistroExistente["Piso"] != null && !string.IsNullOrEmpty(RegistroExistente["Piso"].ToString()) ? RegistroExistente["Piso"].ToString() : "");
@@ -1916,7 +1919,7 @@ namespace Ieasa.Layouts.Ieasa
 
 
 
-
+            string Mensajeresult = "";
             try
             {
                 // string url = "http://192.168.11.105:50000/RESTAdapter/ActualizacionProveedores"; //DEV
@@ -1956,14 +1959,15 @@ namespace Ieasa.Layouts.Ieasa
                "\"verifFacBaseEM\":\"" + verifFacBaseEM + "\",\"telefonoProveedor\":\"" + telefonoProveedor + "\",\"vendedorProveedor\":\"" + vendedorProveedor + "\"," +
                "\"pedidoAutoPermitido\":\"" + pedidoAutoPermitido + "\",\"facturaRelativaServicio\":\"" + facturaRelativaServicio + "\"}}}";
 
-
+              
 
                 using (var response = httpClient.PostAsync(url, new StringContent(json2, System.Text.Encoding.UTF8, "application/json")).Result)
                 {
 
-
+                   
                     lbSap.Text = response.Content.ReadAsStringAsync().Result;
-                    if (response.Content.ReadAsStringAsync().Result.Contains("success"))
+                    Mensajeresult = response.Content.ReadAsStringAsync().ToString();
+                    if (response.Content.ReadAsStringAsync().Result.Contains("success") && !response.Content.ReadAsStringAsync().Result.Contains("Ya existe un proveedor en SAP para la razon social indicada"))
                     {
                         txtEstadoSAP.Text = "ACTUALIZADO";
                         if (RegistroExistente["Estado"].ToString() == "Aprobado" && (RegistroExistente["IdSap"] == null || string.IsNullOrEmpty(RegistroExistente["IdSap"].ToString())))
@@ -2074,19 +2078,36 @@ namespace Ieasa.Layouts.Ieasa
                     }
                     else
                     {
+                      
 
+                        if (lbSap.Text.Contains("Ya existe un proveedor en SAP para la razon social indicada"))
+                        {
+                            txtEstadoSAP.Text = "MODIFICADO";
+                            RegistroExistente["IdSap"] = lbSap.Text.Split(':')[1].Split(',')[0];
+                            RegistroExistente["EstadoSAP"] = "MODIFICADO";
+                            RegistroExistente["SAP"] = lbSap.Text;
+                           lbIdSap.Text = lbSap.Text.Split(':')[1].Split(',')[0];
+                            RegistroExistente.Update();
+                            bEntroValidarExistente = true;
+
+
+                            }
+                        else
+                        { 
                         // REGISTRO NUEVO APROBADO
                         if (RegistroExistente["Estado"].ToString() == "Aprobado" && (RegistroExistente["IdSap"] == null || string.IsNullOrEmpty(RegistroExistente["IdSap"].ToString())))
-                        {
-                            txtEstadoSAP.Text = "NUEVO";
-                            RegistroExistente["IdSap"] = "";
-                            RegistroExistente["EstadoSAP"] = "NUEVO";
-                            RegistroExistente["SAP"] = lbSap.Text;
-                            lbIdSap.Text = "";
-                            RegistroExistente.Update();
-                        }
-                        //REGISTRO MODIFICADO Aprobado
-                        if (RegistroExistente["Estado"].ToString() == "Aprobado" && RegistroExistente["IdSap"] != null && RegistroExistente["EstadoSAP"].ToString() == "MODIFICADO")
+                            {
+
+                                txtEstadoSAP.Text = "NUEVO";
+                                RegistroExistente["IdSap"] = "";
+                                RegistroExistente["EstadoSAP"] = "NUEVO";
+                                RegistroExistente["SAP"] = lbSap.Text;
+                                lbIdSap.Text = "";
+                                RegistroExistente.Update();
+
+                            }
+                            //REGISTRO MODIFICADO Aprobado
+                            if (RegistroExistente["Estado"].ToString() == "Aprobado" && RegistroExistente["IdSap"] != null && RegistroExistente["EstadoSAP"].ToString() == "MODIFICADO")
                         {
                             txtEstadoSAP.Text = "MODIFICADO";
 
@@ -2094,8 +2115,10 @@ namespace Ieasa.Layouts.Ieasa
                             RegistroExistente["SAP"] = lbSap.Text;
 
                             RegistroExistente.Update();
-                        }
+                               
+                            }
 
+                        }
                     }
                 }
 
@@ -2106,7 +2129,16 @@ namespace Ieasa.Layouts.Ieasa
             }
             catch (Exception ex)
             {
-                lbSap.Text += "error" + ex.Message.ToString();
+
+
+
+             
+
+                lbSap.Text += "error" + ex.Message.ToString() ;
+            }
+            if (bEntroValidarExistente == true)
+            {
+                PasarSAP();
             }
         }
 

@@ -19,8 +19,8 @@ namespace DatosPersonal.Layouts.DatosPersonal
 {
     public partial class Registro : LayoutsPageBase
     {
-        //private string sSitio = "https://portalrrhh.energia-argentina.com.ar";
-        private string sSitio = "https://portalrrhh.ieasa.com.ar";
+        private string sSitio = "https://portalrrhhdevtest.energia-argentina.com.ar";
+      //  private string sSitio = "https://portalrrhh.ieasa.com.ar";
         string strSeleccione = "Seleccione";
         protected void Page_Load(object sender, EventArgs e)
         {
