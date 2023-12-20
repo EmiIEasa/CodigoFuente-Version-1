@@ -56,7 +56,7 @@
         </div>
         <div class="row" >
             <div class="col-1 mt-1">
-                <asp:Label ID="Label1" runat="server" Text="Label" ForeColor="#D7D7D7">11/12/2023</asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="Label" ForeColor="#D7D7D7">20/12/2023</asp:Label>
             </div>
             <div class="col-11 mt-1">
                 <div class="form-inline float-right">

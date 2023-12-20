@@ -22,11 +22,12 @@ namespace Ieasa.Layouts.Ieasa
 {
     public partial class AltaProvisoria : UnsecuredLayoutsPageBase
     {
-        private string sSitioAnonimo = "https://proveedores-an.energia-argentina.com.ar/";
-        private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
-        //private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
+      //  private string sSitioAnonimo = "https://proveedores-an-desa.energia-argentina.com.ar/";
+         private string sSitioAnonimo = "https://proveedores-an.energia-argentina.com.ar/";
+       // private string sSitio = "https://proveedores-desa.energia-argentina.com.ar";
+       private string sSitio = "https://portalproveedores.energia-argentina.com.ar";
         // private string sSitio = " https://espd-01.energia-argentina.com.ar";
-       // private string sSitio = "https://portalproveedoresprodtest.energia-argentina.com.ar";
+  //private string sSitio = "https://portalproveedoresprodtest.energia-argentina.com.ar";
         //private string sSitioAnonimo = "http://proveedores-anprodtest.energia-argentina.com.ar/";
 
         string strSeleccione = "Seleccione";
@@ -1524,19 +1525,28 @@ namespace Ieasa.Layouts.Ieasa
         }
         protected void btnAprobarCompras_ServerClick(object sender, EventArgs e)
         {
+          
             SPSecurity.RunWithElevatedPrivileges(delegate ()
             {
+               
                 SPListItem RegistroExistente = SPContext.Current.Web.Lists["AltaProvisoria"].GetItemById(int.Parse(Request.QueryString["ID"].ToString()));
                 bool _showRoles = (new MembershipSettings(SPContext.Current.Web)).EnableRoles;
                 MembershipUser user = null;
+          
                 if (RegistroExistente["Cuit"] != null && !string.IsNullOrEmpty(RegistroExistente["Cuit"].ToString()))
                 {
+                  
+
                     user = Utils.BaseMembershipProvider().GetUser(RegistroExistente["Cuit"].ToString(), false);
+                  
+
                 }
                 if (RegistroExistente["CodigoExtranjero"] != null && !string.IsNullOrEmpty(RegistroExistente["CodigoExtranjero"].ToString()))
                 {
                     user = Utils.BaseMembershipProvider().GetUser(RegistroExistente["CodigoExtranjero"].ToString(), false);
                 }
+
+              
 
                 //SI EL CUIT NO ESTA VACIO, EL PROVEEDOR ES NACIOAL
                 SPUser Usuario = null;
@@ -1555,7 +1565,7 @@ namespace Ieasa.Layouts.Ieasa
                             MembershipCreateStatus createStatus;
                             string sPasword = RandomPassword() + "+";
                             string sCodigoExtranjero = string.Empty;
-
+                          
                             if (RegistroExistente["Proveedor"].ToString() == "Extranjero")
                             {
                                 int iNuevoCodigo = 0;
@@ -1585,20 +1595,25 @@ namespace Ieasa.Layouts.Ieasa
                                 RegistroExistente.Update();
                                 ProvExtranjeroNuevo.Update();
                             }
+                          
+                          
                             if (RegistroExistente["Cuit"] != null && !string.IsNullOrEmpty(RegistroExistente["Cuit"].ToString()))
                             {
-
+                             
                                 user = Utils.BaseMembershipProvider().CreateUser(RegistroExistente["Cuit"].ToString(), sPasword, RegistroExistente["VentasCorreo"].ToString(), null, null, true, null, out createStatus);
-
-                            }
+                              
+                              
+                                }
                             else
                             {
                                 user = Utils.BaseMembershipProvider().CreateUser(sCodigoExtranjero, sPasword, RegistroExistente["VentasCorreo"].ToString(), null, null, true, null, out createStatus);
                             }
                             if (createStatus != MembershipCreateStatus.Success)
                             {
+                                
                                 sMensaje = SetErrorMessage(createStatus);
                             }
+                         
                             // add user to SharePoint whether a role was selected or not
                             AddUserToSite(Utils.EncodeUsername(user.UserName), user.Email, RegistroExistente["NombreFantasia"].ToString());
                             // add user to group
@@ -1608,6 +1623,7 @@ namespace Ieasa.Layouts.Ieasa
                             EnvioDeEmails("LOGIN", "CPUC", "0", RegistroExistente, ((RegistroExistente["Cuit"] != null) ? RegistroExistente["Cuit"].ToString() : sCodigoExtranjero), sPasword);
                             //      
                             UsuarioCreado = true;
+
                         }
                         catch (Exception EX)
                         {
@@ -1618,9 +1634,12 @@ namespace Ieasa.Layouts.Ieasa
                     {
                         try
                         {
+                          
                             MembershipUser userMembership = Utils.BaseMembershipProvider().GetUser((RegistroExistente["Cuit"] != null ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString())), false);
+                         
                             userMembership.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Utils.BaseMembershipProvider().UpdateUser(userMembership);
+                         
                             // user.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
                             Usuario = ((RegistroExistente["Cuit"] != null) ? SPContext.Current.Web.EnsureUser(RegistroExistente["Cuit"].ToString()) : SPContext.Current.Web.EnsureUser(RegistroExistente["CodigoExtranjero"].ToString()));
                             Usuario.Email = RegistroExistente["VentasCorreo"].ToString().Trim();
@@ -1923,8 +1942,8 @@ namespace Ieasa.Layouts.Ieasa
             try
             {
                 // string url = "http://192.168.11.105:50000/RESTAdapter/ActualizacionProveedores"; //DEV
-                  string url = "http://192.168.11.115:50000/RESTAdapter/ActualizacionProveedores";//QAS
-               // string url = "http://esap-5p:50000/RESTAdapter/ActualizacionProveedores";
+                //  string url = "http://192.168.11.115:50000/RESTAdapter/ActualizacionProveedores";//QAS
+               string url = "http://esap-5p:50000/RESTAdapter/ActualizacionProveedores";
                 HttpMessageHandler handler = new HttpClientHandler();
 
                 var httpClient = new HttpClient(handler)
@@ -1936,7 +1955,7 @@ namespace Ieasa.Layouts.Ieasa
                 httpClient.DefaultRequestHeaders.Add("ContentType", "application/json");
 
                 //This is the key section you were missing    
-                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("portal_proveedores:Ieasa2022");//Ieasa.2023
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("portal_proveedores:Ieasa.2024");//Ieasa.2023
                 string val = System.Convert.ToBase64String(plainTextBytes);
                 httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
                 string json2 = string.Empty;
@@ -1987,8 +2006,8 @@ namespace Ieasa.Layouts.Ieasa
                         if (collAttachments.Count > 0)
                         {
                            //  string url2 = "http://192.168.11.105:50000/RESTAdapter/ActualizacionDocumentacionProveedores"; //dev
-                            string url2 = "http://192.168.11.115:50000/RESTAdapter/ActualizacionDocumentacionProveedores";// QAS
-                          //  string url2 = "http://esap-5p:50000/RESTAdapter/ActualizacionDocumentacionProveedores";
+                           // string url2 = "http://192.168.11.115:50000/RESTAdapter/ActualizacionDocumentacionProveedores";// QAS
+                          string url2 = "http://esap-5p:50000/RESTAdapter/ActualizacionDocumentacionProveedores";
                             HttpMessageHandler handler2 = new HttpClientHandler();
 
                             var httpClient2 = new HttpClient(handler2)
@@ -1999,7 +2018,7 @@ namespace Ieasa.Layouts.Ieasa
                             httpClient2.DefaultRequestHeaders.Add("ContentType", "application/json");
 
                             //This is the key section you were missing    
-                            var plainTextBytes2 = System.Text.Encoding.UTF8.GetBytes("PORTAL_PROVEEDORES:Ieasa2022");
+                            var plainTextBytes2 = System.Text.Encoding.UTF8.GetBytes("PORTAL_PROVEEDORES:Ieasa.2024");
                             string val2 = System.Convert.ToBase64String(plainTextBytes);
                             httpClient2.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
 
